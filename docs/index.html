@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>으뜸 딥러닝</title>
+<style>
+:root {
+  --deepblue: #00539C;
+  --partgreen: #B4E178;
+  --magenta: #961E64;
+  --bg: #f8f9fa;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: var(--bg);
+  color: #333;
+  line-height: 1.7;
+}
+
+/* ── Hero ── */
+.hero {
+  background: var(--deepblue);
+  padding: 60px 24px 48px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 20px; left: 8%; right: 25%;
+  height: 1px;
+  background: rgba(255,255,255,0.12);
+}
+.hero::after {
+  content: '';
+  position: absolute;
+  bottom: 20px; left: 25%; right: 8%;
+  height: 1px;
+  background: rgba(255,255,255,0.12);
+}
+.hero .subtitle {
+  color: rgba(255,255,255,0.45);
+  font-size: 0.95rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.hero h1 {
+  color: white;
+  font-size: 2.6rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+.hero h1 span {
+  color: var(--partgreen);
+}
+.hero .tagline {
+  color: rgba(255,255,255,0.7);
+  font-size: 1.05rem;
+  margin-top: 16px;
+  max-width: 540px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.hero .badges {
+  margin-top: 24px;
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.hero .badge {
+  background: rgba(255,255,255,0.12);
+  color: var(--partgreen);
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+/* ── Container ── */
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* ── About Section ── */
+.about {
+  padding: 48px 0 36px;
+}
+.about h2 {
+  color: var(--deepblue);
+  font-size: 1.4rem;
+  margin-bottom: 16px;
+  padding-bottom: 8px;
+  border-bottom: 3px solid var(--partgreen);
+  display: inline-block;
+}
+.about p {
+  margin-bottom: 12px;
+  font-size: 0.95rem;
+  color: #444;
+}
+
+/* ── Parts Grid ── */
+.parts {
+  padding: 0 0 48px;
+}
+.parts h2 {
+  color: var(--deepblue);
+  font-size: 1.4rem;
+  margin-bottom: 20px;
+  padding-bottom: 8px;
+  border-bottom: 3px solid var(--partgreen);
+  display: inline-block;
+}
+.part-card {
+  background: white;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+.part-header {
+  background: var(--partgreen);
+  padding: 14px 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.part-num {
+  background: var(--magenta);
+  color: white;
+  font-weight: 800;
+  font-size: 0.85rem;
+  padding: 4px 12px;
+  border-radius: 4px;
+}
+.part-title {
+  color: var(--magenta);
+  font-weight: 700;
+  font-size: 1rem;
+}
+.chapter-list {
+  padding: 12px 20px 16px;
+}
+.chapter-item {
+  display: flex;
+  align-items: baseline;
+  padding: 7px 0;
+  border-bottom: 1px solid #f0f0f0;
+  font-size: 0.9rem;
+}
+.chapter-item:last-child { border-bottom: none; }
+.ch-num {
+  color: var(--deepblue);
+  font-weight: 700;
+  min-width: 56px;
+  font-size: 0.82rem;
+}
+.ch-title {
+  flex: 1;
+  color: #444;
+}
+.ch-code {
+  font-size: 0.78rem;
+  color: var(--deepblue);
+  text-decoration: none;
+  background: var(--deepblue);
+  color: white;
+  padding: 2px 10px;
+  border-radius: 3px;
+  margin-left: 8px;
+  white-space: nowrap;
+}
+.ch-code:hover { background: var(--magenta); }
+.mp-item {
+  display: flex;
+  align-items: baseline;
+  padding: 7px 0;
+  font-size: 0.9rem;
+}
+.mp-badge {
+  background: #4E3277;
+  color: white;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 3px;
+  margin-right: 10px;
+  white-space: nowrap;
+}
+.mp-title { color: #4E3277; font-weight: 600; }
+
+/* ── Quick Links ── */
+.quick-links {
+  padding: 0 0 48px;
+}
+.quick-links h2 {
+  color: var(--deepblue);
+  font-size: 1.4rem;
+  margin-bottom: 20px;
+  padding-bottom: 8px;
+  border-bottom: 3px solid var(--partgreen);
+  display: inline-block;
+}
+.link-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+}
+.link-card {
+  background: white;
+  border-radius: 10px;
+  padding: 24px 20px;
+  text-align: center;
+  text-decoration: none;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+.link-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+}
+.link-card .icon {
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+.link-card .label {
+  color: var(--deepblue);
+  font-weight: 700;
+  font-size: 1rem;
+}
+.link-card .desc {
+  color: #888;
+  font-size: 0.82rem;
+  margin-top: 6px;
+}
+
+/* ── Footer ── */
+.footer {
+  text-align: center;
+  padding: 32px 20px;
+  color: #aaa;
+  font-size: 0.8rem;
+  border-top: 1px solid #e8e8e8;
+}
+.footer a { color: var(--deepblue); text-decoration: none; }
+</style>
+</head>
+<body>
+
+<!-- ══ Hero ══ -->
+<div class="hero">
+  <div class="subtitle">교과서 &amp; 실습 코드</div>
+  <h1>으뜸 <span>딥러닝</span></h1>
+  <p class="tagline">
+    퍼셉트론에서 에이전틱 AI까지 — 직관과 수식, 코드의 삼각 검증으로 배우는 딥러닝
+  </p>
+  <div class="badges">
+    <span class="badge">15개 장</span>
+    <span class="badge">5개 미니프로젝트</span>
+    <span class="badge">PyTorch 2.x</span>
+    <span class="badge">119개 참고문헌</span>
+  </div>
+</div>
+
+<div class="container">
+
+<!-- ══ About ══ -->
+<section class="about">
+  <h2>이 책에 대하여</h2>
+  <p>
+    <strong>으뜸 딥러닝</strong>은 딥러닝의 핵심 원리를 직관, 수식, 코드 세 방향에서 검증하며 익히는 대학 교재입니다.
+    퍼셉트론의 기초에서 출발하여 합성곱 신경망, 트랜스포머, 대형 언어 모델, 확산 모델, 강화학습,
+    그리고 에이전틱 AI까지 현대 딥러닝의 핵심 주제를 한 권에 담았습니다.
+  </p>
+  <p>
+    각 장 끝에는 PyTorch 실습 절이, 각 부(Part) 끝에는 미니프로젝트가 배치되어 있어
+    개념 학습과 구현 실습을 번갈아 수행할 수 있습니다.
+    아래에서 챕터별 실습 코드를 내려받고, 참고문헌의 원문에 접근할 수 있습니다.
+  </p>
+</section>
+
+<!-- ══ Chapter Codes ══ -->
+<section class="parts">
+  <h2>챕터별 실습 코드</h2>
+
+  <!-- Part I -->
+  <div class="part-card">
+    <div class="part-header">
+      <span class="part-num">Part I</span>
+      <span class="part-title">딥러닝의 기초</span>
+    </div>
+    <div class="chapter-list">
+      <div class="chapter-item">
+        <span class="ch-num">1장</span>
+        <span class="ch-title">딥러닝이란</span>
+      </div>
+      <div class="chapter-item">
+        <span class="ch-num">2장</span>
+        <span class="ch-title">전통적 머신러닝 리뷰</span>
+        <a class="ch-code" href="https://github.com/dknife/DL/tree/main/ch02" target="_blank">Code</a>
+      </div>
+      <div class="chapter-item">
+        <span class="ch-num">3장</span>
+        <span class="ch-title">PyTorch 완전 정복</span>
+        <a class="ch-code" href="https://github.com/dknife/DL/tree/main/ch03" target="_blank">Code</a>
+      </div>
+      <div class="mp-item">
+        <span class="mp-badge">MP A</span>
+        <span class="mp-title">미니프로젝트 A</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Part II -->
+  <div class="part-card">
+    <div class="part-header">
+      <span class="part-num">Part II</span>
+      <span class="part-title">심층 신경망</span>
+    </div>
+    <div class="chapter-list">
+      <div class="chapter-item">
+        <span class="ch-num">4장</span>
+        <span class="ch-title">다층 퍼셉트론과 역전파</span>
+        <a class="ch-code" href="https://github.com/dknife/DL/tree/main/ch04" target="_blank">Code</a>
+      </div>
+      <div class="chapter-item">
+        <span class="ch-num">5장</span>
+        <span class="ch-title">효과적인 신경망 학습 기법</span>
+        <a class="ch-code" href="https://github.com/dknife/DL/tree/main/ch05" target="_blank">Code</a>
+      </div>
+      <div class="chapter-item">
+        <span class="ch-num">6장</span>
+        <span class="ch-title">합성곱 신경망과 현대적 아키텍처</span>
+        <a class="ch-code" href="https://github.com/dknife/DL/tree/main/ch06" target="_blank">Code</a>
+      </div>
+      <div class="chapter-item">
+        <span class="ch-num">7장</span>
+        <span class="ch-title">객체 탐지와 분할</span>
+        <a class="ch-code" href="https://github.com/dknife/DL/tree/main/ch07" target="_blank">Code</a>
+      </div>
+      <div class="mp-item">
+        <span class="mp-badge">MP B</span>
+        <span class="mp-title">미니프로젝트 B</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Part III -->
+  <div class="part-card">
+    <div class="part-header">
+      <span class="part-num">Part III</span>
+      <span class="part-title">시퀀스와 언어, 생성형 모델</span>
+    </div>
+    <div class="chapter-list">
+      <div class="chapter-item">
+        <span class="ch-num">8장</span>
+        <span class="ch-title">순환 신경망과 어텐션 메커니즘</span>
+        <a class="ch-code" href="https://github.com/dknife/DL/tree/main/ch08" target="_blank">Code</a>
+      </div>
+      <div class="chapter-item">
+        <span class="ch-num">9장</span>
+        <span class="ch-title">트랜스포머</span>
+        <a class="ch-code" href="https://github.com/dknife/DL/tree/main/ch09" target="_blank">Code</a>
+      </div>
+      <div class="chapter-item">
+        <span class="ch-num">10장</span>
+        <span class="ch-title">사전학습 언어 모델</span>
+        <a class="ch-code" href="https://github.com/dknife/DL/tree/main/ch10" target="_blank">Code</a>
+      </div>
+      <div class="mp-item">
+        <span class="mp-badge">MP C</span>
+        <span class="mp-title">미니프로젝트 C</span>
+      </div>
+      <div class="chapter-item">
+        <span class="ch-num">11장</span>
+        <span class="ch-title">생성 모델의 원리</span>
+        <a class="ch-code" href="https://github.com/dknife/DL/tree/main/ch11" target="_blank">Code</a>
+      </div>
+      <div class="mp-item">
+        <span class="mp-badge">MP D</span>
+        <span class="mp-title">미니프로젝트 D</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Part IV -->
+  <div class="part-card">
+    <div class="part-header">
+      <span class="part-num">Part IV</span>
+      <span class="part-title">딥러닝의 확장</span>
+    </div>
+    <div class="chapter-list">
+      <div class="chapter-item">
+        <span class="ch-num">12장</span>
+        <span class="ch-title">확산 모델과 멀티모달 학습</span>
+        <a class="ch-code" href="https://github.com/dknife/DL/tree/main/ch12" target="_blank">Code</a>
+      </div>
+      <div class="chapter-item">
+        <span class="ch-num">13장</span>
+        <span class="ch-title">강화학습과 인간 피드백</span>
+        <a class="ch-code" href="https://github.com/dknife/DL/tree/main/ch13" target="_blank">Code</a>
+      </div>
+      <div class="chapter-item">
+        <span class="ch-num">14장</span>
+        <span class="ch-title">추론하는 AI와 에이전틱 AI</span>
+        <a class="ch-code" href="https://github.com/dknife/DL/tree/main/ch14" target="_blank">Code</a>
+      </div>
+      <div class="chapter-item">
+        <span class="ch-num">15장</span>
+        <span class="ch-title">딥러닝의 실전과 책임</span>
+        <a class="ch-code" href="https://github.com/dknife/DL/tree/main/ch15" target="_blank">Code</a>
+      </div>
+      <div class="mp-item">
+        <span class="mp-badge">MP E</span>
+        <span class="mp-title">미니프로젝트 E</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ Quick Links ══ -->
+<section class="quick-links">
+  <h2>바로가기</h2>
+  <div class="link-grid">
+    <a class="link-card" href="references/">
+      <div class="icon">&#128218;</div>
+      <div class="label">참고문헌</div>
+      <div class="desc">119개 문헌 — 검색, 요약, 원문 링크</div>
+    </a>
+    <a class="link-card" href="https://github.com/dknife/DL" target="_blank">
+      <div class="icon">&#128187;</div>
+      <div class="label">GitHub 저장소</div>
+      <div class="desc">전체 실습 코드 &amp; 데이터</div>
+    </a>
+    <a class="link-card" href="https://colab.research.google.com/" target="_blank">
+      <div class="icon">&#9889;</div>
+      <div class="label">Google Colab</div>
+      <div class="desc">브라우저에서 바로 실행</div>
+    </a>
+  </div>
+</section>
+
+</div>
+
+<!-- ══ Footer ══ -->
+<div class="footer">
+  으뜸 딥러닝 &mdash; 퍼셉트론에서 에이전틱 AI까지<br>
+  <a href="https://github.com/dknife/DL">github.com/dknife/DL</a>
+</div>
+
+</body>
+</html>

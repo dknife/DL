@@ -1,0 +1,3367 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>으뜸 딥러닝 — 참고문헌</title>
+<style>
+:root {
+  --deepblue: #00539C;
+  --partgreen: #B4E178;
+  --magenta: #961E64;
+  --bg: #f8f9fa;
+  --card-bg: #ffffff;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: var(--bg);
+  color: #333;
+  line-height: 1.6;
+}
+/* ── Header ── */
+.header {
+  background: var(--deepblue);
+  padding: 40px 24px 32px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.header::before, .header::after {
+  content: '';
+  position: absolute;
+  left: 5%; right: 20%;
+  height: 1px;
+  background: rgba(255,255,255,0.15);
+}
+.header::before { top: 18px; }
+.header::after { bottom: 18px; left: 20%; right: 5%; }
+.header h1 {
+  color: white;
+  font-size: 1.8rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+.header .book-title {
+  color: rgba(255,255,255,0.4);
+  font-size: 0.85rem;
+  margin-top: 6px;
+}
+.header .book-title em {
+  color: rgba(255,255,255,0.6);
+  font-size: 1.1rem;
+  font-style: normal;
+  font-weight: 700;
+}
+.header .count {
+  color: var(--partgreen);
+  font-size: 0.9rem;
+  margin-top: 12px;
+}
+/* ── Search ── */
+.search-bar {
+  max-width: 720px;
+  margin: -20px auto 24px;
+  padding: 0 16px;
+  position: relative;
+  z-index: 10;
+}
+.search-bar input {
+  width: 100%;
+  padding: 14px 20px;
+  border: 2px solid var(--deepblue);
+  border-radius: 8px;
+  font-size: 1rem;
+  outline: none;
+  background: white;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+.search-bar input:focus { border-color: var(--magenta); }
+/* ── Reference List ── */
+.container { max-width: 720px; margin: 0 auto; padding: 0 16px 60px; }
+.ref-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 14px 0;
+  border-bottom: 1px solid #e8e8e8;
+}
+.ref-label {
+  flex-shrink: 0;
+  display: inline-block;
+  background: var(--partgreen);
+  color: var(--magenta);
+  font-weight: 700;
+  font-size: 0.78rem;
+  padding: 4px 10px;
+  border-radius: 4px;
+  text-decoration: none;
+  min-width: 100px;
+  text-align: center;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+}
+.ref-label:hover {
+  background: var(--magenta);
+  color: white;
+  transform: translateY(-1px);
+}
+.ref-info { flex: 1; }
+.ref-title { font-weight: 600; color: var(--deepblue); }
+.ref-author { color: #555; font-size: 0.88rem; }
+.ref-venue { color: #888; font-size: 0.82rem; font-style: italic; }
+/* ── Detail Page ── */
+.detail-page {
+  display: none;
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 0 16px 60px;
+}
+.detail-page.active { display: block; }
+.back-btn {
+  background: var(--deepblue);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  margin: 24px 0 20px;
+}
+.back-btn:hover { background: #003d73; }
+.detail-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+.detail-header .detail-label {
+  background: var(--partgreen);
+  color: var(--magenta);
+  font-weight: 700;
+  font-size: 0.85rem;
+  padding: 5px 14px;
+  border-radius: 4px;
+}
+.detail-header .detail-type {
+  background: var(--deepblue);
+  color: white;
+  font-size: 0.75rem;
+  padding: 3px 10px;
+  border-radius: 3px;
+  text-transform: uppercase;
+}
+.detail-title {
+  color: var(--deepblue);
+  font-size: 1.5rem;
+  line-height: 1.3;
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 3px solid var(--partgreen);
+}
+.detail-meta {
+  background: #f0f4f8;
+  padding: 16px 20px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+.detail-meta p { margin: 4px 0; font-size: 0.92rem; }
+.detail-links {
+  margin-bottom: 20px;
+}
+.detail-links h3 {
+  color: var(--deepblue);
+  font-size: 1rem;
+  margin-bottom: 10px;
+}
+.detail-link {
+  display: inline-block;
+  background: var(--deepblue);
+  color: white;
+  text-decoration: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  margin: 0 8px 8px 0;
+  transition: background 0.2s;
+}
+.detail-link:hover { background: var(--magenta); }
+.detail-summary {
+  background: linear-gradient(135deg, rgba(180,225,120,0.15), rgba(0,83,156,0.05));
+  padding: 20px 24px;
+  border-radius: 8px;
+  border-left: 4px solid var(--partgreen);
+}
+.detail-summary h3 {
+  color: var(--magenta);
+  font-size: 1rem;
+  margin-bottom: 10px;
+}
+.detail-summary p {
+  font-size: 0.95rem;
+  line-height: 1.7;
+}
+/* ── Footer ── */
+.footer {
+  text-align: center;
+  padding: 24px;
+  color: #999;
+  font-size: 0.8rem;
+  border-top: 1px solid #e8e8e8;
+}
+</style>
+</head>
+<body>
+
+<nav style="background:var(--deepblue);padding:10px 24px;">
+  <a href="../" style="color:var(--partgreen);text-decoration:none;font-size:0.9rem;">&larr; 으뜸 딥러닝 홈</a>
+</nav>
+<div class="header" style="padding-top:24px;">
+  <h1>참고문헌</h1>
+  <div class="book-title">으뜸 <em>딥러닝</em></div>
+  <div class="count">119개 문헌</div>
+</div>
+
+<div class="search-bar">
+  <input type="text" id="searchInput" placeholder="저자, 제목, 연도로 검색..."
+         oninput="filterRefs()">
+</div>
+
+<div class="container" id="refList">
+
+    <div class="ref-card" id="card-alayrac2022flamingo">
+      <a href="#detail-alayrac2022flamingo" class="ref-label" onclick="showDetail('alayrac2022flamingo')">[Alayrac 2022]</a>
+      <div class="ref-info">
+        <span class="ref-title">Flamingo: a Visual Language Model for Few-Shot Learning</span><br>
+        <span class="ref-author">Alayrac, Jean-Baptiste and Donahue, Jeff and Luc, Pauline and others</span>
+        <span class="ref-venue">NeurIPS, 2022.</span>
+      </div>
+    </div>
+    <div class="ref-card" id="card-arjovsky2017wgan">
+      <a href="#detail-arjovsky2017wgan" class="ref-label" onclick="showDetail('arjovsky2017wgan')">[Arjovsky 2017]</a>
+      <div class="ref-info">
+        <span class="ref-title">Wasserstein Generative Adversarial Networks</span><br>
+        <span class="ref-author">Arjovsky, Martin and Chintala, Soumith and Bottou, Léon</span>
+        <span class="ref-venue">ICML, pp. 214--223, 2017.</span>
+      </div>
+    </div>
+    <div class="ref-card" id="card-ba2016layernorm">
+      <a href="#detail-ba2016layernorm" class="ref-label" onclick="showDetail('ba2016layernorm')">[Ba 2016]</a>
+      <div class="ref-info">
+        <span class="ref-title">Layer Normalization</span><br>
+        <span class="ref-author">Ba, Jimmy Lei and Kiros, Jamie Ryan and Hinton, Geoffrey E.</span>
+        <span class="ref-venue">arXiv preprint arXiv:1607.06450, 2016.</span>
+      </div>
+    </div>
+    <div class="ref-card" id="card-bahdanau2015attention">
+      <a href="#detail-bahdanau2015attention" class="ref-label" onclick="showDetail('bahdanau2015attention')">[Bahdanau 2015]</a>
+      <div class="ref-info">
+        <span class="ref-title">Neural Machine Translation by Jointly Learning to Align and Translate</span><br>
+        <span class="ref-author">Bahdanau, Dzmitry and Cho, Kyunghyun and Bengio, Yoshua</span>
+        <span class="ref-venue">ICLR, 2015.</span>
+      </div>
+    </div>
+    <div class="ref-card" id="card-bengio1994learning">
+      <a href="#detail-bengio1994learning" class="ref-label" onclick="showDetail('bengio1994learning')">[Bengio 1994]</a>
+      <div class="ref-info">
+        <span class="ref-title">Learning Long-Term Dependencies with Gradient Descent is Difficult</span><br>
+        <span class="ref-author">Bengio, Yoshua and Simard, Patrice and Frasconi, Paolo</span>
+        <span class="ref-venue">IEEE Transactions on Neural Networks, vol. 5, pp. 157--166, 1994.</span>
+      </div>
+    </div>
+    <div class="ref-card" id="card-bengio2013representation">
+      <a href="#detail-bengio2013representation" class="ref-label" onclick="showDetail('bengio2013representation')">[Bengio 2013]</a>
+      <div class="ref-info">
+        <span class="ref-title">Representation Learning: A Review and New Perspectives</span><br>
+        <span class="ref-author">Bengio, Yoshua and Courville, Aaron and Vincent, Pascal</span>
+        <span class="ref-venue">IEEE Transactions on Pattern Analysis and Machine Intelligence, vol. 35, pp. 1798--1828, 2013.</span>
+      </div>
+    </div>
+    <div class="ref-card" id="card-biegler2004retrospective">
+      <a href="#detail-biegler2004retrospective" class="ref-label" onclick="showDetail('biegler2004retrospective')">[Biegler 2004]</a>
+      <div class="ref-info">
+        <span class="ref-title">Retrospective on Optimization</span><br>
+        <span class="ref-author">Biegler, Lorenz T. and Grossmann, Ignacio E.</span>
+        <span class="ref-venue">Computers &amp; Chemical Engineering, vol. 28, pp. 1169--1192, 2004.</span>
+      </div>
+    </div>
+    <div class="ref-card" id="card-boyd2004convex">
+      <a href="#detail-boyd2004convex" class="ref-label" onclick="showDetail('boyd2004convex')">[Boyd 2004]</a>
+      <div class="ref-info">
+        <span class="ref-title">Convex Optimization</span><br>
+        <span class="ref-author">Boyd, Stephen and Vandenberghe, Lieven</span>
+        <span class="ref-venue">. Cambridge University Press, 2004.</span>
+      </div>
+    </div>
+    <div class="ref-card" id="card-breiman2001random">
+      <a href="#detail-breiman2001random" class="ref-label" onclick="showDetail('breiman2001random')">[Breiman 2001]</a>
+      <div class="ref-info">
+        <span class="ref-title">Random Forests</span><br>
+        <span class="ref-author">Breiman, Leo</span>
+        <span class="ref-venue">Machine Learning, vol. 45, pp. 5--32, 2001.</span>
+      </div>
+    </div>
+    <div class="ref-card" id="card-brown2020gpt3">
+      <a href="#detail-brown2020gpt3" class="ref-label" onclick="showDetail('brown2020gpt3')">[Brown 2020]</a>
+      <div class="ref-info">
+        <span class="ref-title">Language Models are Few-Shot Learners</span><br>
+        <span class="ref-author">Brown, Tom B. and Mann, Benjamin and Ryder, Nick and others</span>
+        <span class="ref-venue">NeurIPS, 2020.</span>
+      </div>
+    </div>
+    <div class="ref-card" id="card-caron2021dino">
+      <a href="#detail-caron2021dino" class="ref-label" onclick="showDetail('caron2021dino')">[Caron 2021]</a>
+      <div class="ref-info">
+        <span class="ref-title">Emerging Properties in Self-Supervised Vision Transformers</span><br>
+        <span class="ref-author">Caron, Mathilde and Touvron, Hugo and Misra, Ishan and Jégou, Hervé and Mairal, Julien and Bojanowski, Piotr and Joulin, Armand</span>
+        <span class="ref-venue">ICCV, pp. 9650--9660, 2021.</span>
+      </div>
+    </div>
+    <div class="ref-card" id="card-chen2016xgboost">
+      <a href="#detail-chen2016xgboost" class="ref-label" onclick="showDetail('chen2016xgboost')">[Chen 2016]</a>
+      <div class="ref-info">
+        <span class="ref-title">XGBoost: A Scalable Tree Boosting System</span><br>
+        <span class="ref-author">Chen, Tianqi and Guestrin, Carlos</span>
+        <span class="ref-venue">Proceedings of the 22nd ACM SIGKDD International Conference on Knowledge Discovery and Data Mining, pp. 785--794, 2016.</span>
+      </div>
+    </div>
+    <div class="ref-card" id="card-chen2020simclr">
+      <a href="#detail-chen2020simclr" class="ref-label" onclick="showDetail('chen2020simclr')">[Chen 2020]</a>
+      <div class="ref-info">
+        <span class="ref-title">A Simple Framework for Contrastive Learning of Visual Representations</span><br>
+        <span class="ref-author">Chen, Ting and Kornblith, Simon and Norouzi, Mohammad and Hinton, Geoffrey</span>
+        <span class="ref-venue">ICML, 2020.</span>
+      </div>
+    </div>
+    <div class="ref-card" id="card-cho2014gru">
+      <a href="#detail-cho2014gru" class="ref-label" onclick="showDetail('cho2014gru')">[Cho 2014]</a>
+      <div class="ref-info">
+        <span class="ref-title">Learning Phrase Representations using RNN Encoder-Decoder for Statistical Machine Translation</span><br>
+        <span class="ref-author">Cho, Kyunghyun and van Merrienboer, Bart and Gulcehre, Caglar and Bahdanau, Dzmitry and Bougares, Fethi and Schwenk, Holger and Bengio, Yoshua</span>
+        <span class="ref-venue">EMNLP, pp. 1724--1734, 2014.</span>
+      </div>
+    </div>
+    <div class="ref-card" id="card-chollet2021deep">
+      <a href="#detail-chollet2021deep" class="ref-label" onclick="showDetail('chollet2021deep')">[Chollet 2021]</a>
+      <div class="ref-info">
+        <span class="ref-title">Deep Learning with Python</span><br>
+        <span class="ref-author">Chollet, François</span>
+        <span class="ref-venue">. Manning Publications, 2021.</span>
+      </div>
+    </div>
+    <div class="ref-card" id="card-clevert2016elu">
+      <a href="#detail-clevert2016elu" class="ref-label" onclick="showDetail('clevert2016elu')">[Clevert 2016]</a>
+      <div class="ref-info">
+        <span class="ref-title">Fast and Accurate Deep Network Learning by Exponential Linear Units (ELUs)</span><br>
+        <span class="ref-author">Clevert, Djork-Arné and Unterthiner, Thomas and Hochreiter, Sepp</span>
+        <span class="ref-venue">ICLR, 2016.</span>
+      </div>
+    </div>
+    <div class="ref-card" id="card-cybenko1989approximation">
+      <a href="#detail-cybenko1989approximation" class="ref-label" onclick="showDetail('cybenko1989approximation')">[Cybenko 1989]</a>
+      <div class="ref-info">
+        <span class="ref-title">Approximation by Superpositions of a Sigmoidal Function</span><br>
+        <span class="ref-author">Cybenko, George</span>
+        <span class="ref-venue">Mathematics of Control, Signals and Systems, vol. 2, pp. 303--314, 1989.</span>
+      </div>
+    </div>
+    <div class="ref-card" id="card-deng2009imagenet">
+      <a href="#detail-deng2009imagenet" class="ref-label" onclick="showDetail('deng2009imagenet')">[Deng 2009]</a>
+      <div class="ref-info">
+        <span class="ref-title">ImageNet: A Large-Scale Hierarchical Image Database</span><br>
+        <span class="ref-author">Deng, Jia and Dong, Wei and Socher, Richard and Li, Li-Jia and Li, Kai and Fei-Fei, Li</span>
+        <span class="ref-venue">Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR), pp. 248--255, 2009.</span>
+      </div>
+    </div>
+    <div class="ref-card" id="card-dettmers2023qlora">
+      <a href="#detail-dettmers2023qlora" class="ref-label" onclick="showDetail('dettmers2023qlora')">[Dettmers 2023]</a>
+      <div class="ref-info">
+        <span class="ref-title">QLoRA: Efficient Finetuning of Quantized LLMs</span><br>
+        <span class="ref-author">Dettmers, Tim and Pagnoni, Artidoro and Holtzman, Ari and Zettlemoyer, Luke</span>
+        <span class="ref-venue">NeurIPS, 2023.</span>
+      </div>
+    </div>
+    <div class="ref-card" id="card-devlin2019bert">
+      <a href="#detail-devlin2019bert" class="ref-label" onclick="showDetail('devlin2019bert')">[Devlin 2019]</a>
+      <div class="ref-info">
+        <span class="ref-title">BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding</span><br>
+        <span class="ref-author">Devlin, Jacob and Chang, Ming-Wei and Lee, Kenton and Toutanova, Kristina</span>
+        <span class="ref-venue">NAACL-HLT, pp. 4171--4186, 2019.</span>
+      </div>
+    </div>
+    <div class="ref-card" id="card-dosovitskiy2021vit">
+      <a href="#detail-dosovitskiy2021vit" class="ref-label" onclick="showDetail('dosovitskiy2021vit')">[Dosovitskiy 2021]</a>
+      <div class="ref-info">
+        <span class="ref-title">An Image is Worth 16x16 Words: Transformers for Image Recognition at Scale</span><br>
+        <span class="ref-author">Dosovitskiy, Alexey and Beyer, Lucas and Kolesnikov, Alexander and others</span>
+        <span class="ref-venue">ICLR, 2021.</span>
+      </div>
+    </div>
+    <div class="ref-card" id="card-evtimov2017robust">
+      <a href="#detail-evtimov2017robust" class="ref-label" onclick="showDetail('evtimov2017robust')">[Evtimov 2017]</a>
+      <div class="ref-info">
+        <span class="ref-title">Robust Physical-World Attacks on Deep Learning Models</span><br>
+        <span class="ref-author">Evtimov, Ivan and Eykholt, Kevin and Fernandes, Earlence and Kohno, Tadayoshi and Li, Bo and Prakash, Atul and Rahmati, Amir and Song, Dawn and Yamauchi, Tadayoshi</span>
+        <span class="ref-venue">arXiv preprint arXiv:1707.08945, 2017.</span>
+      </div>
+    </div>
+    <div class="ref-card" id="card-friedman2001greedy">
+      <a href="#detail-friedman2001greedy" class="ref-label" onclick="showDetail('friedman2001greedy')">[Friedman 2001]</a>
+      <div class="ref-info">
+        <span class="ref-title">Greedy Function Approximation: A Gradient Boosting Machine</span><br>
+        <span class="ref-author">Friedman, Jerome H.</span>
+        <span class="ref-venue">The Annals of Statistics, vol. 29, pp. 1189--1232, 2001.</span>
+      </div>
+    </div>
+    <div class="ref-card" id="card-gidaris2018rotation">
+      <a href="#detail-gidaris2018rotation" class="ref-label" onclick="showDetail('gidaris2018rotation')">[Gidaris 2018]</a>
+      <div class="ref-info">
+        <span class="ref-title">Unsupervised Representation Learning by Predicting Image Rotations</span><br>
+        <span class="ref-author">Gidaris, Spyros and Singh, Praveer and Komodakis, Nikos</span>
+        <span class="ref-venue">ICLR, 2018.</span>
+      </div>
+    </div>
+    <div class="ref-card" id="card-girshick2014rcnn">
+      <a href="#detail-girshick2014rcnn" class="ref-label" onclick="showDetail('girshick2014rcnn')">[Girshick 2014]</a>
+      <div class="ref-info">
+        <span class="ref-title">Rich Feature Hierarchies for Accurate Object Detection and Semantic Segmentation</span><br>
+        <span class="ref-author">Girshick, Ross and Donahue, Jeff and Darrell, Trevor and Malik, Jitendra</span>
+        <span class="ref-venue">CVPR, pp. 580--587, 2014.</span>
+      </div>
+    </div>
+    <div class="ref-card" id="card-girshick2015fastrcnn">
+      <a href="#detail-girshick2015fastrcnn" class="ref-label" onclick="showDetail('girshick2015fastrcnn')">[Girshick 2015]</a>
+      <div class="ref-info">
+        <span class="ref-title">Fast R-CNN</span><br>
+        <span class="ref-author">Girshick, Ross</span>
+        <span class="ref-venue">ICCV, pp. 1440--1448, 2015.</span>
+      </div>
+    </div>
+    <div class="ref-card" id="card-glorot2010understanding">
+      <a href="#detail-glorot2010understanding" class="ref-label" onclick="showDetail('glorot2010understanding')">[Glorot 2010]</a>
+      <div class="ref-info">
+        <span class="ref-title">Understanding the Difficulty of Training Deep Feedforward Neural Networks</span><br>
+        <span class="ref-author">Glorot, Xavier and Bengio, Yoshua</span>
+        <span class="ref-venue">AISTATS, pp. 249--256, 2010.</span>
+      </div>
+    </div>
+    <div class="ref-card" id="card-goodfellow2014gan">
+      <a href="#detail-goodfellow2014gan" class="ref-label" onclick="showDetail('goodfellow2014gan')">[Goodfellow 2014]</a>
+      <div class="ref-info">
+        <span class="ref-title">Generative Adversarial Nets</span><br>
+        <span class="ref-author">Goodfellow, Ian and Pouget-Abadie, Jean and Mirza, Mehdi and others</span>
+        <span class="ref-venue">NeurIPS, pp. 2672--2680, 2014.</span>
+      </div>
+    </div>
+    <div class="ref-card" id="card-goodfellow2016deep">
+      <a href="#detail-goodfellow2016deep" class="ref-label" onclick="showDetail('goodfellow2016deep')">[Goodfellow 2016]</a>
+      <div class="ref-info">
+        <span class="ref-title">Deep Learning</span><br>
+        <span class="ref-author">Goodfellow, Ian and Bengio, Yoshua and Courville, Aaron</span>
+        <span class="ref-venue">. MIT Press, 2016.</span>
+      </div>
+    </div>
+    <div class="ref-card" id="card-guyon1992capacity">
+      <a href="#detail-guyon1992capacity" class="ref-label" onclick="showDetail('guyon1992capacity')">[Guyon 1992]</a>
+      <div class="ref-info">
+        <span class="ref-title">Automatic Capacity Tuning of Very Large VC-Dimension Classifiers</span><br>
+        <span class="ref-author">Guyon, Isabelle and Boser, Bernhard and Vapnik, Vladimir</span>
+        <span class="ref-venue">NeurIPS, pp. 147--155, 1992.</span>
+      </div>
+    </div>
+    <div class="ref-card" id="card-geron2019handson">
+      <a href="#detail-geron2019handson" class="ref-label" onclick="showDetail('geron2019handson')">[Géron 2019]</a>
+      <div class="ref-info">
+        <span class="ref-title">Hands-On Machine Learning with Scikit-Learn, Keras, and TensorFlow</span><br>
+        <span class="ref-author">Géron, Aurélien</span>
+        <span class="ref-venue">. O&#x27;Reilly Media, 2019.</span>
+      </div>
+    </div>
+    <div class="ref-card" id="card-halevy2009unreasonable">
+      <a href="#detail-halevy2009unreasonable" class="ref-label" onclick="showDetail('halevy2009unreasonable')">[Halevy 2009]</a>
+      <div class="ref-info">
+        <span class="ref-title">The Unreasonable Effectiveness of Data</span><br>
+        <span class="ref-author">Halevy, Alon and Norvig, Peter and Pereira, Fernando</span>
+        <span class="ref-venue">IEEE Intelligent Systems, vol. 24, pp. 8--12, 2009.</span>
+      </div>
+    </div>
+    <div class="ref-card" id="card-harris2020numpy">
+      <a href="#detail-harris2020numpy" class="ref-label" onclick="showDetail('harris2020numpy')">[Harris 2020]</a>
+      <div class="ref-info">
+        <span class="ref-title">Array Programming with NumPy</span><br>
+        <span class="ref-author">Harris, Charles R. and Millman, K. Jarrod and van der Walt, Stéfan J. and others</span>
+        <span class="ref-venue">Nature, vol. 585, pp. 357--362, 2020.</span>
+      </div>
+    </div>
+    <div class="ref-card" id="card-he2015delving">
+      <a href="#detail-he2015delving" class="ref-label" onclick="showDetail('he2015delving')">[He 2015]</a>
+      <div class="ref-info">
+        <span class="ref-title">Delving Deep into Rectifiers: Surpassing Human-Level Performance on ImageNet Classification</span><br>
+        <span class="ref-author">He, Kaiming and Zhang, Xiangyu and Ren, Shaoqing and Sun, Jian</span>
+        <span class="ref-venue">ICCV, pp. 1026--1034, 2015.</span>
+      </div>
+    </div>
+    <div class="ref-card" id="card-he2016deep">
+      <a href="#detail-he2016deep" class="ref-label" onclick="showDetail('he2016deep')">[He 2016]</a>
+      <div class="ref-info">
+        <span class="ref-title">Deep residual learning for image recognition</span><br>
+        <span class="ref-author">He, Kaiming and Zhang, Xiangyu and Ren, Shaoqing and Sun, Jian</span>
+        <span class="ref-venue">CVPR, pp. 770--778, 2016.</span>
+      </div>
+    </div>
+    <div class="ref-card" id="card-he2017maskrcnn">
+      <a href="#detail-he2017maskrcnn" class="ref-label" onclick="showDetail('he2017maskrcnn')">[He 2017]</a>
+      <div class="ref-info">
+        <span class="ref-title">Mask R-CNN</span><br>
+        <span class="ref-author">He, Kaiming and Gkioxari, Georgia and Dollár, Piotr and Girshick, Ross</span>
+        <span class="ref-venue">ICCV, pp. 2961--2969, 2017.</span>
+      </div>
+    </div>
+    <div class="ref-card" id="card-he2020moco">
+      <a href="#detail-he2020moco" class="ref-label" onclick="showDetail('he2020moco')">[He 2020]</a>
+      <div class="ref-info">
+        <span class="ref-title">Momentum Contrast for Unsupervised Visual Representation Learning</span><br>
+        <span class="ref-author">He, Kaiming and Fan, Haoqi and Wu, Yuxin and Xie, Saining and Girshick, Ross</span>
+        <span class="ref-venue">CVPR, pp. 9729--9738, 2020.</span>
+      </div>
+    </div>
+    <div class="ref-card" id="card-he2021mae">
+      <a href="#detail-he2021mae" class="ref-label" onclick="showDetail('he2021mae')">[He 2022]</a>
+      <div class="ref-info">
+        <span class="ref-title">Masked Autoencoders Are Scalable Vision Learners</span><br>
+        <span class="ref-author">He, Kaiming and Chen, Xinlei and Xie, Saining and Li, Yanghao and Dollár, Piotr and Girshick, Ross</span>
+        <span class="ref-venue">Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR), pp. 16000--16009, 2022.</span>
+      </div>
+    </div>
+    <div class="ref-card" id="card-he2022mae">
+      <a href="#detail-he2022mae" class="ref-label" onclick="showDetail('he2022mae')">[He 2022]</a>
+      <div class="ref-info">
+        <span class="ref-title">Masked Autoencoders Are Scalable Vision Learners</span><br>
+        <span class="ref-author">He, Kaiming and Chen, Xinlei and Xie, Saining and Li, Yanghao and Dollár, Piotr and Girshick, Ross</span>
+        <span class="ref-venue">CVPR, pp. 16000--16009, 2022.</span>
+      </div>
+    </div>
+    <div class="ref-card" id="card-hebb1949organization">
+      <a href="#detail-hebb1949organization" class="ref-label" onclick="showDetail('hebb1949organization')">[Hebb 1949]</a>
+      <div class="ref-info">
+        <span class="ref-title">The Organization of Behavior</span><br>
+        <span class="ref-author">Hebb, Donald O.</span>
+        <span class="ref-venue">. Wiley &amp; Sons, 1949.</span>
+      </div>
+    </div>
+    <div class="ref-card" id="card-hendrycks2016gelu">
+      <a href="#detail-hendrycks2016gelu" class="ref-label" onclick="showDetail('hendrycks2016gelu')">[Hendrycks 2016]</a>
+      <div class="ref-info">
+        <span class="ref-title">Gaussian Error Linear Units (GELUs)</span><br>
+        <span class="ref-author">Hendrycks, Dan and Gimpel, Kevin</span>
+        <span class="ref-venue">arXiv preprint arXiv:1606.08415, 2016.</span>
+      </div>
+    </div>
+    <div class="ref-card" id="card-hinton2006dbn">
+      <a href="#detail-hinton2006dbn" class="ref-label" onclick="showDetail('hinton2006dbn')">[Hinton 2006]</a>
+      <div class="ref-info">
+        <span class="ref-title">A Fast Learning Algorithm for Deep Belief Nets</span><br>
+        <span class="ref-author">Hinton, Geoffrey E. and Osindero, Simon and Teh, Yee-Whye</span>
+        <span class="ref-venue">Neural Computation, vol. 18, pp. 1527--1554, 2006.</span>
+      </div>
+    </div>
+    <div class="ref-card" id="card-hinton2015distilling">
+      <a href="#detail-hinton2015distilling" class="ref-label" onclick="showDetail('hinton2015distilling')">[Hinton 2015]</a>
+      <div class="ref-info">
+        <span class="ref-title">Distilling the Knowledge in a Neural Network</span><br>
+        <span class="ref-author">Hinton, Geoffrey and Vinyals, Oriol and Dean, Jeff</span>
+        <span class="ref-venue">arXiv preprint arXiv:1503.02531, 2015.</span>
+      </div>
+    </div>
+    <div class="ref-card" id="card-ho2020ddpm">
+      <a href="#detail-ho2020ddpm" class="ref-label" onclick="showDetail('ho2020ddpm')">[Ho 2020]</a>
+      <div class="ref-info">
+        <span class="ref-title">Denoising Diffusion Probabilistic Models</span><br>
+        <span class="ref-author">Ho, Jonathan and Jain, Ajay and Abbeel, Pieter</span>
+        <span class="ref-venue">NeurIPS, 2020.</span>
+      </div>
+    </div>
+    <div class="ref-card" id="card-ho2022cfg">
+      <a href="#detail-ho2022cfg" class="ref-label" onclick="showDetail('ho2022cfg')">[Ho 2022]</a>
+      <div class="ref-info">
+        <span class="ref-title">Classifier-Free Diffusion Guidance</span><br>
+        <span class="ref-author">Ho, Jonathan and Salimans, Tim</span>
+        <span class="ref-venue">NeurIPS Workshop on Deep Generative Models and Downstream Applications, 2022.</span>
+      </div>
+    </div>
+    <div class="ref-card" id="card-hochreiter1997lstm">
+      <a href="#detail-hochreiter1997lstm" class="ref-label" onclick="showDetail('hochreiter1997lstm')">[Hochreiter 1997]</a>
+      <div class="ref-info">
+        <span class="ref-title">Long Short-Term Memory</span><br>
+        <span class="ref-author">Hochreiter, Sepp and Schmidhuber, Jürgen</span>
+        <span class="ref-venue">Neural Computation, vol. 9, pp. 1735--1780, 1997.</span>
+      </div>
+    </div>
+    <div class="ref-card" id="card-hoerl1970ridge">
+      <a href="#detail-hoerl1970ridge" class="ref-label" onclick="showDetail('hoerl1970ridge')">[Hoerl 1970]</a>
+      <div class="ref-info">
+        <span class="ref-title">Ridge Regression: Biased Estimation for Nonorthogonal Problems</span><br>
+        <span class="ref-author">Hoerl, Arthur E. and Kennard, Robert W.</span>
+        <span class="ref-venue">Technometrics, vol. 12, pp. 55--67, 1970.</span>
+      </div>
+    </div>
+    <div class="ref-card" id="card-hofmann2008kernel">
+      <a href="#detail-hofmann2008kernel" class="ref-label" onclick="showDetail('hofmann2008kernel')">[Hofmann 2008]</a>
+      <div class="ref-info">
+        <span class="ref-title">Kernel Methods in Machine Learning</span><br>
+        <span class="ref-author">Hofmann, Thomas and Schölkopf, Bernhard and Smola, Alexander J.</span>
+        <span class="ref-venue">The Annals of Statistics, vol. 36, pp. 1171--1220, 2008.</span>
+      </div>
+    </div>
+    <div class="ref-card" id="card-hu2022lora">
+      <a href="#detail-hu2022lora" class="ref-label" onclick="showDetail('hu2022lora')">[Hu 2022]</a>
+      <div class="ref-info">
+        <span class="ref-title">LoRA: Low-Rank Adaptation of Large Language Models</span><br>
+        <span class="ref-author">Hu, Edward J. and Shen, Yelong and Wallis, Phillip and others</span>
+        <span class="ref-venue">ICLR, 2022.</span>
+      </div>
+    </div>
+    <div class="ref-card" id="card-huang2017densenet">
+      <a href="#detail-huang2017densenet" class="ref-label" onclick="showDetail('huang2017densenet')">[Huang 2017]</a>
+      <div class="ref-info">
+        <span class="ref-title">Densely Connected Convolutional Networks</span><br>
+        <span class="ref-author">Huang, Gao and Liu, Zhuang and van der Maaten, Laurens and Weinberger, Kilian Q.</span>
+        <span class="ref-venue">Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR), pp. 4700--4708, 2017.</span>
+      </div>
+    </div>
+    <div class="ref-card" id="card-hubel1959receptive">
+      <a href="#detail-hubel1959receptive" class="ref-label" onclick="showDetail('hubel1959receptive')">[Hubel 1959]</a>
+      <div class="ref-info">
+        <span class="ref-title">Receptive Fields of Single Neurones in the Cat&#x27;s Striate Cortex</span><br>
+        <span class="ref-author">Hubel, David H. and Wiesel, Torsten N.</span>
+        <span class="ref-venue">The Journal of Physiology, vol. 148, pp. 574--591, 1959.</span>
+      </div>
+    </div>
+    <div class="ref-card" id="card-ioffe2015batchnorm">
+      <a href="#detail-ioffe2015batchnorm" class="ref-label" onclick="showDetail('ioffe2015batchnorm')">[Ioffe 2015]</a>
+      <div class="ref-info">
+        <span class="ref-title">Batch Normalization: Accelerating Deep Network Training by Reducing Internal Covariate Shift</span><br>
+        <span class="ref-author">Ioffe, Sergey and Szegedy, Christian</span>
+        <span class="ref-venue">ICML, pp. 448--456, 2015.</span>
+      </div>
+    </div>
+    <div class="ref-card" id="card-jia2021align">
+      <a href="#detail-jia2021align" class="ref-label" onclick="showDetail('jia2021align')">[Jia 2021]</a>
+      <div class="ref-info">
+        <span class="ref-title">Scaling Up Visual and Vision-Language Representation Learning With Noisy Text Supervision</span><br>
+        <span class="ref-author">Jia, Chao and Yang, Yinfei and Xia, Ye and others</span>
+        <span class="ref-venue">ICML, pp. 4904--4916, 2021.</span>
+      </div>
+    </div>
+    <div class="ref-card" id="card-kaplan2020scaling">
+      <a href="#detail-kaplan2020scaling" class="ref-label" onclick="showDetail('kaplan2020scaling')">[Kaplan 2020]</a>
+      <div class="ref-info">
+        <span class="ref-title">Scaling Laws for Neural Language Models</span><br>
+        <span class="ref-author">Kaplan, Jared and McCandlish, Sam and Henighan, Tom and Brown, Tom B. and Chess, Benjamin and Child, Rewon and Gray, Scott and Radford, Alec and Wu, Jeffrey and Amodei, Dario</span>
+        <span class="ref-venue">arXiv preprint arXiv:2001.08361, 2020.</span>
+      </div>
+    </div>
+    <div class="ref-card" id="card-karras2019stylegan">
+      <a href="#detail-karras2019stylegan" class="ref-label" onclick="showDetail('karras2019stylegan')">[Karras 2019]</a>
+      <div class="ref-info">
+        <span class="ref-title">A Style-Based Generator Architecture for Generative Adversarial Networks</span><br>
+        <span class="ref-author">Karras, Tero and Laine, Samuli and Aila, Timo</span>
+        <span class="ref-venue">CVPR, pp. 4401--4410, 2019.</span>
+      </div>
+    </div>
+    <div class="ref-card" id="card-kingma2014vae">
+      <a href="#detail-kingma2014vae" class="ref-label" onclick="showDetail('kingma2014vae')">[Kingma 2014]</a>
+      <div class="ref-info">
+        <span class="ref-title">Auto-Encoding Variational Bayes</span><br>
+        <span class="ref-author">Kingma, Diederik P. and Welling, Max</span>
+        <span class="ref-venue">ICLR, 2014.</span>
+      </div>
+    </div>
+    <div class="ref-card" id="card-kingma2015adam">
+      <a href="#detail-kingma2015adam" class="ref-label" onclick="showDetail('kingma2015adam')">[Kingma 2015]</a>
+      <div class="ref-info">
+        <span class="ref-title">Adam: A Method for Stochastic Optimization</span><br>
+        <span class="ref-author">Kingma, Diederik P. and Ba, Jimmy</span>
+        <span class="ref-venue">ICLR, 2015.</span>
+      </div>
+    </div>
+    <div class="ref-card" id="card-kramer1991nonlinear">
+      <a href="#detail-kramer1991nonlinear" class="ref-label" onclick="showDetail('kramer1991nonlinear')">[Kramer 1991]</a>
+      <div class="ref-info">
+        <span class="ref-title">Nonlinear Principal Component Analysis Using Autoassociative Neural Networks</span><br>
+        <span class="ref-author">Kramer, Mark A.</span>
+        <span class="ref-venue">AIChE Journal, vol. 37, pp. 233--243, 1991.</span>
+      </div>
+    </div>
+    <div class="ref-card" id="card-krizhevsky2012alexnet">
+      <a href="#detail-krizhevsky2012alexnet" class="ref-label" onclick="showDetail('krizhevsky2012alexnet')">[Krizhevsky 2012]</a>
+      <div class="ref-info">
+        <span class="ref-title">ImageNet Classification with Deep Convolutional Neural Networks</span><br>
+        <span class="ref-author">Krizhevsky, Alex and Sutskever, Ilya and Hinton, Geoffrey E.</span>
+        <span class="ref-venue">NeurIPS, pp. 1097--1105, 2012.</span>
+      </div>
+    </div>
+    <div class="ref-card" id="card-kuncheva2003diversity">
+      <a href="#detail-kuncheva2003diversity" class="ref-label" onclick="showDetail('kuncheva2003diversity')">[Kuncheva 2003]</a>
+      <div class="ref-info">
+        <span class="ref-title">Measures of Diversity in Classifier Ensembles and Their Relationship with the Ensemble Accuracy</span><br>
+        <span class="ref-author">Kuncheva, Ludmila I. and Whitaker, Christopher J.</span>
+        <span class="ref-venue">Machine Learning, vol. 51, pp. 181--207, 2003.</span>
+      </div>
+    </div>
+    <div class="ref-card" id="card-lecun1998gradient">
+      <a href="#detail-lecun1998gradient" class="ref-label" onclick="showDetail('lecun1998gradient')">[LeCun 1998]</a>
+      <div class="ref-info">
+        <span class="ref-title">Gradient-based learning applied to document recognition</span><br>
+        <span class="ref-author">LeCun, Yann and Bottou, Léon and Bengio, Yoshua and Haffner, Patrick</span>
+        <span class="ref-venue">Proceedings of the IEEE, vol. 86, pp. 2278--2324, 1998.</span>
+      </div>
+    </div>
+    <div class="ref-card" id="card-lecun1998efficient">
+      <a href="#detail-lecun1998efficient" class="ref-label" onclick="showDetail('lecun1998efficient')">[LeCun 1998]</a>
+      <div class="ref-info">
+        <span class="ref-title">Efficient BackProp</span><br>
+        <span class="ref-author">LeCun, Yann and Bottou, Léon and Orr, Genevieve B. and Müller, Klaus-Robert</span>
+        <span class="ref-venue">Neural Networks: Tricks of the Trade, vol. 1524, pp. 9--50. Springer, 1998.</span>
+      </div>
+    </div>
+    <div class="ref-card" id="card-lewis2020rag">
+      <a href="#detail-lewis2020rag" class="ref-label" onclick="showDetail('lewis2020rag')">[Lewis 2020]</a>
+      <div class="ref-info">
+        <span class="ref-title">Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks</span><br>
+        <span class="ref-author">Lewis, Patrick and Perez, Ethan and Piktus, Aleksandra and others</span>
+        <span class="ref-venue">NeurIPS, 2020.</span>
+      </div>
+    </div>
+    <div class="ref-card" id="card-li2023blip2">
+      <a href="#detail-li2023blip2" class="ref-label" onclick="showDetail('li2023blip2')">[Li 2023]</a>
+      <div class="ref-info">
+        <span class="ref-title">BLIP-2: Bootstrapping Language-Image Pre-Training with Frozen Image Encoders and Large Language Models</span><br>
+        <span class="ref-author">Li, Junnan and Li, Dongxu and Savarese, Silvio and Hoi, Steven</span>
+        <span class="ref-venue">ICML, 2023.</span>
+      </div>
+    </div>
+    <div class="ref-card" id="card-lin2014coco">
+      <a href="#detail-lin2014coco" class="ref-label" onclick="showDetail('lin2014coco')">[Lin 2014]</a>
+      <div class="ref-info">
+        <span class="ref-title">Microsoft COCO: Common Objects in Context</span><br>
+        <span class="ref-author">Lin, Tsung-Yi and Maire, Michael and Belongie, Serge and Hays, James and Perona, Pietro and Ramanan, Deva and Dollár, Piotr and Zitnick, C. Lawrence</span>
+        <span class="ref-venue">Proceedings of the European Conference on Computer Vision (ECCV), pp. 740--755, 2014.</span>
+      </div>
+    </div>
+    <div class="ref-card" id="card-liu2021privacy">
+      <a href="#detail-liu2021privacy" class="ref-label" onclick="showDetail('liu2021privacy')">[Liu 2021]</a>
+      <div class="ref-info">
+        <span class="ref-title">Privacy and Security Issues in Deep Learning: A Survey</span><br>
+        <span class="ref-author">Liu, Ximeng and Xie, Lehui and Wang, Yaopeng and Zou, Jiawei and Xiong, Jinbo and Ying, Zuobin and Vasilakos, Athanasios V.</span>
+        <span class="ref-venue">IEEE Transactions on Neural Networks and Learning Systems, vol. 32, pp. 4147--4169, 2021.</span>
+      </div>
+    </div>
+    <div class="ref-card" id="card-liu2024llava">
+      <a href="#detail-liu2024llava" class="ref-label" onclick="showDetail('liu2024llava')">[Liu 2024]</a>
+      <div class="ref-info">
+        <span class="ref-title">Visual Instruction Tuning</span><br>
+        <span class="ref-author">Liu, Haotian and Li, Chunyuan and Wu, Qingyang and Lee, Yong Jae</span>
+        <span class="ref-venue">NeurIPS, 2024.</span>
+      </div>
+    </div>
+    <div class="ref-card" id="card-long2015fcn">
+      <a href="#detail-long2015fcn" class="ref-label" onclick="showDetail('long2015fcn')">[Long 2015]</a>
+      <div class="ref-info">
+        <span class="ref-title">Fully Convolutional Networks for Semantic Segmentation</span><br>
+        <span class="ref-author">Long, Jonathan and Shelhamer, Evan and Darrell, Trevor</span>
+        <span class="ref-venue">Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR), pp. 3431--3440, 2015.</span>
+      </div>
+    </div>
+    <div class="ref-card" id="card-loshchilov2019adamw">
+      <a href="#detail-loshchilov2019adamw" class="ref-label" onclick="showDetail('loshchilov2019adamw')">[Loshchilov 2019]</a>
+      <div class="ref-info">
+        <span class="ref-title">Decoupled Weight Decay Regularization</span><br>
+        <span class="ref-author">Loshchilov, Ilya and Hutter, Frank</span>
+        <span class="ref-venue">ICLR, 2019.</span>
+      </div>
+    </div>
+    <div class="ref-card" id="card-luong2015attention">
+      <a href="#detail-luong2015attention" class="ref-label" onclick="showDetail('luong2015attention')">[Luong 2015]</a>
+      <div class="ref-info">
+        <span class="ref-title">Effective Approaches to Attention-Based Neural Machine Translation</span><br>
+        <span class="ref-author">Luong, Minh-Thang and Pham, Hieu and Manning, Christopher D.</span>
+        <span class="ref-venue">EMNLP, pp. 1412--1421, 2015.</span>
+      </div>
+    </div>
+    <div class="ref-card" id="card-maas2011sentiment">
+      <a href="#detail-maas2011sentiment" class="ref-label" onclick="showDetail('maas2011sentiment')">[Maas 2011]</a>
+      <div class="ref-info">
+        <span class="ref-title">Learning Word Vectors for Sentiment Analysis</span><br>
+        <span class="ref-author">Maas, Andrew L. and Daly, Raymond E. and Pham, Peter T. and Huang, Dan and Ng, Andrew Y. and Potts, Christopher</span>
+        <span class="ref-venue">ACL-HLT, pp. 142--150, 2011.</span>
+      </div>
+    </div>
+    <div class="ref-card" id="card-mayer2010elephant">
+      <a href="#detail-mayer2010elephant" class="ref-label" onclick="showDetail('mayer2010elephant')">[Mayer 2010]</a>
+      <div class="ref-info">
+        <span class="ref-title">Drawing an Elephant with Four Complex Parameters</span><br>
+        <span class="ref-author">Mayer, Jürgen and Khairy, Khaled and Howard, Jonathon</span>
+        <span class="ref-venue">American Journal of Physics, vol. 78, pp. 648--649, 2010.</span>
+      </div>
+    </div>
+    <div class="ref-card" id="card-mcculloch1943logical">
+      <a href="#detail-mcculloch1943logical" class="ref-label" onclick="showDetail('mcculloch1943logical')">[McCulloch 1943]</a>
+      <div class="ref-info">
+        <span class="ref-title">A Logical Calculus of Ideas Immanent in Nervous Activity</span><br>
+        <span class="ref-author">McCulloch, Warren S. and Pitts, Walter</span>
+        <span class="ref-venue">Bulletin of Mathematical Biophysics, vol. 5, pp. 115--133, 1943.</span>
+      </div>
+    </div>
+    <div class="ref-card" id="card-minsky1968semantic">
+      <a href="#detail-minsky1968semantic" class="ref-label" onclick="showDetail('minsky1968semantic')">[Minsky 1968]</a>
+      <div class="ref-info">
+        <span class="ref-title">Semantic Information Processing</span><br>
+        <span class="ref-author">Minsky, Marvin</span>
+        <span class="ref-venue">. MIT Press, 1968.</span>
+      </div>
+    </div>
+    <div class="ref-card" id="card-minsky1969perceptrons">
+      <a href="#detail-minsky1969perceptrons" class="ref-label" onclick="showDetail('minsky1969perceptrons')">[Minsky 1969]</a>
+      <div class="ref-info">
+        <span class="ref-title">Perceptrons: An Introduction to Computational Geometry</span><br>
+        <span class="ref-author">Minsky, Marvin and Papert, Seymour</span>
+        <span class="ref-venue">. MIT Press, 1969.</span>
+      </div>
+    </div>
+    <div class="ref-card" id="card-mitchell1997machine">
+      <a href="#detail-mitchell1997machine" class="ref-label" onclick="showDetail('mitchell1997machine')">[Mitchell 1997]</a>
+      <div class="ref-info">
+        <span class="ref-title">Machine Learning</span><br>
+        <span class="ref-author">Mitchell, Tom M.</span>
+        <span class="ref-venue">. McGraw-Hill, 1997.</span>
+      </div>
+    </div>
+    <div class="ref-card" id="card-miyato2018spectral">
+      <a href="#detail-miyato2018spectral" class="ref-label" onclick="showDetail('miyato2018spectral')">[Miyato 2018]</a>
+      <div class="ref-info">
+        <span class="ref-title">Spectral Normalization for Generative Adversarial Networks</span><br>
+        <span class="ref-author">Miyato, Takeru and Kataoka, Toshiki and Koyama, Masanori and Yoshida, Yuichi</span>
+        <span class="ref-venue">ICLR, 2018.</span>
+      </div>
+    </div>
+    <div class="ref-card" id="card-mnih2015dqn">
+      <a href="#detail-mnih2015dqn" class="ref-label" onclick="showDetail('mnih2015dqn')">[Mnih 2015]</a>
+      <div class="ref-info">
+        <span class="ref-title">Human-level control through deep reinforcement learning</span><br>
+        <span class="ref-author">Mnih, Volodymyr and Kavukcuoglu, Koray and Silver, David and others</span>
+        <span class="ref-venue">Nature, vol. 518, pp. 529--533, 2015.</span>
+      </div>
+    </div>
+    <div class="ref-card" id="card-moravec1988mind">
+      <a href="#detail-moravec1988mind" class="ref-label" onclick="showDetail('moravec1988mind')">[Moravec 1988]</a>
+      <div class="ref-info">
+        <span class="ref-title">Mind Children: The Future of Robot and Human Intelligence</span><br>
+        <span class="ref-author">Moravec, Hans</span>
+        <span class="ref-venue">. Harvard University Press, 1988.</span>
+      </div>
+    </div>
+    <div class="ref-card" id="card-noroozi2016jigsaw">
+      <a href="#detail-noroozi2016jigsaw" class="ref-label" onclick="showDetail('noroozi2016jigsaw')">[Noroozi 2016]</a>
+      <div class="ref-info">
+        <span class="ref-title">Unsupervised Visual Representation Learning by Context Prediction</span><br>
+        <span class="ref-author">Noroozi, Mehdi and Favaro, Paolo</span>
+        <span class="ref-venue">ECCV, pp. 69--84, 2016.</span>
+      </div>
+    </div>
+    <div class="ref-card" id="card-ouyang2022rlhf">
+      <a href="#detail-ouyang2022rlhf" class="ref-label" onclick="showDetail('ouyang2022rlhf')">[Ouyang 2022]</a>
+      <div class="ref-info">
+        <span class="ref-title">Training language models to follow instructions with human feedback</span><br>
+        <span class="ref-author">Ouyang, Long and Wu, Jeff and Jiang, Xu and others</span>
+        <span class="ref-venue">NeurIPS, 2022.</span>
+      </div>
+    </div>
+    <div class="ref-card" id="card-perronnin2010improving">
+      <a href="#detail-perronnin2010improving" class="ref-label" onclick="showDetail('perronnin2010improving')">[Perronnin 2010]</a>
+      <div class="ref-info">
+        <span class="ref-title">Improving the Fisher Kernel for Large-Scale Image Classification</span><br>
+        <span class="ref-author">Perronnin, Florent and Sánchez, Jorge and Mensink, Thomas</span>
+        <span class="ref-venue">ECCV, pp. 143--156, 2010.</span>
+      </div>
+    </div>
+    <div class="ref-card" id="card-peters2018elmo">
+      <a href="#detail-peters2018elmo" class="ref-label" onclick="showDetail('peters2018elmo')">[Peters 2018]</a>
+      <div class="ref-info">
+        <span class="ref-title">Deep Contextualized Word Representations</span><br>
+        <span class="ref-author">Peters, Matthew E. and Neumann, Mark and Iyyer, Mohit and Gardner, Matt and Clark, Christopher and Lee, Kenton and Zettlemoyer, Luke</span>
+        <span class="ref-venue">Proceedings of the 2018 Conference of the North American Chapter of the ACL (NAACL), pp. 2227--2237, 2018.</span>
+      </div>
+    </div>
+    <div class="ref-card" id="card-radford2016dcgan">
+      <a href="#detail-radford2016dcgan" class="ref-label" onclick="showDetail('radford2016dcgan')">[Radford 2016]</a>
+      <div class="ref-info">
+        <span class="ref-title">Unsupervised Representation Learning with Deep Convolutional Generative Adversarial Networks</span><br>
+        <span class="ref-author">Radford, Alec and Metz, Luke and Chintala, Soumith</span>
+        <span class="ref-venue">ICLR, 2016.</span>
+      </div>
+    </div>
+    <div class="ref-card" id="card-radford2018gpt">
+      <a href="#detail-radford2018gpt" class="ref-label" onclick="showDetail('radford2018gpt')">[Radford 2018]</a>
+      <div class="ref-info">
+        <span class="ref-title">Improving Language Understanding by Generative Pre-Training</span><br>
+        <span class="ref-author">Radford, Alec and Narasimhan, Karthik and Salimans, Tim and Sutskever, Ilya</span>
+        <span class="ref-venue">OpenAI Technical Report, 2018.</span>
+      </div>
+    </div>
+    <div class="ref-card" id="card-radford2019gpt2">
+      <a href="#detail-radford2019gpt2" class="ref-label" onclick="showDetail('radford2019gpt2')">[Radford 2019]</a>
+      <div class="ref-info">
+        <span class="ref-title">Language Models are Unsupervised Multitask Learners</span><br>
+        <span class="ref-author">Radford, Alec and Wu, Jeffrey and Child, Rewon and Luan, David and Amodei, Dario and Sutskever, Ilya</span>
+        <span class="ref-venue">OpenAI Technical Report, 2019.</span>
+      </div>
+    </div>
+    <div class="ref-card" id="card-radford2021clip">
+      <a href="#detail-radford2021clip" class="ref-label" onclick="showDetail('radford2021clip')">[Radford 2021]</a>
+      <div class="ref-info">
+        <span class="ref-title">Learning Transferable Visual Models From Natural Language Supervision</span><br>
+        <span class="ref-author">Radford, Alec and Kim, Jong Wook and Hallacy, Chris and others</span>
+        <span class="ref-venue">ICML, 2021.</span>
+      </div>
+    </div>
+    <div class="ref-card" id="card-rafailov2023dpo">
+      <a href="#detail-rafailov2023dpo" class="ref-label" onclick="showDetail('rafailov2023dpo')">[Rafailov 2023]</a>
+      <div class="ref-info">
+        <span class="ref-title">Direct Preference Optimization: Your Language Model is Secretly a Reward Model</span><br>
+        <span class="ref-author">Rafailov, Rafael and Sharma, Archit and Mitchell, Eric and others</span>
+        <span class="ref-venue">NeurIPS, 2023.</span>
+      </div>
+    </div>
+    <div class="ref-card" id="card-redmon2016yolo">
+      <a href="#detail-redmon2016yolo" class="ref-label" onclick="showDetail('redmon2016yolo')">[Redmon 2016]</a>
+      <div class="ref-info">
+        <span class="ref-title">You Only Look Once: Unified, Real-Time Object Detection</span><br>
+        <span class="ref-author">Redmon, Joseph and Divvala, Santosh and Girshick, Ross and Farhadi, Ali</span>
+        <span class="ref-venue">CVPR, pp. 779--788, 2016.</span>
+      </div>
+    </div>
+    <div class="ref-card" id="card-ren2015fasterrcnn">
+      <a href="#detail-ren2015fasterrcnn" class="ref-label" onclick="showDetail('ren2015fasterrcnn')">[Ren 2015]</a>
+      <div class="ref-info">
+        <span class="ref-title">Faster R-CNN: Towards Real-Time Object Detection with Region Proposal Networks</span><br>
+        <span class="ref-author">Ren, Shaoqing and He, Kaiming and Girshick, Ross and Sun, Jian</span>
+        <span class="ref-venue">NeurIPS, pp. 91--99, 2015.</span>
+      </div>
+    </div>
+    <div class="ref-card" id="card-rombach2022ldm">
+      <a href="#detail-rombach2022ldm" class="ref-label" onclick="showDetail('rombach2022ldm')">[Rombach 2022]</a>
+      <div class="ref-info">
+        <span class="ref-title">High-Resolution Image Synthesis with Latent Diffusion Models</span><br>
+        <span class="ref-author">Rombach, Robin and Blattmann, Andreas and Lorenz, Dominik and Esser, Patrick and Ommer, Björn</span>
+        <span class="ref-venue">CVPR, pp. 10684--10695, 2022.</span>
+      </div>
+    </div>
+    <div class="ref-card" id="card-ronneberger2015unet">
+      <a href="#detail-ronneberger2015unet" class="ref-label" onclick="showDetail('ronneberger2015unet')">[Ronneberger 2015]</a>
+      <div class="ref-info">
+        <span class="ref-title">U-Net: Convolutional Networks for Biomedical Image Segmentation</span><br>
+        <span class="ref-author">Ronneberger, Olaf and Fischer, Philipp and Brox, Thomas</span>
+        <span class="ref-venue">MICCAI, pp. 234--241, 2015.</span>
+      </div>
+    </div>
+    <div class="ref-card" id="card-rosenblatt1958perceptron">
+      <a href="#detail-rosenblatt1958perceptron" class="ref-label" onclick="showDetail('rosenblatt1958perceptron')">[Rosenblatt 1958]</a>
+      <div class="ref-info">
+        <span class="ref-title">The Perceptron: A Probabilistic Model for Information Storage and Organization in the Brain</span><br>
+        <span class="ref-author">Rosenblatt, Frank</span>
+        <span class="ref-venue">Psychological Review, vol. 65, pp. 386--408, 1958.</span>
+      </div>
+    </div>
+    <div class="ref-card" id="card-rumelhart1986backprop">
+      <a href="#detail-rumelhart1986backprop" class="ref-label" onclick="showDetail('rumelhart1986backprop')">[Rumelhart 1986]</a>
+      <div class="ref-info">
+        <span class="ref-title">Learning Representations by Back-propagating Errors</span><br>
+        <span class="ref-author">Rumelhart, David E. and Hinton, Geoffrey E. and Williams, Ronald J.</span>
+        <span class="ref-venue">Nature, vol. 323, pp. 533--536, 1986.</span>
+      </div>
+    </div>
+    <div class="ref-card" id="card-samuel1959checkers">
+      <a href="#detail-samuel1959checkers" class="ref-label" onclick="showDetail('samuel1959checkers')">[Samuel 1959]</a>
+      <div class="ref-info">
+        <span class="ref-title">Some Studies in Machine Learning Using the Game of Checkers</span><br>
+        <span class="ref-author">Samuel, Arthur L.</span>
+        <span class="ref-venue">IBM Journal of Research and Development, vol. 3, pp. 210--229, 1959.</span>
+      </div>
+    </div>
+    <div class="ref-card" id="card-schulman2017ppo">
+      <a href="#detail-schulman2017ppo" class="ref-label" onclick="showDetail('schulman2017ppo')">[Schulman 2017]</a>
+      <div class="ref-info">
+        <span class="ref-title">Proximal Policy Optimization Algorithms</span><br>
+        <span class="ref-author">Schulman, John and Wolski, Filip and Dhariwal, Prafulla and Radford, Alec and Klimov, Oleg</span>
+        <span class="ref-venue">arXiv preprint arXiv:1707.06347, 2017.</span>
+      </div>
+    </div>
+    <div class="ref-card" id="card-shannon1937symbolic">
+      <a href="#detail-shannon1937symbolic" class="ref-label" onclick="showDetail('shannon1937symbolic')">[Shannon 1937]</a>
+      <div class="ref-info">
+        <span class="ref-title">A Symbolic Analysis of Relay and Switching Circuits</span><br>
+        <span class="ref-author">Shannon, Claude E.</span>
+        <span class="ref-venue">, 1937.</span>
+      </div>
+    </div>
+    <div class="ref-card" id="card-simonyan2015vgg">
+      <a href="#detail-simonyan2015vgg" class="ref-label" onclick="showDetail('simonyan2015vgg')">[Simonyan 2015]</a>
+      <div class="ref-info">
+        <span class="ref-title">Very Deep Convolutional Networks for Large-Scale Image Recognition</span><br>
+        <span class="ref-author">Simonyan, Karen and Zisserman, Andrew</span>
+        <span class="ref-venue">ICLR, 2015.</span>
+      </div>
+    </div>
+    <div class="ref-card" id="card-srivastava2014dropout">
+      <a href="#detail-srivastava2014dropout" class="ref-label" onclick="showDetail('srivastava2014dropout')">[Srivastava 2014]</a>
+      <div class="ref-info">
+        <span class="ref-title">Dropout: A Simple Way to Prevent Neural Networks from Overfitting</span><br>
+        <span class="ref-author">Srivastava, Nitish and Hinton, Geoffrey and Krizhevsky, Alex and Sutskever, Ilya and Salakhutdinov, Ruslan</span>
+        <span class="ref-venue">Journal of Machine Learning Research, vol. 15, pp. 1929--1958, 2014.</span>
+      </div>
+    </div>
+    <div class="ref-card" id="card-strubell2019energy">
+      <a href="#detail-strubell2019energy" class="ref-label" onclick="showDetail('strubell2019energy')">[Strubell 2019]</a>
+      <div class="ref-info">
+        <span class="ref-title">Energy and Policy Considerations for Deep Learning in NLP</span><br>
+        <span class="ref-author">Strubell, Emma and Ganesh, Ananya and McCallum, Andrew</span>
+        <span class="ref-venue">Proceedings of the 57th Annual Meeting of the ACL, pp. 3645--3650, 2019.</span>
+      </div>
+    </div>
+    <div class="ref-card" id="card-su2021rope">
+      <a href="#detail-su2021rope" class="ref-label" onclick="showDetail('su2021rope')">[Su 2021]</a>
+      <div class="ref-info">
+        <span class="ref-title">RoFormer: Enhanced Transformer with Rotary Position Embedding</span><br>
+        <span class="ref-author">Su, Jianlin and Lu, Yu and Pan, Shengfeng and Murtadha, Ahmed and Wen, Bo and Liu, Yunfeng</span>
+        <span class="ref-venue">arXiv preprint arXiv:2104.09864, 2021.</span>
+      </div>
+    </div>
+    <div class="ref-card" id="card-sun2020survey">
+      <a href="#detail-sun2020survey" class="ref-label" onclick="showDetail('sun2020survey')">[Sun 2020]</a>
+      <div class="ref-info">
+        <span class="ref-title">A Survey of Optimization Methods from a Machine Learning Perspective</span><br>
+        <span class="ref-author">Sun, Shiliang and Cao, Zehui and Zhu, Han and Zhao, Jing</span>
+        <span class="ref-venue">IEEE Transactions on Cybernetics, vol. 50, pp. 3668--3681, 2020.</span>
+      </div>
+    </div>
+    <div class="ref-card" id="card-sutton2018rl">
+      <a href="#detail-sutton2018rl" class="ref-label" onclick="showDetail('sutton2018rl')">[Sutton 2018]</a>
+      <div class="ref-info">
+        <span class="ref-title">Reinforcement Learning: An Introduction</span><br>
+        <span class="ref-author">Sutton, Richard S. and Barto, Andrew G.</span>
+        <span class="ref-venue">. MIT Press, 2018.</span>
+      </div>
+    </div>
+    <div class="ref-card" id="card-szegedy2015googlenet">
+      <a href="#detail-szegedy2015googlenet" class="ref-label" onclick="showDetail('szegedy2015googlenet')">[Szegedy 2015]</a>
+      <div class="ref-info">
+        <span class="ref-title">Going Deeper with Convolutions</span><br>
+        <span class="ref-author">Szegedy, Christian and Liu, Wei and Jia, Yangqing and Sermanet, Pierre and Reed, Scott and Anguelov, Dragomir and Erhan, Dumitru and Vanhoucke, Vincent and Rabinovich, Andrew</span>
+        <span class="ref-venue">CVPR, pp. 1--9, 2015.</span>
+      </div>
+    </div>
+    <div class="ref-card" id="card-tan2019efficientnet">
+      <a href="#detail-tan2019efficientnet" class="ref-label" onclick="showDetail('tan2019efficientnet')">[Tan 2019]</a>
+      <div class="ref-info">
+        <span class="ref-title">EfficientNet: Rethinking Model Scaling for Convolutional Neural Networks</span><br>
+        <span class="ref-author">Tan, Mingxing and Le, Quoc V.</span>
+        <span class="ref-venue">Proceedings of the 36th International Conference on Machine Learning (ICML), pp. 6105--6114, 2019.</span>
+      </div>
+    </div>
+    <div class="ref-card" id="card-tibshirani1996lasso">
+      <a href="#detail-tibshirani1996lasso" class="ref-label" onclick="showDetail('tibshirani1996lasso')">[Tibshirani 1996]</a>
+      <div class="ref-info">
+        <span class="ref-title">Regression Shrinkage and Selection via the Lasso</span><br>
+        <span class="ref-author">Tibshirani, Robert</span>
+        <span class="ref-venue">Journal of the Royal Statistical Society: Series B, vol. 58, pp. 267--288, 1996.</span>
+      </div>
+    </div>
+    <div class="ref-card" id="card-touvron2023llama">
+      <a href="#detail-touvron2023llama" class="ref-label" onclick="showDetail('touvron2023llama')">[Touvron 2023]</a>
+      <div class="ref-info">
+        <span class="ref-title">LLaMA 2: Open Foundation and Fine-Tuned Chat Models</span><br>
+        <span class="ref-author">Touvron, Hugo and Martin, Louis and Stone, Kevin and Albert, Peter and Almahairi, Amjad and Babaei, Yasmine and others</span>
+        <span class="ref-venue">arXiv preprint arXiv:2307.09288, 2023.</span>
+      </div>
+    </div>
+    <div class="ref-card" id="card-turing1950computing">
+      <a href="#detail-turing1950computing" class="ref-label" onclick="showDetail('turing1950computing')">[Turing 1950]</a>
+      <div class="ref-info">
+        <span class="ref-title">Computing Machinery and Intelligence</span><br>
+        <span class="ref-author">Turing, Alan M.</span>
+        <span class="ref-venue">Mind, vol. 49, pp. 433--460, 1950.</span>
+      </div>
+    </div>
+    <div class="ref-card" id="card-vanderWalt2014scikit">
+      <a href="#detail-vanderWalt2014scikit" class="ref-label" onclick="showDetail('vanderWalt2014scikit')">[van der Walt 2014]</a>
+      <div class="ref-info">
+        <span class="ref-title">Scikit-Image: Image Processing in Python</span><br>
+        <span class="ref-author">van der Walt, Stéfan and Schönberger, Johannes L. and Nunez-Iglesias, Juan and Boulogne, François and Warner, Joshua D. and Yager, Neil and Gouillart, Emmanuelle and Yu, Tony</span>
+        <span class="ref-venue">PeerJ, vol. 2, pp. e453, 2014.</span>
+      </div>
+    </div>
+    <div class="ref-card" id="card-vaswani2017attention">
+      <a href="#detail-vaswani2017attention" class="ref-label" onclick="showDetail('vaswani2017attention')">[Vaswani 2017]</a>
+      <div class="ref-info">
+        <span class="ref-title">Attention Is All You Need</span><br>
+        <span class="ref-author">Vaswani, Ashish and Shazeer, Noam and Parmar, Niki and others</span>
+        <span class="ref-venue">NeurIPS, pp. 5998--6008, 2017.</span>
+      </div>
+    </div>
+    <div class="ref-card" id="card-wei2022cot">
+      <a href="#detail-wei2022cot" class="ref-label" onclick="showDetail('wei2022cot')">[Wei 2022]</a>
+      <div class="ref-info">
+        <span class="ref-title">Chain-of-Thought Prompting Elicits Reasoning in Large Language Models</span><br>
+        <span class="ref-author">Wei, Jason and Wang, Xuezhi and Schuurmans, Dale and others</span>
+        <span class="ref-venue">NeurIPS, 2022.</span>
+      </div>
+    </div>
+    <div class="ref-card" id="card-welling2019vae">
+      <a href="#detail-welling2019vae" class="ref-label" onclick="showDetail('welling2019vae')">[Welling 2019]</a>
+      <div class="ref-info">
+        <span class="ref-title">An Introduction to Variational Autoencoders</span><br>
+        <span class="ref-author">Welling, Max and Kingma, Diederik P.</span>
+        <span class="ref-venue">Foundations and Trends in Machine Learning, vol. 12, pp. 307--392, 2019.</span>
+      </div>
+    </div>
+    <div class="ref-card" id="card-werbos1974beyond">
+      <a href="#detail-werbos1974beyond" class="ref-label" onclick="showDetail('werbos1974beyond')">[Werbos 1974]</a>
+      <div class="ref-info">
+        <span class="ref-title">Beyond Regression: New Tools for Prediction and Analysis in the Behavioral Sciences</span><br>
+        <span class="ref-author">Werbos, Paul J.</span>
+        <span class="ref-venue">, 1974.</span>
+      </div>
+    </div>
+    <div class="ref-card" id="card-williams1992reinforce">
+      <a href="#detail-williams1992reinforce" class="ref-label" onclick="showDetail('williams1992reinforce')">[Williams 1992]</a>
+      <div class="ref-info">
+        <span class="ref-title">Simple Statistical Gradient-Following Algorithms for Connectionist Reinforcement Learning</span><br>
+        <span class="ref-author">Williams, Ronald J.</span>
+        <span class="ref-venue">Machine Learning, vol. 8, pp. 229--256, 1992.</span>
+      </div>
+    </div>
+    <div class="ref-card" id="card-wolpert1996lack">
+      <a href="#detail-wolpert1996lack" class="ref-label" onclick="showDetail('wolpert1996lack')">[Wolpert 1996]</a>
+      <div class="ref-info">
+        <span class="ref-title">The Lack of A Priori Distinctions between Learning Algorithms</span><br>
+        <span class="ref-author">Wolpert, David H.</span>
+        <span class="ref-venue">Neural Computation, vol. 8, pp. 1341--1390, 1996.</span>
+      </div>
+    </div>
+    <div class="ref-card" id="card-wolpert1997nofree">
+      <a href="#detail-wolpert1997nofree" class="ref-label" onclick="showDetail('wolpert1997nofree')">[Wolpert 1997]</a>
+      <div class="ref-info">
+        <span class="ref-title">No Free Lunch Theorems for Optimization</span><br>
+        <span class="ref-author">Wolpert, David H. and Macready, William G.</span>
+        <span class="ref-venue">IEEE Transactions on Evolutionary Computation, vol. 1, pp. 67--82, 1997.</span>
+      </div>
+    </div>
+    <div class="ref-card" id="card-yao2023react">
+      <a href="#detail-yao2023react" class="ref-label" onclick="showDetail('yao2023react')">[Yao 2023]</a>
+      <div class="ref-info">
+        <span class="ref-title">ReAct: Synergizing Reasoning and Acting in Language Models</span><br>
+        <span class="ref-author">Yao, Shunyu and Zhao, Jeffrey and Yu, Dian and others</span>
+        <span class="ref-venue">ICLR, 2023.</span>
+      </div>
+    </div>
+    <div class="ref-card" id="card-zhang2019rmsnorm">
+      <a href="#detail-zhang2019rmsnorm" class="ref-label" onclick="showDetail('zhang2019rmsnorm')">[Zhang 2019]</a>
+      <div class="ref-info">
+        <span class="ref-title">Root Mean Square Layer Normalization</span><br>
+        <span class="ref-author">Zhang, Biao and Sennrich, Rico</span>
+        <span class="ref-venue">NeurIPS, 2019.</span>
+      </div>
+    </div>
+    <div class="ref-card" id="card-zhu2017cyclegan">
+      <a href="#detail-zhu2017cyclegan" class="ref-label" onclick="showDetail('zhu2017cyclegan')">[Zhu 2017]</a>
+      <div class="ref-info">
+        <span class="ref-title">Unpaired Image-to-Image Translation Using Cycle-Consistent Adversarial Networks</span><br>
+        <span class="ref-author">Zhu, Jun-Yan and Park, Taesung and Isola, Phillip and Efros, Alexei A.</span>
+        <span class="ref-venue">ICCV, pp. 2223--2232, 2017.</span>
+      </div>
+    </div>
+</div>
+
+
+  <div class="detail-page" id="detail-alayrac2022flamingo">
+    <button class="back-btn" onclick="hideDetail()">&larr; 목록으로</button>
+    <div class="detail-header">
+      <span class="detail-label">[Alayrac 2022]</span>
+      <span class="detail-type">article</span>
+    </div>
+    <h2 class="detail-title">Flamingo: a Visual Language Model for Few-Shot Learning</h2>
+    <div class="detail-meta">
+      <p><strong>저자:</strong> Alayrac, Jean-Baptiste and Donahue, Jeff and Luc, Pauline and others</p>
+      <p><strong>출처:</strong> NeurIPS, 2022.</p>
+    </div>
+    <div class="detail-links">
+      <h3>원문 접근</h3>
+      <a href="https://scholar.google.com/scholar?q=Flamingo: a Visual Language Model for Few-Shot Learning" target="_blank" class="detail-link">Google Scholar &rarr;</a>
+
+    </div>
+    
+  </div>
+  <div class="detail-page" id="detail-arjovsky2017wgan">
+    <button class="back-btn" onclick="hideDetail()">&larr; 목록으로</button>
+    <div class="detail-header">
+      <span class="detail-label">[Arjovsky 2017]</span>
+      <span class="detail-type">inproceedings</span>
+    </div>
+    <h2 class="detail-title">Wasserstein Generative Adversarial Networks</h2>
+    <div class="detail-meta">
+      <p><strong>저자:</strong> Arjovsky, Martin and Chintala, Soumith and Bottou, Léon</p>
+      <p><strong>출처:</strong> ICML, pp. 214--223, 2017.</p>
+    </div>
+    <div class="detail-links">
+      <h3>원문 접근</h3>
+      <a href="https://scholar.google.com/scholar?q=Wasserstein Generative Adversarial Networks" target="_blank" class="detail-link">Google Scholar &rarr;</a>
+
+    </div>
+    <div class='detail-summary'><h3>주요 내용 요약</h3><p>Arjovsky 등은 GAN의 학습 불안정 문제를 이론적으로 분석하고, Jensen-Shannon 발산을 Wasserstein 거리(Earth Mover&#x27;s Distance)로 대체한 WGAN을 제안하였다.</p><p>Wasserstein 거리는 두 분포의 겹침이 없어도 의미 있는 기울기를 제공하므로, 기존 GAN에서 발생하던 기울기 소실 문제를 해결한다. 판별자를 &#x27;크리틱(critic)&#x27;으로 재정의하고, 출력에 시그모이드를 적용하지 않는다.</p><p>WGAN은 GAN 학습의 안정성을 크게 개선하였으며, 크리틱 손실이 생성 품질과 상관관계를 가져 학습 진행을 모니터링할 수 있게 되었다. WGAN-GP(gradient penalty)로 발전하여 더욱 안정적인 학습이 가능해졌다.</p></div>
+  </div>
+  <div class="detail-page" id="detail-ba2016layernorm">
+    <button class="back-btn" onclick="hideDetail()">&larr; 목록으로</button>
+    <div class="detail-header">
+      <span class="detail-label">[Ba 2016]</span>
+      <span class="detail-type">article</span>
+    </div>
+    <h2 class="detail-title">Layer Normalization</h2>
+    <div class="detail-meta">
+      <p><strong>저자:</strong> Ba, Jimmy Lei and Kiros, Jamie Ryan and Hinton, Geoffrey E.</p>
+      <p><strong>출처:</strong> arXiv preprint arXiv:1607.06450, 2016.</p>
+    </div>
+    <div class="detail-links">
+      <h3>원문 접근</h3>
+      <a href="https://arxiv.org/abs/1607.06450" target="_blank" class="detail-link">arXiv &rarr;</a>
+<a href="https://scholar.google.com/scholar?q=Layer Normalization" target="_blank" class="detail-link">Google Scholar &rarr;</a>
+
+    </div>
+    <div class='detail-summary'><h3>주요 내용 요약</h3><p>Ba, Kiros, Hinton은 배치 차원이 아닌 특징 차원에서 정규화를 수행하는 레이어 정규화(Layer Normalization)를 제안하였다. 배치 크기에 독립적이므로 시퀀스 길이가 다양한 RNN에서 특히 유용하다.</p><p>배치 정규화가 미니배치의 통계를 사용하여 배치 크기가 작으면 불안정해지는 반면, 레이어 정규화는 단일 샘플 내에서 정규화하므로 이 문제가 없다. 추론 시에도 학습 시와 동일한 연산을 사용하여 구현이 간단하다.</p><p>트랜스포머의 &#x27;Add &amp; Norm&#x27; 구조에서 Norm은 레이어 정규화를 의미하며, 현대 LLM에서는 Pre-LN(서브레이어 앞에 배치) 구조가 표준이다.</p></div>
+  </div>
+  <div class="detail-page" id="detail-bahdanau2015attention">
+    <button class="back-btn" onclick="hideDetail()">&larr; 목록으로</button>
+    <div class="detail-header">
+      <span class="detail-label">[Bahdanau 2015]</span>
+      <span class="detail-type">inproceedings</span>
+    </div>
+    <h2 class="detail-title">Neural Machine Translation by Jointly Learning to Align and Translate</h2>
+    <div class="detail-meta">
+      <p><strong>저자:</strong> Bahdanau, Dzmitry and Cho, Kyunghyun and Bengio, Yoshua</p>
+      <p><strong>출처:</strong> ICLR, 2015.</p>
+    </div>
+    <div class="detail-links">
+      <h3>원문 접근</h3>
+      <a href="https://scholar.google.com/scholar?q=Neural Machine Translation by Jointly Learning to Align and " target="_blank" class="detail-link">Google Scholar &rarr;</a>
+
+    </div>
+    <div class='detail-summary'><h3>주요 내용 요약</h3><p>Bahdanau 등은 기계 번역에서 인코더의 모든 시간 단계 출력에 대해 가중 평균을 계산하는 어텐션 메커니즘을 제안하였다. 디코더가 매 생성 단계마다 입력 시퀀스의 관련 부분에 선택적으로 집중할 수 있게 한다.</p><p>기존 Seq2Seq 모델은 입력 전체를 하나의 고정 길이 벡터로 압축해야 했으므로, 긴 문장에서 정보 손실이 불가피했다. 어텐션은 이 병목을 제거하여 긴 문장의 번역 품질을 획기적으로 개선하였다.</p><p>이 연구는 &#x27;어텐션&#x27;이라는 개념을 딥러닝에 처음 도입한 선구적 논문으로, 이후 Luong Attention, Self-Attention, 그리고 트랜스포머로 이어지는 어텐션 메커니즘 연구의 출발점이 되었다.</p></div>
+  </div>
+  <div class="detail-page" id="detail-bengio1994learning">
+    <button class="back-btn" onclick="hideDetail()">&larr; 목록으로</button>
+    <div class="detail-header">
+      <span class="detail-label">[Bengio 1994]</span>
+      <span class="detail-type">article</span>
+    </div>
+    <h2 class="detail-title">Learning Long-Term Dependencies with Gradient Descent is Difficult</h2>
+    <div class="detail-meta">
+      <p><strong>저자:</strong> Bengio, Yoshua and Simard, Patrice and Frasconi, Paolo</p>
+      <p><strong>출처:</strong> IEEE Transactions on Neural Networks, vol. 5, pp. 157--166, 1994.</p>
+    </div>
+    <div class="detail-links">
+      <h3>원문 접근</h3>
+      <a href="https://scholar.google.com/scholar?q=Learning Long-Term Dependencies with Gradient Descent is Dif" target="_blank" class="detail-link">Google Scholar &rarr;</a>
+
+    </div>
+    
+  </div>
+  <div class="detail-page" id="detail-bengio2013representation">
+    <button class="back-btn" onclick="hideDetail()">&larr; 목록으로</button>
+    <div class="detail-header">
+      <span class="detail-label">[Bengio 2013]</span>
+      <span class="detail-type">article</span>
+    </div>
+    <h2 class="detail-title">Representation Learning: A Review and New Perspectives</h2>
+    <div class="detail-meta">
+      <p><strong>저자:</strong> Bengio, Yoshua and Courville, Aaron and Vincent, Pascal</p>
+      <p><strong>출처:</strong> IEEE Transactions on Pattern Analysis and Machine Intelligence, vol. 35, pp. 1798--1828, 2013.</p>
+    </div>
+    <div class="detail-links">
+      <h3>원문 접근</h3>
+      <a href="https://scholar.google.com/scholar?q=Representation Learning: A Review and New Perspectives" target="_blank" class="detail-link">Google Scholar &rarr;</a>
+
+    </div>
+    
+  </div>
+  <div class="detail-page" id="detail-biegler2004retrospective">
+    <button class="back-btn" onclick="hideDetail()">&larr; 목록으로</button>
+    <div class="detail-header">
+      <span class="detail-label">[Biegler 2004]</span>
+      <span class="detail-type">article</span>
+    </div>
+    <h2 class="detail-title">Retrospective on Optimization</h2>
+    <div class="detail-meta">
+      <p><strong>저자:</strong> Biegler, Lorenz T. and Grossmann, Ignacio E.</p>
+      <p><strong>출처:</strong> Computers &amp; Chemical Engineering, vol. 28, pp. 1169--1192, 2004.</p>
+    </div>
+    <div class="detail-links">
+      <h3>원문 접근</h3>
+      <a href="https://scholar.google.com/scholar?q=Retrospective on Optimization" target="_blank" class="detail-link">Google Scholar &rarr;</a>
+
+    </div>
+    
+  </div>
+  <div class="detail-page" id="detail-boyd2004convex">
+    <button class="back-btn" onclick="hideDetail()">&larr; 목록으로</button>
+    <div class="detail-header">
+      <span class="detail-label">[Boyd 2004]</span>
+      <span class="detail-type">book</span>
+    </div>
+    <h2 class="detail-title">Convex Optimization</h2>
+    <div class="detail-meta">
+      <p><strong>저자:</strong> Boyd, Stephen and Vandenberghe, Lieven</p>
+      <p><strong>출처:</strong> . Cambridge University Press, 2004.</p>
+    </div>
+    <div class="detail-links">
+      <h3>원문 접근</h3>
+      <a href="https://scholar.google.com/scholar?q=Convex Optimization" target="_blank" class="detail-link">Google Scholar &rarr;</a>
+
+    </div>
+    
+  </div>
+  <div class="detail-page" id="detail-breiman2001random">
+    <button class="back-btn" onclick="hideDetail()">&larr; 목록으로</button>
+    <div class="detail-header">
+      <span class="detail-label">[Breiman 2001]</span>
+      <span class="detail-type">article</span>
+    </div>
+    <h2 class="detail-title">Random Forests</h2>
+    <div class="detail-meta">
+      <p><strong>저자:</strong> Breiman, Leo</p>
+      <p><strong>출처:</strong> Machine Learning, vol. 45, pp. 5--32, 2001.</p>
+    </div>
+    <div class="detail-links">
+      <h3>원문 접근</h3>
+      <a href="https://scholar.google.com/scholar?q=Random Forests" target="_blank" class="detail-link">Google Scholar &rarr;</a>
+
+    </div>
+    <div class='detail-summary'><h3>주요 내용 요약</h3><p>Breiman은 배깅(bootstrap aggregating)과 특징 무작위화를 결합한 Random Forest 앙상블 알고리즘을 제안하였다.</p><p>각 트리를 부트스트랩 복원 추출 데이터로 학습하고, 각 분할에서 sqrt(n)개의 특징만 무작위로 선택하여 트리 간 다양성을 높인다. OOB(Out-of-Bag) 샘플로 별도 검증 없이 일반화 오차를 추정할 수 있다.</p><p>Random Forest는 하이퍼파라미터에 덜 민감하고, 병렬 학습이 가능하며, 특징 중요도를 자동 계산하는 장점이 있어 정형 데이터 분석의 표준 알고리즘 중 하나이다.</p></div>
+  </div>
+  <div class="detail-page" id="detail-brown2020gpt3">
+    <button class="back-btn" onclick="hideDetail()">&larr; 목록으로</button>
+    <div class="detail-header">
+      <span class="detail-label">[Brown 2020]</span>
+      <span class="detail-type">article</span>
+    </div>
+    <h2 class="detail-title">Language Models are Few-Shot Learners</h2>
+    <div class="detail-meta">
+      <p><strong>저자:</strong> Brown, Tom B. and Mann, Benjamin and Ryder, Nick and others</p>
+      <p><strong>출처:</strong> NeurIPS, 2020.</p>
+    </div>
+    <div class="detail-links">
+      <h3>원문 접근</h3>
+      <a href="https://scholar.google.com/scholar?q=Language Models are Few-Shot Learners" target="_blank" class="detail-link">Google Scholar &rarr;</a>
+
+    </div>
+    <div class='detail-summary'><h3>주요 내용 요약</h3><p>Brown 등은 1,750억 파라미터의 GPT-3로 인컨텍스트 학습(few-shot/zero-shot) 능력을 대규모로 시연하였다. 가중치 갱신 없이 프롬프트의 예시만으로 새로운 과제에 적응할 수 있다.</p><p>모델 규모가 커질수록 출현(emergence) 능력이 나타나며, 작은 모델에서는 전혀 보이지 않던 능력(산술, 번역, 코드 생성 등)이 특정 규모를 넘어서면 갑자기 나타난다. 이 현상은 이후 &#x27;출현 능력&#x27; 연구의 촉발점이 되었다.</p><p>GPT-3는 RLHF를 통해 InstructGPT와 ChatGPT로 정렬되어 대중화되었으며, 대형 언어 모델(LLM) 시대를 개막한 결정적 논문이다.</p></div>
+  </div>
+  <div class="detail-page" id="detail-caron2021dino">
+    <button class="back-btn" onclick="hideDetail()">&larr; 목록으로</button>
+    <div class="detail-header">
+      <span class="detail-label">[Caron 2021]</span>
+      <span class="detail-type">inproceedings</span>
+    </div>
+    <h2 class="detail-title">Emerging Properties in Self-Supervised Vision Transformers</h2>
+    <div class="detail-meta">
+      <p><strong>저자:</strong> Caron, Mathilde and Touvron, Hugo and Misra, Ishan and Jégou, Hervé and Mairal, Julien and Bojanowski, Piotr and Joulin, Armand</p>
+      <p><strong>출처:</strong> ICCV, pp. 9650--9660, 2021.</p>
+    </div>
+    <div class="detail-links">
+      <h3>원문 접근</h3>
+      <a href="https://scholar.google.com/scholar?q=Emerging Properties in Self-Supervised Vision Transformers" target="_blank" class="detail-link">Google Scholar &rarr;</a>
+
+    </div>
+    <div class='detail-summary'><h3>주요 내용 요약</h3><p>Caron 등은 자기증류(self-distillation)로 ViT를 사전학습하는 DINO를 제안하였다. 교사(모멘텀 인코더)와 학생(현재 인코더)의 출력 분포를 일치시키는 방식으로, 부정 쌍이나 대조 손실 없이 학습한다.</p><p>놀라운 발견은 DINO로 학습된 ViT의 셀프 어텐션 맵이 레이블 없이도 객체의 의미 있는 세그멘테이션을 자발적으로 학습한다는 것이다. 이는 자기지도학습에서 의미 있는 표현이 출현(emerge)할 수 있음을 보여준다.</p><p>DINO는 DINOv2로 발전하여 범용 비전 백본으로 활용되고 있으며, 자기지도 비전 표현 학습의 대표적 성공 사례이다.</p></div>
+  </div>
+  <div class="detail-page" id="detail-chen2016xgboost">
+    <button class="back-btn" onclick="hideDetail()">&larr; 목록으로</button>
+    <div class="detail-header">
+      <span class="detail-label">[Chen 2016]</span>
+      <span class="detail-type">inproceedings</span>
+    </div>
+    <h2 class="detail-title">XGBoost: A Scalable Tree Boosting System</h2>
+    <div class="detail-meta">
+      <p><strong>저자:</strong> Chen, Tianqi and Guestrin, Carlos</p>
+      <p><strong>출처:</strong> Proceedings of the 22nd ACM SIGKDD International Conference on Knowledge Discovery and Data Mining, pp. 785--794, 2016.</p>
+    </div>
+    <div class="detail-links">
+      <h3>원문 접근</h3>
+      <a href="https://scholar.google.com/scholar?q=XGBoost: A Scalable Tree Boosting System" target="_blank" class="detail-link">Google Scholar &rarr;</a>
+
+    </div>
+    <div class='detail-summary'><h3>주요 내용 요약</h3><p>Chen과 Guestrin은 정칙화된 목적 함수와 2차 테일러 근사를 적용한 XGBoost(eXtreme Gradient Boosting)를 제안하였다.</p><p>트리 분할 시 2차 도함수 정보(Hessian)를 활용하여 더 정확한 분할 기준을 설정하고, L1/L2 정칙화, 열 서브샘플링, 결측치 자동 처리 등의 기능을 갖추었다. 캐시 인식(cache-aware) 알고리즘과 블록 구조로 대규모 데이터에서도 효율적이다.</p><p>XGBoost는 2016년 Kaggle 경진대회에서 압도적인 우승 빈도를 기록하며 정형 데이터의 사실상 표준 알고리즘으로 자리잡았다.</p></div>
+  </div>
+  <div class="detail-page" id="detail-chen2020simclr">
+    <button class="back-btn" onclick="hideDetail()">&larr; 목록으로</button>
+    <div class="detail-header">
+      <span class="detail-label">[Chen 2020]</span>
+      <span class="detail-type">inproceedings</span>
+    </div>
+    <h2 class="detail-title">A Simple Framework for Contrastive Learning of Visual Representations</h2>
+    <div class="detail-meta">
+      <p><strong>저자:</strong> Chen, Ting and Kornblith, Simon and Norouzi, Mohammad and Hinton, Geoffrey</p>
+      <p><strong>출처:</strong> ICML, 2020.</p>
+    </div>
+    <div class="detail-links">
+      <h3>원문 접근</h3>
+      <a href="https://scholar.google.com/scholar?q=A Simple Framework for Contrastive Learning of Visual Repres" target="_blank" class="detail-link">Google Scholar &rarr;</a>
+
+    </div>
+    <div class='detail-summary'><h3>주요 내용 요약</h3><p>Chen 등은 같은 이미지의 두 증강 뷰를 가깝게, 다른 이미지를 멀게 배치하여 시각 표현을 학습하는 SimCLR 프레임워크를 제안하였다.</p><p>강한 데이터 증강(Color Jitter, Random Crop 등), 큰 배치 크기(4,096~8,192), 투영 헤드(projection head)의 세 가지 조합이 핵심이다. NT-Xent 대조 손실로 긍정/부정 쌍을 구분한다.</p><p>SimCLR은 레이블 없이 ImageNet 선형 평가에서 76.5%를 달성하여, 자기지도학습이 지도학습에 필적할 수 있음을 보였다. MoCo, BYOL, DINO 등 후속 대조 학습 연구의 기준점이 되었다.</p></div>
+  </div>
+  <div class="detail-page" id="detail-cho2014gru">
+    <button class="back-btn" onclick="hideDetail()">&larr; 목록으로</button>
+    <div class="detail-header">
+      <span class="detail-label">[Cho 2014]</span>
+      <span class="detail-type">inproceedings</span>
+    </div>
+    <h2 class="detail-title">Learning Phrase Representations using RNN Encoder-Decoder for Statistical Machine Translation</h2>
+    <div class="detail-meta">
+      <p><strong>저자:</strong> Cho, Kyunghyun and van Merrienboer, Bart and Gulcehre, Caglar and Bahdanau, Dzmitry and Bougares, Fethi and Schwenk, Holger and Bengio, Yoshua</p>
+      <p><strong>출처:</strong> EMNLP, pp. 1724--1734, 2014.</p>
+    </div>
+    <div class="detail-links">
+      <h3>원문 접근</h3>
+      <a href="https://scholar.google.com/scholar?q=Learning Phrase Representations using RNN Encoder-Decoder fo" target="_blank" class="detail-link">Google Scholar &rarr;</a>
+
+    </div>
+    <div class='detail-summary'><h3>주요 내용 요약</h3><p>Cho 등은 LSTM의 세 게이트를 갱신(update)과 리셋(reset) 두 개로 줄이고, 셀 상태를 은닉 상태에 통합한 GRU(Gated Recurrent Unit)를 제안하였다.</p><p>갱신 게이트 z_t 하나가 &#x27;이전 정보 유지&#x27;와 &#x27;새 정보 수용&#x27;을 보간 방식으로 동시에 제어한다. 파라미터 수가 LSTM의 약 75%로 줄어들어 학습이 빠르지만, 장기 의존성 해결 능력은 유사한 수준을 유지한다.</p><p>GRU는 LSTM의 경량 대안으로, 데이터나 연산 자원이 제한된 환경에서 특히 유용하다. 어떤 과제에서 LSTM과 GRU 중 어느 것이 더 나은지는 경험적으로 결정해야 한다.</p></div>
+  </div>
+  <div class="detail-page" id="detail-chollet2021deep">
+    <button class="back-btn" onclick="hideDetail()">&larr; 목록으로</button>
+    <div class="detail-header">
+      <span class="detail-label">[Chollet 2021]</span>
+      <span class="detail-type">book</span>
+    </div>
+    <h2 class="detail-title">Deep Learning with Python</h2>
+    <div class="detail-meta">
+      <p><strong>저자:</strong> Chollet, François</p>
+      <p><strong>출처:</strong> . Manning Publications, 2021.</p>
+    </div>
+    <div class="detail-links">
+      <h3>원문 접근</h3>
+      <a href="https://scholar.google.com/scholar?q=Deep Learning with Python" target="_blank" class="detail-link">Google Scholar &rarr;</a>
+
+    </div>
+    
+  </div>
+  <div class="detail-page" id="detail-clevert2016elu">
+    <button class="back-btn" onclick="hideDetail()">&larr; 목록으로</button>
+    <div class="detail-header">
+      <span class="detail-label">[Clevert 2016]</span>
+      <span class="detail-type">inproceedings</span>
+    </div>
+    <h2 class="detail-title">Fast and Accurate Deep Network Learning by Exponential Linear Units (ELUs)</h2>
+    <div class="detail-meta">
+      <p><strong>저자:</strong> Clevert, Djork-Arné and Unterthiner, Thomas and Hochreiter, Sepp</p>
+      <p><strong>출처:</strong> ICLR, 2016.</p>
+    </div>
+    <div class="detail-links">
+      <h3>원문 접근</h3>
+      <a href="https://scholar.google.com/scholar?q=Fast and Accurate Deep Network Learning by Exponential Linea" target="_blank" class="detail-link">Google Scholar &rarr;</a>
+
+    </div>
+    
+  </div>
+  <div class="detail-page" id="detail-cybenko1989approximation">
+    <button class="back-btn" onclick="hideDetail()">&larr; 목록으로</button>
+    <div class="detail-header">
+      <span class="detail-label">[Cybenko 1989]</span>
+      <span class="detail-type">article</span>
+    </div>
+    <h2 class="detail-title">Approximation by Superpositions of a Sigmoidal Function</h2>
+    <div class="detail-meta">
+      <p><strong>저자:</strong> Cybenko, George</p>
+      <p><strong>출처:</strong> Mathematics of Control, Signals and Systems, vol. 2, pp. 303--314, 1989.</p>
+    </div>
+    <div class="detail-links">
+      <h3>원문 접근</h3>
+      <a href="https://scholar.google.com/scholar?q=Approximation by Superpositions of a Sigmoidal Function" target="_blank" class="detail-link">Google Scholar &rarr;</a>
+
+    </div>
+    <div class='detail-summary'><h3>주요 내용 요약</h3><p>Cybenko는 시그모이드 활성화 함수를 사용하는 단일 은닉층 신경망이 임의의 연속 함수를 원하는 정밀도로 근사할 수 있음을 수학적으로 증명하였다. 이것이 보편 근사 정리(Universal Approximation Theorem)이다.</p><p>이 정리는 &#x27;충분히 넓은&#x27; 은닉층 하나면 어떤 연속 매핑이든 표현할 수 있다는 것을 보장하지만, 필요한 뉴런의 수가 지수적으로 증가할 수 있으며, 학습이 가능하다는 보장은 하지 않는다. 즉 존재성은 증명하지만 효율적 학습 가능성은 별개의 문제이다.</p><p>이후 Hornik(1991) 등이 이 결과를 다양한 활성화 함수로 확장하였고, 현대 연구에서는 깊이(depth)가 너비(width)보다 더 효율적인 표현력을 제공한다는 것이 심층 신경망의 이론적 근거로 제시되고 있다.</p></div>
+  </div>
+  <div class="detail-page" id="detail-deng2009imagenet">
+    <button class="back-btn" onclick="hideDetail()">&larr; 목록으로</button>
+    <div class="detail-header">
+      <span class="detail-label">[Deng 2009]</span>
+      <span class="detail-type">inproceedings</span>
+    </div>
+    <h2 class="detail-title">ImageNet: A Large-Scale Hierarchical Image Database</h2>
+    <div class="detail-meta">
+      <p><strong>저자:</strong> Deng, Jia and Dong, Wei and Socher, Richard and Li, Li-Jia and Li, Kai and Fei-Fei, Li</p>
+      <p><strong>출처:</strong> Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR), pp. 248--255, 2009.</p>
+    </div>
+    <div class="detail-links">
+      <h3>원문 접근</h3>
+      <a href="https://scholar.google.com/scholar?q=ImageNet: A Large-Scale Hierarchical Image Database" target="_blank" class="detail-link">Google Scholar &rarr;</a>
+
+    </div>
+    <div class='detail-summary'><h3>주요 내용 요약</h3><p>Deng, Fei-Fei Li 등은 2만 2천 범주, 1,400만 장 이상의 이미지로 구성된 대규모 이미지 데이터베이스 ImageNet을 구축하였다. 수만 명의 크라우드 워커가 수년간 참여한 대규모 어노테이션 프로젝트이다.</p><p>ImageNet을 기반으로 한 ILSVRC(ImageNet Large Scale Visual Recognition Challenge)는 2010년부터 매년 개최되어, AlexNet(2012), VGGNet(2014), GoogLeNet(2014), ResNet(2015) 등 딥러닝 혁명의 주요 아키텍처가 탄생하는 무대가 되었다.</p><p>ImageNet은 단순한 데이터셋을 넘어 &#x27;대규모 데이터 + 딥러닝&#x27;이라는 패러다임의 촉매제 역할을 하였으며, 컴퓨터 비전 연구의 표준 벤치마크로 자리잡았다.</p></div>
+  </div>
+  <div class="detail-page" id="detail-dettmers2023qlora">
+    <button class="back-btn" onclick="hideDetail()">&larr; 목록으로</button>
+    <div class="detail-header">
+      <span class="detail-label">[Dettmers 2023]</span>
+      <span class="detail-type">inproceedings</span>
+    </div>
+    <h2 class="detail-title">QLoRA: Efficient Finetuning of Quantized LLMs</h2>
+    <div class="detail-meta">
+      <p><strong>저자:</strong> Dettmers, Tim and Pagnoni, Artidoro and Holtzman, Ari and Zettlemoyer, Luke</p>
+      <p><strong>출처:</strong> NeurIPS, 2023.</p>
+    </div>
+    <div class="detail-links">
+      <h3>원문 접근</h3>
+      <a href="https://scholar.google.com/scholar?q=QLoRA: Efficient Finetuning of Quantized LLMs" target="_blank" class="detail-link">Google Scholar &rarr;</a>
+
+    </div>
+    <div class='detail-summary'><h3>주요 내용 요약</h3><p>Dettmers 등은 기반 모델을 4비트로 양자화하고 LoRA 어댑터는 16비트로 유지하는 QLoRA를 제안하였다. 650억 파라미터 모델을 단일 48GB GPU에서 파인튜닝할 수 있다.</p><p>NormalFloat4(NF4) 양자화와 이중 양자화(double quantization)를 도입하여 메모리 효율을 극대화하면서도 성능 손실을 최소화한다. Paged Optimizers로 메모리 스파이크에도 대응한다.</p><p>QLoRA는 대형 모델의 파인튜닝을 대중화한 핵심 기술로, 학계와 산업계에서 LLM 커스터마이징의 사실상 표준 방법이 되었다.</p></div>
+  </div>
+  <div class="detail-page" id="detail-devlin2019bert">
+    <button class="back-btn" onclick="hideDetail()">&larr; 목록으로</button>
+    <div class="detail-header">
+      <span class="detail-label">[Devlin 2019]</span>
+      <span class="detail-type">inproceedings</span>
+    </div>
+    <h2 class="detail-title">BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding</h2>
+    <div class="detail-meta">
+      <p><strong>저자:</strong> Devlin, Jacob and Chang, Ming-Wei and Lee, Kenton and Toutanova, Kristina</p>
+      <p><strong>출처:</strong> NAACL-HLT, pp. 4171--4186, 2019.</p>
+    </div>
+    <div class="detail-links">
+      <h3>원문 접근</h3>
+      <a href="https://scholar.google.com/scholar?q=BERT: Pre-training of Deep Bidirectional Transformers for La" target="_blank" class="detail-link">Google Scholar &rarr;</a>
+
+    </div>
+    <div class='detail-summary'><h3>주요 내용 요약</h3><p>Devlin 등은 트랜스포머 인코더 기반의 양방향 사전학습 모델 BERT를 제안하였다. 마스크 언어 모델(MLM)과 다음 문장 예측(NSP)으로 사전학습한 뒤, 소량의 레이블 데이터로 파인튜닝하는 2단계 패러다임을 확립하였다.</p><p>MLM은 입력 토큰의 15%를 [MASK]로 가리고 이를 양방향 문맥에서 복원하는 과제로, 80-10-10 전략(마스킹/랜덤/유지)으로 사전학습-파인튜닝 간 불일치를 완화한다. BERT-BASE(1.1억)와 BERT-LARGE(3.4억) 두 규모로 공개되었다.</p><p>BERT는 발표 당시 11개 NLP 벤치마크(GLUE, SQuAD 등)에서 동시에 최고 성능을 달성하며, NLP 분야에 &#x27;사전학습 혁명&#x27;을 일으켰다. RoBERTa, ALBERT, ELECTRA 등 수많은 후속 변형이 이를 발전시켰다.</p></div>
+  </div>
+  <div class="detail-page" id="detail-dosovitskiy2021vit">
+    <button class="back-btn" onclick="hideDetail()">&larr; 목록으로</button>
+    <div class="detail-header">
+      <span class="detail-label">[Dosovitskiy 2021]</span>
+      <span class="detail-type">inproceedings</span>
+    </div>
+    <h2 class="detail-title">An Image is Worth 16x16 Words: Transformers for Image Recognition at Scale</h2>
+    <div class="detail-meta">
+      <p><strong>저자:</strong> Dosovitskiy, Alexey and Beyer, Lucas and Kolesnikov, Alexander and others</p>
+      <p><strong>출처:</strong> ICLR, 2021.</p>
+    </div>
+    <div class="detail-links">
+      <h3>원문 접근</h3>
+      <a href="https://scholar.google.com/scholar?q=An Image is Worth 16x16 Words: Transformers for Image Recogn" target="_blank" class="detail-link">Google Scholar &rarr;</a>
+
+    </div>
+    <div class='detail-summary'><h3>주요 내용 요약</h3><p>Dosovitskiy 등은 이미지를 16×16 패치 시퀀스로 분할하여 트랜스포머 인코더에 입력하는 ViT(Vision Transformer)를 제안하였다. CNN 없이 이미지 분류 SOTA를 달성한 최초의 모델이다.</p><p>각 패치를 선형 임베딩으로 변환하고 위치 임베딩을 더한 뒤, 표준 트랜스포머 인코더를 거쳐 [CLS] 토큰의 출력으로 분류한다. 대규모 데이터(JFT-300M)로 사전학습하면 ImageNet에서 CNN에 필적하거나 초과하는 성능을 보인다.</p><p>ViT는 &#x27;트랜스포머가 비전에서도 작동한다&#x27;는 것을 증명하여, DeiT, Swin Transformer, MAE 등 비전 트랜스포머 연구의 폭발적 성장을 촉발하였다.</p></div>
+  </div>
+  <div class="detail-page" id="detail-evtimov2017robust">
+    <button class="back-btn" onclick="hideDetail()">&larr; 목록으로</button>
+    <div class="detail-header">
+      <span class="detail-label">[Evtimov 2017]</span>
+      <span class="detail-type">article</span>
+    </div>
+    <h2 class="detail-title">Robust Physical-World Attacks on Deep Learning Models</h2>
+    <div class="detail-meta">
+      <p><strong>저자:</strong> Evtimov, Ivan and Eykholt, Kevin and Fernandes, Earlence and Kohno, Tadayoshi and Li, Bo and Prakash, Atul and Rahmati, Amir and Song, Dawn and Yamauchi, Tadayoshi</p>
+      <p><strong>출처:</strong> arXiv preprint arXiv:1707.08945, 2017.</p>
+    </div>
+    <div class="detail-links">
+      <h3>원문 접근</h3>
+      <a href="https://arxiv.org/abs/1707.08945" target="_blank" class="detail-link">arXiv &rarr;</a>
+<a href="https://scholar.google.com/scholar?q=Robust Physical-World Attacks on Deep Learning Models" target="_blank" class="detail-link">Google Scholar &rarr;</a>
+
+    </div>
+    
+  </div>
+  <div class="detail-page" id="detail-friedman2001greedy">
+    <button class="back-btn" onclick="hideDetail()">&larr; 목록으로</button>
+    <div class="detail-header">
+      <span class="detail-label">[Friedman 2001]</span>
+      <span class="detail-type">article</span>
+    </div>
+    <h2 class="detail-title">Greedy Function Approximation: A Gradient Boosting Machine</h2>
+    <div class="detail-meta">
+      <p><strong>저자:</strong> Friedman, Jerome H.</p>
+      <p><strong>출처:</strong> The Annals of Statistics, vol. 29, pp. 1189--1232, 2001.</p>
+    </div>
+    <div class="detail-links">
+      <h3>원문 접근</h3>
+      <a href="https://scholar.google.com/scholar?q=Greedy Function Approximation: A Gradient Boosting Machine" target="_blank" class="detail-link">Google Scholar &rarr;</a>
+
+    </div>
+    <div class='detail-summary'><h3>주요 내용 요약</h3><p>Friedman은 함수 공간에서의 경사하강법으로 앙상블을 순차 구축하는 Gradient Boosting Machine(GBM)을 제안하였다.</p><p>각 단계에서 이전 앙상블의 잔차(음의 그래디언트)를 새로운 약한 학습기(얕은 트리)가 학습하여 보정한다. 학습률(shrinkage)로 각 트리의 기여를 조절하여 과적합을 방지한다. 임의의 미분 가능한 손실 함수로 확장할 수 있다.</p><p>GBM은 XGBoost, LightGBM, CatBoost 등의 이론적 기반이 되었으며, 정형 데이터에서 딥러닝을 능가하는 경우가 많아 실무에서 널리 사용된다.</p></div>
+  </div>
+  <div class="detail-page" id="detail-gidaris2018rotation">
+    <button class="back-btn" onclick="hideDetail()">&larr; 목록으로</button>
+    <div class="detail-header">
+      <span class="detail-label">[Gidaris 2018]</span>
+      <span class="detail-type">inproceedings</span>
+    </div>
+    <h2 class="detail-title">Unsupervised Representation Learning by Predicting Image Rotations</h2>
+    <div class="detail-meta">
+      <p><strong>저자:</strong> Gidaris, Spyros and Singh, Praveer and Komodakis, Nikos</p>
+      <p><strong>출처:</strong> ICLR, 2018.</p>
+    </div>
+    <div class="detail-links">
+      <h3>원문 접근</h3>
+      <a href="https://scholar.google.com/scholar?q=Unsupervised Representation Learning by Predicting Image Rot" target="_blank" class="detail-link">Google Scholar &rarr;</a>
+
+    </div>
+    
+  </div>
+  <div class="detail-page" id="detail-girshick2014rcnn">
+    <button class="back-btn" onclick="hideDetail()">&larr; 목록으로</button>
+    <div class="detail-header">
+      <span class="detail-label">[Girshick 2014]</span>
+      <span class="detail-type">inproceedings</span>
+    </div>
+    <h2 class="detail-title">Rich Feature Hierarchies for Accurate Object Detection and Semantic Segmentation</h2>
+    <div class="detail-meta">
+      <p><strong>저자:</strong> Girshick, Ross and Donahue, Jeff and Darrell, Trevor and Malik, Jitendra</p>
+      <p><strong>출처:</strong> CVPR, pp. 580--587, 2014.</p>
+    </div>
+    <div class="detail-links">
+      <h3>원문 접근</h3>
+      <a href="https://scholar.google.com/scholar?q=Rich Feature Hierarchies for Accurate Object Detection and S" target="_blank" class="detail-link">Google Scholar &rarr;</a>
+
+    </div>
+    <div class='detail-summary'><h3>주요 내용 요약</h3><p>Girshick 등은 CNN 특징 추출을 객체 탐지에 최초로 적용한 R-CNN을 제안하였다. Selective Search로 약 2,000개의 후보 영역을 제안하고, 각 영역을 독립적으로 CNN에 통과시켜 분류하는 2단계 파이프라인이다.</p><p>R-CNN은 PASCAL VOC 2012에서 기존 방법 대비 mAP를 53.3%에서 62.4%로 끌어올렸으나, 이미지 한 장에 약 47초가 걸리는 치명적인 속도 문제가 있었다. 각 후보 영역마다 CNN을 개별 실행하기 때문이다.</p><p>이 한계는 Fast R-CNN(RoI Pooling), Faster R-CNN(RPN) 등 후속 연구로 해결되었으며, R-CNN은 CNN 기반 객체 탐지 패러다임을 확립한 선구적 연구로 평가된다.</p></div>
+  </div>
+  <div class="detail-page" id="detail-girshick2015fastrcnn">
+    <button class="back-btn" onclick="hideDetail()">&larr; 목록으로</button>
+    <div class="detail-header">
+      <span class="detail-label">[Girshick 2015]</span>
+      <span class="detail-type">inproceedings</span>
+    </div>
+    <h2 class="detail-title">Fast R-CNN</h2>
+    <div class="detail-meta">
+      <p><strong>저자:</strong> Girshick, Ross</p>
+      <p><strong>출처:</strong> ICCV, pp. 1440--1448, 2015.</p>
+    </div>
+    <div class="detail-links">
+      <h3>원문 접근</h3>
+      <a href="https://scholar.google.com/scholar?q=Fast R-CNN" target="_blank" class="detail-link">Google Scholar &rarr;</a>
+
+    </div>
+    
+  </div>
+  <div class="detail-page" id="detail-glorot2010understanding">
+    <button class="back-btn" onclick="hideDetail()">&larr; 목록으로</button>
+    <div class="detail-header">
+      <span class="detail-label">[Glorot 2010]</span>
+      <span class="detail-type">inproceedings</span>
+    </div>
+    <h2 class="detail-title">Understanding the Difficulty of Training Deep Feedforward Neural Networks</h2>
+    <div class="detail-meta">
+      <p><strong>저자:</strong> Glorot, Xavier and Bengio, Yoshua</p>
+      <p><strong>출처:</strong> AISTATS, pp. 249--256, 2010.</p>
+    </div>
+    <div class="detail-links">
+      <h3>원문 접근</h3>
+      <a href="https://scholar.google.com/scholar?q=Understanding the Difficulty of Training Deep Feedforward Ne" target="_blank" class="detail-link">Google Scholar &rarr;</a>
+
+    </div>
+    <div class='detail-summary'><h3>주요 내용 요약</h3><p>Glorot과 Bengio는 심층 신경망에서 활성화의 분산이 층을 거칠수록 소실되거나 폭발하는 현상을 분석하고, 이를 방지하는 Xavier 초기화를 제안하였다.</p><p>Xavier 초기화는 가중치를 Var(W) = 2/(n_in + n_out)으로 설정하여, 순전파와 역전파 모두에서 분산이 일정하게 유지되도록 한다. 시그모이드와 tanh 활성화에 최적화되어 있다.</p><p>이 연구는 &#x27;좋은 초기화가 깊은 네트워크 학습의 전제 조건&#x27;이라는 인식을 확립하였으며, 이후 He 초기화(ReLU용)의 이론적 기반이 되었다.</p></div>
+  </div>
+  <div class="detail-page" id="detail-goodfellow2014gan">
+    <button class="back-btn" onclick="hideDetail()">&larr; 목록으로</button>
+    <div class="detail-header">
+      <span class="detail-label">[Goodfellow 2014]</span>
+      <span class="detail-type">inproceedings</span>
+    </div>
+    <h2 class="detail-title">Generative Adversarial Nets</h2>
+    <div class="detail-meta">
+      <p><strong>저자:</strong> Goodfellow, Ian and Pouget-Abadie, Jean and Mirza, Mehdi and others</p>
+      <p><strong>출처:</strong> NeurIPS, pp. 2672--2680, 2014.</p>
+    </div>
+    <div class="detail-links">
+      <h3>원문 접근</h3>
+      <a href="https://scholar.google.com/scholar?q=Generative Adversarial Nets" target="_blank" class="detail-link">Google Scholar &rarr;</a>
+
+    </div>
+    <div class='detail-summary'><h3>주요 내용 요약</h3><p>Goodfellow 등은 생성자(Generator)와 판별자(Discriminator)의 적대적 경쟁으로 학습하는 GAN(Generative Adversarial Network) 프레임워크를 제안하였다. 민맥스 게임 min_G max_D V(D,G)로 정형화된다.</p><p>이론적으로 최적점에서 생성 분포가 실제 데이터 분포와 일치하며(p_g = p_data), 이는 Jensen-Shannon 발산의 최소화에 해당한다. 명시적 밀도 함수 없이 암묵적으로 데이터 분포를 학습하는 새로운 패러다임을 제시하였다.</p><p>GAN은 이후 DCGAN, WGAN, StyleGAN, CycleGAN 등 수많은 변형을 낳았으며, 이미지 생성, 스타일 변환, 초해상도 등 다양한 응용에 혁명을 가져왔다. 다만 모드 붕괴, 학습 불안정성 등의 문제가 있어 확산 모델이 대안으로 부상하였다.</p></div>
+  </div>
+  <div class="detail-page" id="detail-goodfellow2016deep">
+    <button class="back-btn" onclick="hideDetail()">&larr; 목록으로</button>
+    <div class="detail-header">
+      <span class="detail-label">[Goodfellow 2016]</span>
+      <span class="detail-type">book</span>
+    </div>
+    <h2 class="detail-title">Deep Learning</h2>
+    <div class="detail-meta">
+      <p><strong>저자:</strong> Goodfellow, Ian and Bengio, Yoshua and Courville, Aaron</p>
+      <p><strong>출처:</strong> . MIT Press, 2016.</p>
+    </div>
+    <div class="detail-links">
+      <h3>원문 접근</h3>
+      <a href="https://www.deeplearningbook.org" target="_blank" class="detail-link">Official Page &rarr;</a>
+<a href="https://scholar.google.com/scholar?q=Deep Learning" target="_blank" class="detail-link">Google Scholar &rarr;</a>
+
+    </div>
+    <div class='detail-summary'><h3>주요 내용 요약</h3><p>Goodfellow, Bengio, Courville의 &#x27;Deep Learning&#x27;은 딥러닝의 수학적 기초부터 CNN, RNN, 생성 모델까지 체계적으로 다루는 고전적 교과서이다. 온라인(deeplearningbook.org)에서 무료로 제공된다.</p><p>1부(응용 수학과 머신러닝 기초), 2부(심층 네트워크), 3부(딥러닝 연구)의 3부 구성으로, 선형대수, 확률론, 수치 계산에서 시작하여 최적화, 정칙화, CNN, RNN, 오토인코더, 생성 모델까지 폭넓게 다룬다.</p><p>2016년 출간되어 트랜스포머 이전의 딥러닝을 다루고 있지만, 수학적 기초와 핵심 원리에 대한 설명은 여전히 최고 수준으로 평가된다.</p></div>
+  </div>
+  <div class="detail-page" id="detail-guyon1992capacity">
+    <button class="back-btn" onclick="hideDetail()">&larr; 목록으로</button>
+    <div class="detail-header">
+      <span class="detail-label">[Guyon 1992]</span>
+      <span class="detail-type">inproceedings</span>
+    </div>
+    <h2 class="detail-title">Automatic Capacity Tuning of Very Large VC-Dimension Classifiers</h2>
+    <div class="detail-meta">
+      <p><strong>저자:</strong> Guyon, Isabelle and Boser, Bernhard and Vapnik, Vladimir</p>
+      <p><strong>출처:</strong> NeurIPS, pp. 147--155, 1992.</p>
+    </div>
+    <div class="detail-links">
+      <h3>원문 접근</h3>
+      <a href="https://scholar.google.com/scholar?q=Automatic Capacity Tuning of Very Large VC-Dimension Classif" target="_blank" class="detail-link">Google Scholar &rarr;</a>
+
+    </div>
+    
+  </div>
+  <div class="detail-page" id="detail-geron2019handson">
+    <button class="back-btn" onclick="hideDetail()">&larr; 목록으로</button>
+    <div class="detail-header">
+      <span class="detail-label">[Géron 2019]</span>
+      <span class="detail-type">book</span>
+    </div>
+    <h2 class="detail-title">Hands-On Machine Learning with Scikit-Learn, Keras, and TensorFlow</h2>
+    <div class="detail-meta">
+      <p><strong>저자:</strong> Géron, Aurélien</p>
+      <p><strong>출처:</strong> . O&#x27;Reilly Media, 2019.</p>
+    </div>
+    <div class="detail-links">
+      <h3>원문 접근</h3>
+      <a href="https://scholar.google.com/scholar?q=Hands-On Machine Learning with Scikit-Learn, Keras, and Tens" target="_blank" class="detail-link">Google Scholar &rarr;</a>
+
+    </div>
+    
+  </div>
+  <div class="detail-page" id="detail-halevy2009unreasonable">
+    <button class="back-btn" onclick="hideDetail()">&larr; 목록으로</button>
+    <div class="detail-header">
+      <span class="detail-label">[Halevy 2009]</span>
+      <span class="detail-type">article</span>
+    </div>
+    <h2 class="detail-title">The Unreasonable Effectiveness of Data</h2>
+    <div class="detail-meta">
+      <p><strong>저자:</strong> Halevy, Alon and Norvig, Peter and Pereira, Fernando</p>
+      <p><strong>출처:</strong> IEEE Intelligent Systems, vol. 24, pp. 8--12, 2009.</p>
+    </div>
+    <div class="detail-links">
+      <h3>원문 접근</h3>
+      <a href="https://scholar.google.com/scholar?q=The Unreasonable Effectiveness of Data" target="_blank" class="detail-link">Google Scholar &rarr;</a>
+
+    </div>
+    
+  </div>
+  <div class="detail-page" id="detail-harris2020numpy">
+    <button class="back-btn" onclick="hideDetail()">&larr; 목록으로</button>
+    <div class="detail-header">
+      <span class="detail-label">[Harris 2020]</span>
+      <span class="detail-type">article</span>
+    </div>
+    <h2 class="detail-title">Array Programming with NumPy</h2>
+    <div class="detail-meta">
+      <p><strong>저자:</strong> Harris, Charles R. and Millman, K. Jarrod and van der Walt, Stéfan J. and others</p>
+      <p><strong>출처:</strong> Nature, vol. 585, pp. 357--362, 2020.</p>
+    </div>
+    <div class="detail-links">
+      <h3>원문 접근</h3>
+      <a href="https://scholar.google.com/scholar?q=Array Programming with NumPy" target="_blank" class="detail-link">Google Scholar &rarr;</a>
+
+    </div>
+    
+  </div>
+  <div class="detail-page" id="detail-he2015delving">
+    <button class="back-btn" onclick="hideDetail()">&larr; 목록으로</button>
+    <div class="detail-header">
+      <span class="detail-label">[He 2015]</span>
+      <span class="detail-type">inproceedings</span>
+    </div>
+    <h2 class="detail-title">Delving Deep into Rectifiers: Surpassing Human-Level Performance on ImageNet Classification</h2>
+    <div class="detail-meta">
+      <p><strong>저자:</strong> He, Kaiming and Zhang, Xiangyu and Ren, Shaoqing and Sun, Jian</p>
+      <p><strong>출처:</strong> ICCV, pp. 1026--1034, 2015.</p>
+    </div>
+    <div class="detail-links">
+      <h3>원문 접근</h3>
+      <a href="https://scholar.google.com/scholar?q=Delving Deep into Rectifiers: Surpassing Human-Level Perform" target="_blank" class="detail-link">Google Scholar &rarr;</a>
+
+    </div>
+    <div class='detail-summary'><h3>주요 내용 요약</h3><p>He 등은 ReLU 활성화 함수의 비대칭성을 고려한 He(Kaiming) 초기화를 제안하고, 이를 적용한 모델로 ImageNet에서 인간 수준의 성능을 최초로 초과하였다.</p><p>ReLU는 음수 입력을 0으로 만들므로, Xavier 초기화에서 가정하는 선형 활성화와 다르다. He 초기화는 Var(W) = 2/n_in으로 설정하여 ReLU의 절반 비활성화를 보상한다.</p><p>PyTorch의 nn.Linear 기본 설정이 He 초기화에 근접하므로, 대부분의 경우 별도 설정 없이 사용할 수 있다. ReLU 계열 활성화의 사실상 표준 초기화이다.</p></div>
+  </div>
+  <div class="detail-page" id="detail-he2016deep">
+    <button class="back-btn" onclick="hideDetail()">&larr; 목록으로</button>
+    <div class="detail-header">
+      <span class="detail-label">[He 2016]</span>
+      <span class="detail-type">inproceedings</span>
+    </div>
+    <h2 class="detail-title">Deep residual learning for image recognition</h2>
+    <div class="detail-meta">
+      <p><strong>저자:</strong> He, Kaiming and Zhang, Xiangyu and Ren, Shaoqing and Sun, Jian</p>
+      <p><strong>출처:</strong> CVPR, pp. 770--778, 2016.</p>
+    </div>
+    <div class="detail-links">
+      <h3>원문 접근</h3>
+      <a href="https://scholar.google.com/scholar?q=Deep residual learning for image recognition" target="_blank" class="detail-link">Google Scholar &rarr;</a>
+
+    </div>
+    <div class='detail-summary'><h3>주요 내용 요약</h3><p>He 등은 입력을 출력에 직접 더하는 잔차 연결(skip connection)을 도입한 ResNet을 제안하였다. 이를 통해 152층까지 깊은 네트워크를 안정적으로 학습할 수 있었으며, ILSVRC 2015에서 Top-5 오류율 3.57%로 인간 수준(약 5%)을 최초로 넘어섰다.</p><p>잔차 블록 y = F(x) + x에서 네트워크가 학습할 것이 없으면 F = 0으로 항등 함수가 되므로, 층을 추가해도 성능이 저하되지 않는다. 스킵 경로를 통해 기울기가 직접 전달되어 기울기 소실 문제가 근본적으로 완화된다.</p><p>잔차 연결은 CNN을 넘어 트랜스포머, U-Net, DenseNet 등 현대 딥러닝의 거의 모든 아키텍처에서 핵심 구성 요소로 사용되는 보편적 설계 원리가 되었다.</p></div>
+  </div>
+  <div class="detail-page" id="detail-he2017maskrcnn">
+    <button class="back-btn" onclick="hideDetail()">&larr; 목록으로</button>
+    <div class="detail-header">
+      <span class="detail-label">[He 2017]</span>
+      <span class="detail-type">inproceedings</span>
+    </div>
+    <h2 class="detail-title">Mask R-CNN</h2>
+    <div class="detail-meta">
+      <p><strong>저자:</strong> He, Kaiming and Gkioxari, Georgia and Dollár, Piotr and Girshick, Ross</p>
+      <p><strong>출처:</strong> ICCV, pp. 2961--2969, 2017.</p>
+    </div>
+    <div class="detail-links">
+      <h3>원문 접근</h3>
+      <a href="https://scholar.google.com/scholar?q=Mask R-CNN" target="_blank" class="detail-link">Google Scholar &rarr;</a>
+
+    </div>
+    <div class='detail-summary'><h3>주요 내용 요약</h3><p>He 등은 Faster R-CNN에 마스크 예측 브랜치를 추가하여 탐지와 인스턴스 분할을 동시에 수행하는 Mask R-CNN을 제안하였다.</p><p>핵심 기여는 RoI Align으로, 기존 RoI Pooling의 양자화 오차를 이중 선형 보간으로 제거하여 픽셀 수준의 정밀도를 확보한다. 마스크 예측과 클래스 예측을 분리(decouple)하여 각 클래스에 대한 독립적 이진 마스크를 예측하는 것도 성능 향상에 기여하였다.</p><p>Mask R-CNN은 인스턴스 분할의 기준 모델로 자리잡았으며, 키포인트 검출, 패노픽 분할 등으로 확장되어 다양한 비전 과제의 통합 프레임워크가 되었다.</p></div>
+  </div>
+  <div class="detail-page" id="detail-he2020moco">
+    <button class="back-btn" onclick="hideDetail()">&larr; 목록으로</button>
+    <div class="detail-header">
+      <span class="detail-label">[He 2020]</span>
+      <span class="detail-type">inproceedings</span>
+    </div>
+    <h2 class="detail-title">Momentum Contrast for Unsupervised Visual Representation Learning</h2>
+    <div class="detail-meta">
+      <p><strong>저자:</strong> He, Kaiming and Fan, Haoqi and Wu, Yuxin and Xie, Saining and Girshick, Ross</p>
+      <p><strong>출처:</strong> CVPR, pp. 9729--9738, 2020.</p>
+    </div>
+    <div class="detail-links">
+      <h3>원문 접근</h3>
+      <a href="https://scholar.google.com/scholar?q=Momentum Contrast for Unsupervised Visual Representation Lea" target="_blank" class="detail-link">Google Scholar &rarr;</a>
+
+    </div>
+    <div class='detail-summary'><h3>주요 내용 요약</h3><p>He 등은 모멘텀 인코더와 동적 큐를 사용하여 큰 배치 없이도 풍부한 부정 샘플을 확보하는 MoCo(Momentum Contrast)를 제안하였다.</p><p>쿼리 인코더는 경사하강법으로 갱신하고, 키 인코더는 쿼리의 가중 이동 평균으로 천천히 갱신(모멘텀 업데이트)한다. 65,536개의 키를 큐에 유지하여 SimCLR의 큰 배치 요구를 피한다.</p><p>MoCo는 표준 GPU에서도 효과적인 대조 학습을 가능하게 하여, 자기지도 비전 표현 학습의 실용적 확산에 기여하였다.</p></div>
+  </div>
+  <div class="detail-page" id="detail-he2021mae">
+    <button class="back-btn" onclick="hideDetail()">&larr; 목록으로</button>
+    <div class="detail-header">
+      <span class="detail-label">[He 2022]</span>
+      <span class="detail-type">article</span>
+    </div>
+    <h2 class="detail-title">Masked Autoencoders Are Scalable Vision Learners</h2>
+    <div class="detail-meta">
+      <p><strong>저자:</strong> He, Kaiming and Chen, Xinlei and Xie, Saining and Li, Yanghao and Dollár, Piotr and Girshick, Ross</p>
+      <p><strong>출처:</strong> Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR), pp. 16000--16009, 2022.</p>
+    </div>
+    <div class="detail-links">
+      <h3>원문 접근</h3>
+      <a href="https://scholar.google.com/scholar?q=Masked Autoencoders Are Scalable Vision Learners" target="_blank" class="detail-link">Google Scholar &rarr;</a>
+
+    </div>
+    <div class='detail-summary'><h3>주요 내용 요약</h3><p>He 등은 이미지 패치의 75%를 무작위로 마스킹하고 나머지에서 복원하는 자기지도학습 방법 MAE(Masked Autoencoders)를 제안하였다.</p><p>ViT 인코더는 마스킹되지 않은 25%의 패치만 처리하므로 학습 효율이 높고, 경량 디코더가 마스킹된 패치를 픽셀 수준에서 재구성한다. 높은 마스킹 비율(75%)이 비시각적 중복(redundancy)을 극복하는 핵심이다.</p><p>MAE는 ImageNet 파인튜닝에서 87.8%를 달성하여, 대조 학습에 의존하지 않는 비전 자기지도학습의 새로운 경로를 열었다.</p></div>
+  </div>
+  <div class="detail-page" id="detail-he2022mae">
+    <button class="back-btn" onclick="hideDetail()">&larr; 목록으로</button>
+    <div class="detail-header">
+      <span class="detail-label">[He 2022]</span>
+      <span class="detail-type">inproceedings</span>
+    </div>
+    <h2 class="detail-title">Masked Autoencoders Are Scalable Vision Learners</h2>
+    <div class="detail-meta">
+      <p><strong>저자:</strong> He, Kaiming and Chen, Xinlei and Xie, Saining and Li, Yanghao and Dollár, Piotr and Girshick, Ross</p>
+      <p><strong>출처:</strong> CVPR, pp. 16000--16009, 2022.</p>
+    </div>
+    <div class="detail-links">
+      <h3>원문 접근</h3>
+      <a href="https://scholar.google.com/scholar?q=Masked Autoencoders Are Scalable Vision Learners" target="_blank" class="detail-link">Google Scholar &rarr;</a>
+
+    </div>
+    
+  </div>
+  <div class="detail-page" id="detail-hebb1949organization">
+    <button class="back-btn" onclick="hideDetail()">&larr; 목록으로</button>
+    <div class="detail-header">
+      <span class="detail-label">[Hebb 1949]</span>
+      <span class="detail-type">book</span>
+    </div>
+    <h2 class="detail-title">The Organization of Behavior</h2>
+    <div class="detail-meta">
+      <p><strong>저자:</strong> Hebb, Donald O.</p>
+      <p><strong>출처:</strong> . Wiley &amp; Sons, 1949.</p>
+    </div>
+    <div class="detail-links">
+      <h3>원문 접근</h3>
+      <a href="https://scholar.google.com/scholar?q=The Organization of Behavior" target="_blank" class="detail-link">Google Scholar &rarr;</a>
+
+    </div>
+    <div class='detail-summary'><h3>주요 내용 요약</h3><p>Donald Hebb는 두 뉴런이 동시에 활성화되면 그 사이의 연결이 강화된다는 &#x27;헵의 학습 법칙&#x27;을 제안하였다. &#x27;함께 발화하는 뉴런은 함께 연결된다(Neurons that fire together, wire together)&#x27;라는 이 원칙은 시냅스 가소성의 최초의 계산적 설명이다.</p><p>이 아이디어는 이후 퍼셉트론 학습 규칙, 역전파 알고리즘, 그리고 현대 신경망의 경사하강법 기반 학습의 생물학적 근거를 제공하였다. 특히 비지도 학습과 자기조직화 지도(SOM)의 이론적 토대로도 기능한다.</p><p>Hebb의 저서 &#x27;The Organization of Behavior&#x27;는 심리학, 신경과학, 컴퓨터 과학을 연결하는 학제적 고전으로, 인공지능 연구에 생물학적 영감을 불어넣은 선구적 작품이다.</p></div>
+  </div>
+  <div class="detail-page" id="detail-hendrycks2016gelu">
+    <button class="back-btn" onclick="hideDetail()">&larr; 목록으로</button>
+    <div class="detail-header">
+      <span class="detail-label">[Hendrycks 2016]</span>
+      <span class="detail-type">article</span>
+    </div>
+    <h2 class="detail-title">Gaussian Error Linear Units (GELUs)</h2>
+    <div class="detail-meta">
+      <p><strong>저자:</strong> Hendrycks, Dan and Gimpel, Kevin</p>
+      <p><strong>출처:</strong> arXiv preprint arXiv:1606.08415, 2016.</p>
+    </div>
+    <div class="detail-links">
+      <h3>원문 접근</h3>
+      <a href="https://arxiv.org/abs/1606.08415" target="_blank" class="detail-link">arXiv &rarr;</a>
+<a href="https://scholar.google.com/scholar?q=Gaussian Error Linear Units (GELUs)" target="_blank" class="detail-link">Google Scholar &rarr;</a>
+
+    </div>
+    <div class='detail-summary'><h3>주요 내용 요약</h3><p>Hendrycks와 Gimpel은 가우시안 오차 함수를 기반으로 한 GELU(Gaussian Error Linear Unit) 활성화 함수를 제안하였다. GELU(x) = x·Φ(x)로, 입력을 확률적으로 스케일링한다.</p><p>ReLU가 입력의 부호에 따라 이진적으로 0 또는 x를 출력하는 반면, GELU는 입력값에 따라 부드럽게 전환되어 기울기가 연속적이다. 이 부드러운 전환이 트랜스포머의 학습 안정성에 기여한다.</p><p>GELU는 BERT, GPT 등 주요 트랜스포머 모델의 표준 활성화 함수로 채택되어 현재 자연어 처리 분야에서 가장 널리 사용된다.</p></div>
+  </div>
+  <div class="detail-page" id="detail-hinton2006dbn">
+    <button class="back-btn" onclick="hideDetail()">&larr; 목록으로</button>
+    <div class="detail-header">
+      <span class="detail-label">[Hinton 2006]</span>
+      <span class="detail-type">article</span>
+    </div>
+    <h2 class="detail-title">A Fast Learning Algorithm for Deep Belief Nets</h2>
+    <div class="detail-meta">
+      <p><strong>저자:</strong> Hinton, Geoffrey E. and Osindero, Simon and Teh, Yee-Whye</p>
+      <p><strong>출처:</strong> Neural Computation, vol. 18, pp. 1527--1554, 2006.</p>
+    </div>
+    <div class="detail-links">
+      <h3>원문 접근</h3>
+      <a href="https://scholar.google.com/scholar?q=A Fast Learning Algorithm for Deep Belief Nets" target="_blank" class="detail-link">Google Scholar &rarr;</a>
+
+    </div>
+    <div class='detail-summary'><h3>주요 내용 요약</h3><p>Hinton 등은 제한 볼츠만 머신(RBM)을 층별로 쌓아 심층 신뢰망(DBN)을 구성하고, 비지도 사전학습 후 역전파로 파인튜닝하는 2단계 학습 방법을 제안하였다. 이 방법으로 깊은 네트워크를 안정적으로 학습할 수 있음을 보였다.</p><p>층별 탐욕적 사전학습은 각 층의 가중치를 좋은 초기값으로 설정하여, 이후 역전파가 기울기 소실 없이 효과적으로 작동할 수 있는 기반을 마련한다. 이는 심층 네트워크의 학습 가능성에 대한 실증적 증거를 최초로 제시한 것이다.</p><p>이 논문은 2000년대 초 침체기에 있던 신경망 연구를 되살린 &#x27;딥러닝 부흥&#x27;의 시발점으로 평가된다. Hinton은 이 연구에 &#x27;딥러닝&#x27;이라는 이름을 붙여 새로운 연구 패러다임을 선언했다.</p></div>
+  </div>
+  <div class="detail-page" id="detail-hinton2015distilling">
+    <button class="back-btn" onclick="hideDetail()">&larr; 목록으로</button>
+    <div class="detail-header">
+      <span class="detail-label">[Hinton 2015]</span>
+      <span class="detail-type">article</span>
+    </div>
+    <h2 class="detail-title">Distilling the Knowledge in a Neural Network</h2>
+    <div class="detail-meta">
+      <p><strong>저자:</strong> Hinton, Geoffrey and Vinyals, Oriol and Dean, Jeff</p>
+      <p><strong>출처:</strong> arXiv preprint arXiv:1503.02531, 2015.</p>
+    </div>
+    <div class="detail-links">
+      <h3>원문 접근</h3>
+      <a href="https://arxiv.org/abs/1503.02531" target="_blank" class="detail-link">arXiv &rarr;</a>
+<a href="https://scholar.google.com/scholar?q=Distilling the Knowledge in a Neural Network" target="_blank" class="detail-link">Google Scholar &rarr;</a>
+
+    </div>
+    <div class='detail-summary'><h3>주요 내용 요약</h3><p>Hinton, Vinyals, Dean은 큰 교사 모델의 소프트 레이블(soft targets)로 작은 학생 모델을 훈련하는 지식 증류(Knowledge Distillation) 기법을 제안하였다.</p><p>교사 모델의 softmax 출력(온도 T로 완화)에는 클래스 간 유사도 정보가 담겨 있어, 하드 레이블(one-hot)보다 풍부한 학습 신호를 제공한다. 학생 손실은 하드 레이블과의 교차 엔트로피와 교사와의 KL 발산의 가중합이다.</p><p>지식 증류는 모델 경량화의 핵심 기법으로, 양자화·프루닝과 함께 엣지 디바이스 배포를 위한 표준 도구이다.</p></div>
+  </div>
+  <div class="detail-page" id="detail-ho2020ddpm">
+    <button class="back-btn" onclick="hideDetail()">&larr; 목록으로</button>
+    <div class="detail-header">
+      <span class="detail-label">[Ho 2020]</span>
+      <span class="detail-type">inproceedings</span>
+    </div>
+    <h2 class="detail-title">Denoising Diffusion Probabilistic Models</h2>
+    <div class="detail-meta">
+      <p><strong>저자:</strong> Ho, Jonathan and Jain, Ajay and Abbeel, Pieter</p>
+      <p><strong>출처:</strong> NeurIPS, 2020.</p>
+    </div>
+    <div class="detail-links">
+      <h3>원문 접근</h3>
+      <a href="https://scholar.google.com/scholar?q=Denoising Diffusion Probabilistic Models" target="_blank" class="detail-link">Google Scholar &rarr;</a>
+
+    </div>
+    <div class='detail-summary'><h3>주요 내용 요약</h3><p>Ho 등은 데이터에 점진적으로 가우시안 노이즈를 추가하는 순방향 과정과, 신경망이 노이즈를 예측하여 제거하는 역방향 과정으로 구성된 DDPM(Denoising Diffusion Probabilistic Model)을 제안하였다.</p><p>학습 목표는 추가된 노이즈 ε과 예측 노이즈 ε_θ의 MSE를 최소화하는 단순한 형태이며, T단계(보통 1000)의 점진적 노이즈 제거를 통해 순수 노이즈에서 이미지를 생성한다. VAE의 안정성과 GAN의 생성 품질을 결합한 것이 핵심 장점이다.</p><p>DDPM은 확산 모델 시대를 개막한 논문으로, Stable Diffusion, DALL-E 2, Imagen 등 텍스트-이미지 생성 모델의 이론적 기반이 되었다. 다만 T단계 순차 샘플링으로 인한 속도 제약이 있어, DDIM 등 가속 기법이 후속 연구되었다.</p></div>
+  </div>
+  <div class="detail-page" id="detail-ho2022cfg">
+    <button class="back-btn" onclick="hideDetail()">&larr; 목록으로</button>
+    <div class="detail-header">
+      <span class="detail-label">[Ho 2022]</span>
+      <span class="detail-type">article</span>
+    </div>
+    <h2 class="detail-title">Classifier-Free Diffusion Guidance</h2>
+    <div class="detail-meta">
+      <p><strong>저자:</strong> Ho, Jonathan and Salimans, Tim</p>
+      <p><strong>출처:</strong> NeurIPS Workshop on Deep Generative Models and Downstream Applications, 2022.</p>
+    </div>
+    <div class="detail-links">
+      <h3>원문 접근</h3>
+      <a href="https://scholar.google.com/scholar?q=Classifier-Free Diffusion Guidance" target="_blank" class="detail-link">Google Scholar &rarr;</a>
+
+    </div>
+    <div class='detail-summary'><h3>주요 내용 요약</h3><p>Ho와 Salimans는 별도의 분류기 없이 조건부 생성을 강화하는 분류기 없는 안내(Classifier-Free Guidance, CFG)를 제안하였다.</p><p>학습 시 텍스트 조건을 일정 확률(10%)로 빈 문자열로 대체하여, 모델이 조건부 예측과 무조건부 예측을 모두 학습하게 한다. 생성 시 두 예측의 차이를 안내 스케일 w로 증폭하여 프롬프트 충실도를 높인다.</p><p>CFG는 Stable Diffusion, DALL-E 2 등 텍스트 조건 확산 모델의 필수 구성 요소로, w값으로 품질/다양성과 프롬프트 충실도의 균형을 조절한다.</p></div>
+  </div>
+  <div class="detail-page" id="detail-hochreiter1997lstm">
+    <button class="back-btn" onclick="hideDetail()">&larr; 목록으로</button>
+    <div class="detail-header">
+      <span class="detail-label">[Hochreiter 1997]</span>
+      <span class="detail-type">article</span>
+    </div>
+    <h2 class="detail-title">Long Short-Term Memory</h2>
+    <div class="detail-meta">
+      <p><strong>저자:</strong> Hochreiter, Sepp and Schmidhuber, Jürgen</p>
+      <p><strong>출처:</strong> Neural Computation, vol. 9, pp. 1735--1780, 1997.</p>
+    </div>
+    <div class="detail-links">
+      <h3>원문 접근</h3>
+      <a href="https://scholar.google.com/scholar?q=Long Short-Term Memory" target="_blank" class="detail-link">Google Scholar &rarr;</a>
+
+    </div>
+    <div class='detail-summary'><h3>주요 내용 요약</h3><p>Hochreiter와 Schmidhuber는 셀 상태(cell state)와 세 개의 게이트(망각, 입력, 출력)를 도입한 LSTM(Long Short-Term Memory)을 제안하였다. 기울기 소실 문제를 해결하여 장기 의존성을 학습할 수 있는 핵심 아키텍처이다.</p><p>셀 상태는 &#x27;컨베이어 벨트&#x27;처럼 정보를 시간 축을 따라 직접 전달하며, 게이트들이 어떤 정보를 유지·추가·출력할지를 선택적으로 제어한다. 기울기가 셀 상태를 통해 변형 없이 흐를 수 있어 수백 스텝 이상의 의존성도 학습 가능하다.</p><p>LSTM은 기계 번역, 음성 인식, 감성 분석 등 시퀀스 과제에서 오랫동안 지배적이었으며, 2017년 트랜스포머의 등장 이후에도 시계열 예측 등 일부 영역에서 활용된다.</p></div>
+  </div>
+  <div class="detail-page" id="detail-hoerl1970ridge">
+    <button class="back-btn" onclick="hideDetail()">&larr; 목록으로</button>
+    <div class="detail-header">
+      <span class="detail-label">[Hoerl 1970]</span>
+      <span class="detail-type">article</span>
+    </div>
+    <h2 class="detail-title">Ridge Regression: Biased Estimation for Nonorthogonal Problems</h2>
+    <div class="detail-meta">
+      <p><strong>저자:</strong> Hoerl, Arthur E. and Kennard, Robert W.</p>
+      <p><strong>출처:</strong> Technometrics, vol. 12, pp. 55--67, 1970.</p>
+    </div>
+    <div class="detail-links">
+      <h3>원문 접근</h3>
+      <a href="https://scholar.google.com/scholar?q=Ridge Regression: Biased Estimation for Nonorthogonal Proble" target="_blank" class="detail-link">Google Scholar &rarr;</a>
+
+    </div>
+    
+  </div>
+  <div class="detail-page" id="detail-hofmann2008kernel">
+    <button class="back-btn" onclick="hideDetail()">&larr; 목록으로</button>
+    <div class="detail-header">
+      <span class="detail-label">[Hofmann 2008]</span>
+      <span class="detail-type">article</span>
+    </div>
+    <h2 class="detail-title">Kernel Methods in Machine Learning</h2>
+    <div class="detail-meta">
+      <p><strong>저자:</strong> Hofmann, Thomas and Schölkopf, Bernhard and Smola, Alexander J.</p>
+      <p><strong>출처:</strong> The Annals of Statistics, vol. 36, pp. 1171--1220, 2008.</p>
+    </div>
+    <div class="detail-links">
+      <h3>원문 접근</h3>
+      <a href="https://scholar.google.com/scholar?q=Kernel Methods in Machine Learning" target="_blank" class="detail-link">Google Scholar &rarr;</a>
+
+    </div>
+    
+  </div>
+  <div class="detail-page" id="detail-hu2022lora">
+    <button class="back-btn" onclick="hideDetail()">&larr; 목록으로</button>
+    <div class="detail-header">
+      <span class="detail-label">[Hu 2022]</span>
+      <span class="detail-type">article</span>
+    </div>
+    <h2 class="detail-title">LoRA: Low-Rank Adaptation of Large Language Models</h2>
+    <div class="detail-meta">
+      <p><strong>저자:</strong> Hu, Edward J. and Shen, Yelong and Wallis, Phillip and others</p>
+      <p><strong>출처:</strong> ICLR, 2022.</p>
+    </div>
+    <div class="detail-links">
+      <h3>원문 접근</h3>
+      <a href="https://scholar.google.com/scholar?q=LoRA: Low-Rank Adaptation of Large Language Models" target="_blank" class="detail-link">Google Scholar &rarr;</a>
+
+    </div>
+    <div class='detail-summary'><h3>주요 내용 요약</h3><p>Hu 등은 사전학습된 가중치를 동결하고 저랭크 행렬 쌍 BA만 학습하는 LoRA(Low-Rank Adaptation)를 제안하였다. 풀 파인튜닝 대비 100배 이상 적은 학습 파라미터로 유사한 성능을 달성한다.</p><p>핵심 가정은 파인튜닝 시 가중치 변화량 ΔW가 저랭크(low-rank)라는 것이다. ΔW = BA로 분해하여 랭크 r(보통 4~16)만큼의 파라미터만 학습하므로, 메모리와 연산 비용이 극적으로 줄어든다. 추론 시 BA를 원본에 병합하면 추가 지연이 없다.</p><p>LoRA는 Hugging Face PEFT 라이브러리를 통해 손쉽게 적용할 수 있으며, QLoRA(4비트 양자화 + LoRA)와 결합하면 소비자 GPU에서도 수백억 파라미터 모델의 파인튜닝이 가능하다.</p></div>
+  </div>
+  <div class="detail-page" id="detail-huang2017densenet">
+    <button class="back-btn" onclick="hideDetail()">&larr; 목록으로</button>
+    <div class="detail-header">
+      <span class="detail-label">[Huang 2017]</span>
+      <span class="detail-type">inproceedings</span>
+    </div>
+    <h2 class="detail-title">Densely Connected Convolutional Networks</h2>
+    <div class="detail-meta">
+      <p><strong>저자:</strong> Huang, Gao and Liu, Zhuang and van der Maaten, Laurens and Weinberger, Kilian Q.</p>
+      <p><strong>출처:</strong> Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR), pp. 4700--4708, 2017.</p>
+    </div>
+    <div class="detail-links">
+      <h3>원문 접근</h3>
+      <a href="https://scholar.google.com/scholar?q=Densely Connected Convolutional Networks" target="_blank" class="detail-link">Google Scholar &rarr;</a>
+
+    </div>
+    <div class='detail-summary'><h3>주요 내용 요약</h3><p>Huang 등은 각 층이 이전 모든 층의 출력을 입력으로 받는 Dense Block 구조를 제안하였다. ResNet이 잔차를 &#x27;더하는&#x27; 방식이라면, DenseNet은 특징 맵을 &#x27;연결(concatenation)&#x27;하여 재사용한다.</p><p>이 구조는 특징 재사용을 극대화하여 파라미터 효율이 높고, 기울기가 모든 층에 직접 전달되어 기울기 흐름이 강화된다. 다만 연결된 특징 맵이 누적되면서 메모리 사용량이 증가하므로, Transition Layer에서 1×1 합성곱과 풀링으로 차원을 줄인다.</p><p>DenseNet은 ResNet 대비 적은 파라미터로 유사한 성능을 달성하며, 특히 데이터가 제한된 의료 영상 분야에서 널리 활용된다.</p></div>
+  </div>
+  <div class="detail-page" id="detail-hubel1959receptive">
+    <button class="back-btn" onclick="hideDetail()">&larr; 목록으로</button>
+    <div class="detail-header">
+      <span class="detail-label">[Hubel 1959]</span>
+      <span class="detail-type">article</span>
+    </div>
+    <h2 class="detail-title">Receptive Fields of Single Neurones in the Cat&#x27;s Striate Cortex</h2>
+    <div class="detail-meta">
+      <p><strong>저자:</strong> Hubel, David H. and Wiesel, Torsten N.</p>
+      <p><strong>출처:</strong> The Journal of Physiology, vol. 148, pp. 574--591, 1959.</p>
+    </div>
+    <div class="detail-links">
+      <h3>원문 접근</h3>
+      <a href="https://scholar.google.com/scholar?q=Receptive Fields of Single Neurones in the Cat&amp;#x27;s Striate Cor" target="_blank" class="detail-link">Google Scholar &rarr;</a>
+
+    </div>
+    
+  </div>
+  <div class="detail-page" id="detail-ioffe2015batchnorm">
+    <button class="back-btn" onclick="hideDetail()">&larr; 목록으로</button>
+    <div class="detail-header">
+      <span class="detail-label">[Ioffe 2015]</span>
+      <span class="detail-type">inproceedings</span>
+    </div>
+    <h2 class="detail-title">Batch Normalization: Accelerating Deep Network Training by Reducing Internal Covariate Shift</h2>
+    <div class="detail-meta">
+      <p><strong>저자:</strong> Ioffe, Sergey and Szegedy, Christian</p>
+      <p><strong>출처:</strong> ICML, pp. 448--456, 2015.</p>
+    </div>
+    <div class="detail-links">
+      <h3>원문 접근</h3>
+      <a href="https://scholar.google.com/scholar?q=Batch Normalization: Accelerating Deep Network Training by R" target="_blank" class="detail-link">Google Scholar &rarr;</a>
+
+    </div>
+    <div class='detail-summary'><h3>주요 내용 요약</h3><p>Ioffe와 Szegedy는 미니배치 단위로 활성화의 평균과 분산을 정규화하는 배치 정규화(Batch Normalization)를 제안하였다. 학습 가능한 스케일(γ)과 시프트(β) 파라미터를 추가하여 표현력을 유지한다.</p><p>배치 정규화는 내부 공변량 이동(internal covariate shift)을 줄여 더 높은 학습률을 사용할 수 있게 하고, 학습 속도를 크게 향상시킨다. 또한 정칙화 효과도 있어 드롭아웃을 대체할 수 있다.</p><p>이 기법은 2015년 이후 거의 모든 CNN 아키텍처의 필수 구성 요소가 되었으며, ResNet, EfficientNet 등에서 핵심적으로 사용된다. 다만 배치 크기에 의존하는 한계가 있어 RNN/트랜스포머에서는 레이어 정규화가 대안으로 사용된다.</p></div>
+  </div>
+  <div class="detail-page" id="detail-jia2021align">
+    <button class="back-btn" onclick="hideDetail()">&larr; 목록으로</button>
+    <div class="detail-header">
+      <span class="detail-label">[Jia 2021]</span>
+      <span class="detail-type">inproceedings</span>
+    </div>
+    <h2 class="detail-title">Scaling Up Visual and Vision-Language Representation Learning With Noisy Text Supervision</h2>
+    <div class="detail-meta">
+      <p><strong>저자:</strong> Jia, Chao and Yang, Yinfei and Xia, Ye and others</p>
+      <p><strong>출처:</strong> ICML, pp. 4904--4916, 2021.</p>
+    </div>
+    <div class="detail-links">
+      <h3>원문 접근</h3>
+      <a href="https://scholar.google.com/scholar?q=Scaling Up Visual and Vision-Language Representation Learnin" target="_blank" class="detail-link">Google Scholar &rarr;</a>
+
+    </div>
+    
+  </div>
+  <div class="detail-page" id="detail-kaplan2020scaling">
+    <button class="back-btn" onclick="hideDetail()">&larr; 목록으로</button>
+    <div class="detail-header">
+      <span class="detail-label">[Kaplan 2020]</span>
+      <span class="detail-type">article</span>
+    </div>
+    <h2 class="detail-title">Scaling Laws for Neural Language Models</h2>
+    <div class="detail-meta">
+      <p><strong>저자:</strong> Kaplan, Jared and McCandlish, Sam and Henighan, Tom and Brown, Tom B. and Chess, Benjamin and Child, Rewon and Gray, Scott and Radford, Alec and Wu, Jeffrey and Amodei, Dario</p>
+      <p><strong>출처:</strong> arXiv preprint arXiv:2001.08361, 2020.</p>
+    </div>
+    <div class="detail-links">
+      <h3>원문 접근</h3>
+      <a href="https://arxiv.org/abs/2001.08361" target="_blank" class="detail-link">arXiv &rarr;</a>
+<a href="https://scholar.google.com/scholar?q=Scaling Laws for Neural Language Models" target="_blank" class="detail-link">Google Scholar &rarr;</a>
+
+    </div>
+    <div class='detail-summary'><h3>주요 내용 요약</h3><p>Kaplan 등은 모델 크기(N), 데이터 양(D), 연산량(C)과 성능(손실) 사이의 멱법칙(power-law) 관계를 실증적으로 규명하였다. 세 변수 중 하나를 고정하면 나머지와 성능의 관계가 단순한 멱법칙을 따른다.</p><p>주요 발견은 (1) 모델 크기가 가장 중요한 변수이며, (2) 최적 연산 예산 배분에서 모델 크기를 우선 키워야 하고, (3) 같은 연산량이면 큰 모델을 적은 데이터로 학습하는 것이 작은 모델을 많은 데이터로 학습하는 것보다 효율적이라는 것이다.</p><p>이 스케일링 법칙은 GPT-3, GPT-4 등의 규모 결정에 실질적으로 활용되었으며, 이후 Chinchilla 논문(Hoffmann et al., 2022)이 데이터의 중요성을 재평가하여 보완하였다.</p></div>
+  </div>
+  <div class="detail-page" id="detail-karras2019stylegan">
+    <button class="back-btn" onclick="hideDetail()">&larr; 목록으로</button>
+    <div class="detail-header">
+      <span class="detail-label">[Karras 2019]</span>
+      <span class="detail-type">inproceedings</span>
+    </div>
+    <h2 class="detail-title">A Style-Based Generator Architecture for Generative Adversarial Networks</h2>
+    <div class="detail-meta">
+      <p><strong>저자:</strong> Karras, Tero and Laine, Samuli and Aila, Timo</p>
+      <p><strong>출처:</strong> CVPR, pp. 4401--4410, 2019.</p>
+    </div>
+    <div class="detail-links">
+      <h3>원문 접근</h3>
+      <a href="https://scholar.google.com/scholar?q=A Style-Based Generator Architecture for Generative Adversar" target="_blank" class="detail-link">Google Scholar &rarr;</a>
+
+    </div>
+    <div class='detail-summary'><h3>주요 내용 요약</h3><p>Karras 등은 매핑 네트워크와 적응적 인스턴스 정규화(AdaIN)를 도입한 스타일 기반 생성자 구조 StyleGAN을 제안하였다. 전례 없는 고품질 얼굴 이미지를 생성하며 이미지 생성의 새 기준을 세웠다.</p><p>잠재 벡터 z를 8층 MLP 매핑 네트워크로 중간 잠재 공간 w로 변환한 뒤, AdaIN을 통해 생성자의 각 해상도 단계에 주입한다. 이를 통해 거친 특징(포즈, 얼굴형)과 세밀한 특징(머리색, 질감)을 계층적으로 제어할 수 있다.</p><p>StyleGAN은 v2, v3로 발전하며 이미지 생성 품질의 한계를 계속 갱신하였고, 얼굴 편집, 도메인 적응, 데이터 증강 등 다양한 응용에 활용된다.</p></div>
+  </div>
+  <div class="detail-page" id="detail-kingma2014vae">
+    <button class="back-btn" onclick="hideDetail()">&larr; 목록으로</button>
+    <div class="detail-header">
+      <span class="detail-label">[Kingma 2014]</span>
+      <span class="detail-type">inproceedings</span>
+    </div>
+    <h2 class="detail-title">Auto-Encoding Variational Bayes</h2>
+    <div class="detail-meta">
+      <p><strong>저자:</strong> Kingma, Diederik P. and Welling, Max</p>
+      <p><strong>출처:</strong> ICLR, 2014.</p>
+    </div>
+    <div class="detail-links">
+      <h3>원문 접근</h3>
+      <a href="https://scholar.google.com/scholar?q=Auto-Encoding Variational Bayes" target="_blank" class="detail-link">Google Scholar &rarr;</a>
+
+    </div>
+    <div class='detail-summary'><h3>주요 내용 요약</h3><p>Kingma와 Welling은 잠재 변수의 사후 분포를 신경망으로 근사하는 변분 오토인코더(VAE)를 제안하였다. 인코더가 확률 분포(평균, 분산)를 출력하고, KL 발산으로 잠재 공간을 정규화한다.</p><p>학습 목표는 ELBO(Evidence Lower Bound) 최대화이며, 이는 재구성 손실과 KL 발산의 합을 최소화하는 것과 같다. 재파라미터화 트릭 z = μ + σ⊙ε으로 샘플링을 미분 가능하게 만들어 역전파를 가능하게 한다.</p><p>VAE는 잠재 공간이 연속적이고 구조화되어 있어 보간에 의한 부드러운 생성이 가능하지만, GAN에 비해 생성 이미지가 흐릿한 한계가 있다. 잠재 확산 모델(LDM)의 인코더/디코더로도 핵심적으로 활용된다.</p></div>
+  </div>
+  <div class="detail-page" id="detail-kingma2015adam">
+    <button class="back-btn" onclick="hideDetail()">&larr; 목록으로</button>
+    <div class="detail-header">
+      <span class="detail-label">[Kingma 2015]</span>
+      <span class="detail-type">inproceedings</span>
+    </div>
+    <h2 class="detail-title">Adam: A Method for Stochastic Optimization</h2>
+    <div class="detail-meta">
+      <p><strong>저자:</strong> Kingma, Diederik P. and Ba, Jimmy</p>
+      <p><strong>출처:</strong> ICLR, 2015.</p>
+    </div>
+    <div class="detail-links">
+      <h3>원문 접근</h3>
+      <a href="https://scholar.google.com/scholar?q=Adam: A Method for Stochastic Optimization" target="_blank" class="detail-link">Google Scholar &rarr;</a>
+
+    </div>
+    <div class='detail-summary'><h3>주요 내용 요약</h3><p>Kingma와 Ba는 1차 모멘트(평균)와 2차 모멘트(분산)의 이동 평균을 동시에 추적하여 각 파라미터에 적응적 학습률을 적용하는 Adam 옵티마이저를 제안하였다. β₁=0.9, β₂=0.999, η=10⁻³이 기본 하이퍼파라미터이다.</p><p>Adam은 모멘텀의 가속 효과와 RMSProp의 적응적 학습률을 결합한 것으로, 편향 보정(bias correction) 항을 추가하여 학습 초기의 불안정성을 해결한다. 대부분의 문제에서 기본 설정만으로 합리적인 성능을 보여 빠른 프로토타이핑에 적합하다.</p><p>Adam은 현재 가장 널리 사용되는 딥러닝 옵티마이저이며, 가중치 감쇠를 올바르게 분리한 AdamW(Loshchilov &amp; Hutter, 2019)는 트랜스포머 학습의 사실상 표준이 되었다.</p></div>
+  </div>
+  <div class="detail-page" id="detail-kramer1991nonlinear">
+    <button class="back-btn" onclick="hideDetail()">&larr; 목록으로</button>
+    <div class="detail-header">
+      <span class="detail-label">[Kramer 1991]</span>
+      <span class="detail-type">article</span>
+    </div>
+    <h2 class="detail-title">Nonlinear Principal Component Analysis Using Autoassociative Neural Networks</h2>
+    <div class="detail-meta">
+      <p><strong>저자:</strong> Kramer, Mark A.</p>
+      <p><strong>출처:</strong> AIChE Journal, vol. 37, pp. 233--243, 1991.</p>
+    </div>
+    <div class="detail-links">
+      <h3>원문 접근</h3>
+      <a href="https://scholar.google.com/scholar?q=Nonlinear Principal Component Analysis Using Autoassociative" target="_blank" class="detail-link">Google Scholar &rarr;</a>
+
+    </div>
+    
+  </div>
+  <div class="detail-page" id="detail-krizhevsky2012alexnet">
+    <button class="back-btn" onclick="hideDetail()">&larr; 목록으로</button>
+    <div class="detail-header">
+      <span class="detail-label">[Krizhevsky 2012]</span>
+      <span class="detail-type">inproceedings</span>
+    </div>
+    <h2 class="detail-title">ImageNet Classification with Deep Convolutional Neural Networks</h2>
+    <div class="detail-meta">
+      <p><strong>저자:</strong> Krizhevsky, Alex and Sutskever, Ilya and Hinton, Geoffrey E.</p>
+      <p><strong>출처:</strong> NeurIPS, pp. 1097--1105, 2012.</p>
+    </div>
+    <div class="detail-links">
+      <h3>원문 접근</h3>
+      <a href="https://scholar.google.com/scholar?q=ImageNet Classification with Deep Convolutional Neural Netwo" target="_blank" class="detail-link">Google Scholar &rarr;</a>
+
+    </div>
+    <div class='detail-summary'><h3>주요 내용 요약</h3><p>Krizhevsky 등은 GPU 병렬 학습과 ReLU 활성화, 드롭아웃, 데이터 증강을 결합한 AlexNet으로 ImageNet 대회(ILSVRC 2012)에서 기존 방법을 10% 이상의 격차로 누르며 우승하였다. 이 결과는 딥러닝 혁명의 촉발점으로 널리 인식된다.</p><p>AlexNet은 5개 합성곱층과 3개 완전연결층으로 구성되며, 약 6천만 개의 파라미터를 가진다. 두 개의 GPU에 네트워크를 분할하여 학습한 최초의 대규모 CNN으로, GPU 가속 학습의 실용성을 입증하였다.</p><p>이 논문 이후 컴퓨터 비전 분야는 수작업 특징 설계에서 데이터로부터 특징을 학습하는 패러다임으로 급격히 전환되었으며, VGGNet, GoogLeNet, ResNet 등 후속 아키텍처 연구의 물결을 일으켰다.</p></div>
+  </div>
+  <div class="detail-page" id="detail-kuncheva2003diversity">
+    <button class="back-btn" onclick="hideDetail()">&larr; 목록으로</button>
+    <div class="detail-header">
+      <span class="detail-label">[Kuncheva 2003]</span>
+      <span class="detail-type">article</span>
+    </div>
+    <h2 class="detail-title">Measures of Diversity in Classifier Ensembles and Their Relationship with the Ensemble Accuracy</h2>
+    <div class="detail-meta">
+      <p><strong>저자:</strong> Kuncheva, Ludmila I. and Whitaker, Christopher J.</p>
+      <p><strong>출처:</strong> Machine Learning, vol. 51, pp. 181--207, 2003.</p>
+    </div>
+    <div class="detail-links">
+      <h3>원문 접근</h3>
+      <a href="https://scholar.google.com/scholar?q=Measures of Diversity in Classifier Ensembles and Their Rela" target="_blank" class="detail-link">Google Scholar &rarr;</a>
+
+    </div>
+    
+  </div>
+  <div class="detail-page" id="detail-lecun1998gradient">
+    <button class="back-btn" onclick="hideDetail()">&larr; 목록으로</button>
+    <div class="detail-header">
+      <span class="detail-label">[LeCun 1998]</span>
+      <span class="detail-type">article</span>
+    </div>
+    <h2 class="detail-title">Gradient-based learning applied to document recognition</h2>
+    <div class="detail-meta">
+      <p><strong>저자:</strong> LeCun, Yann and Bottou, Léon and Bengio, Yoshua and Haffner, Patrick</p>
+      <p><strong>출처:</strong> Proceedings of the IEEE, vol. 86, pp. 2278--2324, 1998.</p>
+    </div>
+    <div class="detail-links">
+      <h3>원문 접근</h3>
+      <a href="https://scholar.google.com/scholar?q=Gradient-based learning applied to document recognition" target="_blank" class="detail-link">Google Scholar &rarr;</a>
+
+    </div>
+    <div class='detail-summary'><h3>주요 내용 요약</h3><p>LeCun 등은 합성곱 신경망 LeNet-5를 이용한 문서 인식 시스템을 구축하여, 손글씨 숫자 인식에서 당시 최고 성능을 달성하였다. 합성곱-풀링-완전연결의 기본 CNN 구조를 확립한 선구적 논문이다.</p><p>LeNet-5는 가중치 공유, 지역적 수용야, 서브샘플링(풀링)이라는 세 가지 핵심 원리를 결합하여, 이미지의 공간적 구조를 효율적으로 처리한다. 미국 은행 수표의 우편번호 인식에 실제 상용 배포되어 실용적 성공도 거두었다.</p><p>이 논문은 CNN 아키텍처의 원형을 제시했을 뿐 아니라, 경사 기반 학습(gradient-based learning)의 실용성을 대규모 실험으로 입증하여 2012년 AlexNet의 성공으로 이어지는 길을 닦았다.</p></div>
+  </div>
+  <div class="detail-page" id="detail-lecun1998efficient">
+    <button class="back-btn" onclick="hideDetail()">&larr; 목록으로</button>
+    <div class="detail-header">
+      <span class="detail-label">[LeCun 1998]</span>
+      <span class="detail-type">incollection</span>
+    </div>
+    <h2 class="detail-title">Efficient BackProp</h2>
+    <div class="detail-meta">
+      <p><strong>저자:</strong> LeCun, Yann and Bottou, Léon and Orr, Genevieve B. and Müller, Klaus-Robert</p>
+      <p><strong>출처:</strong> Neural Networks: Tricks of the Trade, vol. 1524, pp. 9--50. Springer, 1998.</p>
+    </div>
+    <div class="detail-links">
+      <h3>원문 접근</h3>
+      <a href="https://scholar.google.com/scholar?q=Efficient BackProp" target="_blank" class="detail-link">Google Scholar &rarr;</a>
+
+    </div>
+    
+  </div>
+  <div class="detail-page" id="detail-lewis2020rag">
+    <button class="back-btn" onclick="hideDetail()">&larr; 목록으로</button>
+    <div class="detail-header">
+      <span class="detail-label">[Lewis 2020]</span>
+      <span class="detail-type">article</span>
+    </div>
+    <h2 class="detail-title">Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks</h2>
+    <div class="detail-meta">
+      <p><strong>저자:</strong> Lewis, Patrick and Perez, Ethan and Piktus, Aleksandra and others</p>
+      <p><strong>출처:</strong> NeurIPS, 2020.</p>
+    </div>
+    <div class="detail-links">
+      <h3>원문 접근</h3>
+      <a href="https://scholar.google.com/scholar?q=Retrieval-Augmented Generation for Knowledge-Intensive NLP T" target="_blank" class="detail-link">Google Scholar &rarr;</a>
+
+    </div>
+    <div class='detail-summary'><h3>주요 내용 요약</h3><p>Lewis 등은 외부 문서를 검색하여 LLM의 입력에 제공하는 RAG(Retrieval-Augmented Generation)를 제안하였다. 파라미터에 저장된 지식의 한계를 외부 지식 소스로 보완한다.</p><p>파이프라인은 인덱싱(문서 분할 → 임베딩 → 벡터 DB 저장)과 검색-생성(질문 임베딩 → 유사 문서 검색 → LLM 프롬프트에 주입 → 답변 생성)으로 구성된다. 검색 품질이 최종 성능을 결정하므로 청킹, 임베딩, 재순위 매기기 등 검색 파이프라인 설계가 핵심이다.</p><p>RAG는 지식 컷오프 문제, 환각(hallucination) 완화, 출처 추적(source attribution) 등에 효과적이며, LLM의 지식 확장을 위한 표준 접근법으로 자리잡았다.</p></div>
+  </div>
+  <div class="detail-page" id="detail-li2023blip2">
+    <button class="back-btn" onclick="hideDetail()">&larr; 목록으로</button>
+    <div class="detail-header">
+      <span class="detail-label">[Li 2023]</span>
+      <span class="detail-type">article</span>
+    </div>
+    <h2 class="detail-title">BLIP-2: Bootstrapping Language-Image Pre-Training with Frozen Image Encoders and Large Language Models</h2>
+    <div class="detail-meta">
+      <p><strong>저자:</strong> Li, Junnan and Li, Dongxu and Savarese, Silvio and Hoi, Steven</p>
+      <p><strong>출처:</strong> ICML, 2023.</p>
+    </div>
+    <div class="detail-links">
+      <h3>원문 접근</h3>
+      <a href="https://scholar.google.com/scholar?q=BLIP-2: Bootstrapping Language-Image Pre-Training with Froze" target="_blank" class="detail-link">Google Scholar &rarr;</a>
+
+    </div>
+    
+  </div>
+  <div class="detail-page" id="detail-lin2014coco">
+    <button class="back-btn" onclick="hideDetail()">&larr; 목록으로</button>
+    <div class="detail-header">
+      <span class="detail-label">[Lin 2014]</span>
+      <span class="detail-type">inproceedings</span>
+    </div>
+    <h2 class="detail-title">Microsoft COCO: Common Objects in Context</h2>
+    <div class="detail-meta">
+      <p><strong>저자:</strong> Lin, Tsung-Yi and Maire, Michael and Belongie, Serge and Hays, James and Perona, Pietro and Ramanan, Deva and Dollár, Piotr and Zitnick, C. Lawrence</p>
+      <p><strong>출처:</strong> Proceedings of the European Conference on Computer Vision (ECCV), pp. 740--755, 2014.</p>
+    </div>
+    <div class="detail-links">
+      <h3>원문 접근</h3>
+      <a href="https://scholar.google.com/scholar?q=Microsoft COCO: Common Objects in Context" target="_blank" class="detail-link">Google Scholar &rarr;</a>
+
+    </div>
+    <div class='detail-summary'><h3>주요 내용 요약</h3><p>Lin 등은 33만 장 이미지에 80개 객체 범주의 인스턴스 분할, 캡션, 키포인트 등 다중 과제 어노테이션을 제공하는 Microsoft COCO 데이터셋을 구축하였다.</p><p>COCO는 ImageNet과 달리 이미지당 여러 객체가 존재하고, 각 객체에 대해 바운딩 박스, 세그멘테이션 마스크, 캡션 등 다양한 수준의 어노테이션을 제공한다. mAP@[0.5:0.95] 평가 프로토콜을 도입하여 탐지 모델의 다양한 IoU 임계값에서의 성능을 종합적으로 평가한다.</p><p>COCO는 객체 탐지, 인스턴스 분할, 이미지 캡션 분야의 표준 벤치마크로 자리잡았으며, 매년 열리는 COCO Challenge는 최신 기술의 발전을 이끄는 동력이 되고 있다.</p></div>
+  </div>
+  <div class="detail-page" id="detail-liu2021privacy">
+    <button class="back-btn" onclick="hideDetail()">&larr; 목록으로</button>
+    <div class="detail-header">
+      <span class="detail-label">[Liu 2021]</span>
+      <span class="detail-type">article</span>
+    </div>
+    <h2 class="detail-title">Privacy and Security Issues in Deep Learning: A Survey</h2>
+    <div class="detail-meta">
+      <p><strong>저자:</strong> Liu, Ximeng and Xie, Lehui and Wang, Yaopeng and Zou, Jiawei and Xiong, Jinbo and Ying, Zuobin and Vasilakos, Athanasios V.</p>
+      <p><strong>출처:</strong> IEEE Transactions on Neural Networks and Learning Systems, vol. 32, pp. 4147--4169, 2021.</p>
+    </div>
+    <div class="detail-links">
+      <h3>원문 접근</h3>
+      <a href="https://scholar.google.com/scholar?q=Privacy and Security Issues in Deep Learning: A Survey" target="_blank" class="detail-link">Google Scholar &rarr;</a>
+
+    </div>
+    
+  </div>
+  <div class="detail-page" id="detail-liu2024llava">
+    <button class="back-btn" onclick="hideDetail()">&larr; 목록으로</button>
+    <div class="detail-header">
+      <span class="detail-label">[Liu 2024]</span>
+      <span class="detail-type">article</span>
+    </div>
+    <h2 class="detail-title">Visual Instruction Tuning</h2>
+    <div class="detail-meta">
+      <p><strong>저자:</strong> Liu, Haotian and Li, Chunyuan and Wu, Qingyang and Lee, Yong Jae</p>
+      <p><strong>출처:</strong> NeurIPS, 2024.</p>
+    </div>
+    <div class="detail-links">
+      <h3>원문 접근</h3>
+      <a href="https://scholar.google.com/scholar?q=Visual Instruction Tuning" target="_blank" class="detail-link">Google Scholar &rarr;</a>
+
+    </div>
+    
+  </div>
+  <div class="detail-page" id="detail-long2015fcn">
+    <button class="back-btn" onclick="hideDetail()">&larr; 목록으로</button>
+    <div class="detail-header">
+      <span class="detail-label">[Long 2015]</span>
+      <span class="detail-type">inproceedings</span>
+    </div>
+    <h2 class="detail-title">Fully Convolutional Networks for Semantic Segmentation</h2>
+    <div class="detail-meta">
+      <p><strong>저자:</strong> Long, Jonathan and Shelhamer, Evan and Darrell, Trevor</p>
+      <p><strong>출처:</strong> Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR), pp. 3431--3440, 2015.</p>
+    </div>
+    <div class="detail-links">
+      <h3>원문 접근</h3>
+      <a href="https://scholar.google.com/scholar?q=Fully Convolutional Networks for Semantic Segmentation" target="_blank" class="detail-link">Google Scholar &rarr;</a>
+
+    </div>
+    <div class='detail-summary'><h3>주요 내용 요약</h3><p>Long 등은 완전연결층을 1×1 합성곱으로 대체하여 임의 크기 입력에서 픽셀별 예측을 수행하는 FCN(Fully Convolutional Network)을 제안하였다. 시맨틱 분할을 위한 최초의 종단간 학습 가능 모델이다.</p><p>분류 네트워크(VGG 등)를 완전 합성곱으로 변환하고, 전치 합성곱으로 특징 맵을 원본 해상도로 업샘플링한다. 스킵 연결(FCN-8s)을 통해 얕은 층의 세밀한 공간 정보와 깊은 층의 의미 정보를 결합한다.</p><p>FCN은 U-Net, DeepLab 등 후속 분할 아키텍처의 기반이 되었으며, &#x27;합성곱만으로 밀집 예측(dense prediction)이 가능하다&#x27;는 핵심 통찰을 제공하였다.</p></div>
+  </div>
+  <div class="detail-page" id="detail-loshchilov2019adamw">
+    <button class="back-btn" onclick="hideDetail()">&larr; 목록으로</button>
+    <div class="detail-header">
+      <span class="detail-label">[Loshchilov 2019]</span>
+      <span class="detail-type">inproceedings</span>
+    </div>
+    <h2 class="detail-title">Decoupled Weight Decay Regularization</h2>
+    <div class="detail-meta">
+      <p><strong>저자:</strong> Loshchilov, Ilya and Hutter, Frank</p>
+      <p><strong>출처:</strong> ICLR, 2019.</p>
+    </div>
+    <div class="detail-links">
+      <h3>원문 접근</h3>
+      <a href="https://scholar.google.com/scholar?q=Decoupled Weight Decay Regularization" target="_blank" class="detail-link">Google Scholar &rarr;</a>
+
+    </div>
+    <div class='detail-summary'><h3>주요 내용 요약</h3><p>Loshchilov와 Hutter는 Adam 옵티마이저에서 L2 정칙화와 가중치 감쇠가 동일하지 않다는 점을 지적하고, 가중치 감쇠를 경사 업데이트와 분리하여 적용하는 AdamW를 제안하였다.</p><p>기존 Adam에서의 L2 정칙화는 적응적 학습률과 결합되면서 의도한 정칙화 효과가 왜곡된다. AdamW는 이 문제를 해결하여 더 나은 일반화 성능을 달성하며, 특히 대규모 모델에서 그 차이가 두드러진다.</p><p>AdamW는 BERT, GPT, ViT 등 트랜스포머 기반 모델 학습의 사실상 표준 옵티마이저가 되었으며, 코사인 어닐링 학습률 스케줄과 함께 사용되는 것이 일반적이다.</p></div>
+  </div>
+  <div class="detail-page" id="detail-luong2015attention">
+    <button class="back-btn" onclick="hideDetail()">&larr; 목록으로</button>
+    <div class="detail-header">
+      <span class="detail-label">[Luong 2015]</span>
+      <span class="detail-type">inproceedings</span>
+    </div>
+    <h2 class="detail-title">Effective Approaches to Attention-Based Neural Machine Translation</h2>
+    <div class="detail-meta">
+      <p><strong>저자:</strong> Luong, Minh-Thang and Pham, Hieu and Manning, Christopher D.</p>
+      <p><strong>출처:</strong> EMNLP, pp. 1412--1421, 2015.</p>
+    </div>
+    <div class="detail-links">
+      <h3>원문 접근</h3>
+      <a href="https://scholar.google.com/scholar?q=Effective Approaches to Attention-Based Neural Machine Trans" target="_blank" class="detail-link">Google Scholar &rarr;</a>
+
+    </div>
+    
+  </div>
+  <div class="detail-page" id="detail-maas2011sentiment">
+    <button class="back-btn" onclick="hideDetail()">&larr; 목록으로</button>
+    <div class="detail-header">
+      <span class="detail-label">[Maas 2011]</span>
+      <span class="detail-type">inproceedings</span>
+    </div>
+    <h2 class="detail-title">Learning Word Vectors for Sentiment Analysis</h2>
+    <div class="detail-meta">
+      <p><strong>저자:</strong> Maas, Andrew L. and Daly, Raymond E. and Pham, Peter T. and Huang, Dan and Ng, Andrew Y. and Potts, Christopher</p>
+      <p><strong>출처:</strong> ACL-HLT, pp. 142--150, 2011.</p>
+    </div>
+    <div class="detail-links">
+      <h3>원문 접근</h3>
+      <a href="https://scholar.google.com/scholar?q=Learning Word Vectors for Sentiment Analysis" target="_blank" class="detail-link">Google Scholar &rarr;</a>
+
+    </div>
+    
+  </div>
+  <div class="detail-page" id="detail-mayer2010elephant">
+    <button class="back-btn" onclick="hideDetail()">&larr; 목록으로</button>
+    <div class="detail-header">
+      <span class="detail-label">[Mayer 2010]</span>
+      <span class="detail-type">article</span>
+    </div>
+    <h2 class="detail-title">Drawing an Elephant with Four Complex Parameters</h2>
+    <div class="detail-meta">
+      <p><strong>저자:</strong> Mayer, Jürgen and Khairy, Khaled and Howard, Jonathon</p>
+      <p><strong>출처:</strong> American Journal of Physics, vol. 78, pp. 648--649, 2010.</p>
+    </div>
+    <div class="detail-links">
+      <h3>원문 접근</h3>
+      <a href="https://scholar.google.com/scholar?q=Drawing an Elephant with Four Complex Parameters" target="_blank" class="detail-link">Google Scholar &rarr;</a>
+
+    </div>
+    
+  </div>
+  <div class="detail-page" id="detail-mcculloch1943logical">
+    <button class="back-btn" onclick="hideDetail()">&larr; 목록으로</button>
+    <div class="detail-header">
+      <span class="detail-label">[McCulloch 1943]</span>
+      <span class="detail-type">article</span>
+    </div>
+    <h2 class="detail-title">A Logical Calculus of Ideas Immanent in Nervous Activity</h2>
+    <div class="detail-meta">
+      <p><strong>저자:</strong> McCulloch, Warren S. and Pitts, Walter</p>
+      <p><strong>출처:</strong> Bulletin of Mathematical Biophysics, vol. 5, pp. 115--133, 1943.</p>
+    </div>
+    <div class="detail-links">
+      <h3>원문 접근</h3>
+      <a href="https://scholar.google.com/scholar?q=A Logical Calculus of Ideas Immanent in Nervous Activity" target="_blank" class="detail-link">Google Scholar &rarr;</a>
+
+    </div>
+    <div class='detail-summary'><h3>주요 내용 요약</h3><p>McCulloch과 Pitts는 뉴런의 동작을 이진 논리 연산으로 추상화한 최초의 수학적 모델을 제안하였다. 이 모델에서 각 뉴런은 여러 입력의 가중합이 임계값을 초과하면 1을, 그렇지 않으면 0을 출력하며, AND, OR, NOT 등 모든 논리 게이트를 표현할 수 있음을 보였다.</p><p>이 연구의 핵심 기여는 생물학적 뉴런의 기능을 수학적 형식주의로 번역한 것으로, 이후 퍼셉트론, 다층 신경망, 그리고 현대 딥러닝으로 이어지는 연결주의(connectionism) 패러다임의 이론적 출발점이 되었다. 비록 학습 규칙은 포함되지 않았지만, 뉴런의 계산 능력을 공식적으로 증명한 최초의 논문으로 평가된다.</p><p>오늘날의 인공 뉴런(완전연결층의 단일 유닛)은 이 모델에서 임계 함수를 시그모이드나 ReLU 같은 연속 활성화 함수로 대체하고, 가중치를 학습 가능하게 만든 확장판으로 볼 수 있다.</p></div>
+  </div>
+  <div class="detail-page" id="detail-minsky1968semantic">
+    <button class="back-btn" onclick="hideDetail()">&larr; 목록으로</button>
+    <div class="detail-header">
+      <span class="detail-label">[Minsky 1968]</span>
+      <span class="detail-type">book</span>
+    </div>
+    <h2 class="detail-title">Semantic Information Processing</h2>
+    <div class="detail-meta">
+      <p><strong>저자:</strong> Minsky, Marvin</p>
+      <p><strong>출처:</strong> . MIT Press, 1968.</p>
+    </div>
+    <div class="detail-links">
+      <h3>원문 접근</h3>
+      <a href="https://scholar.google.com/scholar?q=Semantic Information Processing" target="_blank" class="detail-link">Google Scholar &rarr;</a>
+
+    </div>
+    
+  </div>
+  <div class="detail-page" id="detail-minsky1969perceptrons">
+    <button class="back-btn" onclick="hideDetail()">&larr; 목록으로</button>
+    <div class="detail-header">
+      <span class="detail-label">[Minsky 1969]</span>
+      <span class="detail-type">book</span>
+    </div>
+    <h2 class="detail-title">Perceptrons: An Introduction to Computational Geometry</h2>
+    <div class="detail-meta">
+      <p><strong>저자:</strong> Minsky, Marvin and Papert, Seymour</p>
+      <p><strong>출처:</strong> . MIT Press, 1969.</p>
+    </div>
+    <div class="detail-links">
+      <h3>원문 접근</h3>
+      <a href="https://scholar.google.com/scholar?q=Perceptrons: An Introduction to Computational Geometry" target="_blank" class="detail-link">Google Scholar &rarr;</a>
+
+    </div>
+    <div class='detail-summary'><h3>주요 내용 요약</h3><p>Minsky와 Papert는 단층 퍼셉트론의 계산적 한계를 수학적으로 엄밀하게 분석하였다. 특히 XOR 문제와 같은 선형 분리 불가능 패턴을 단층 구조로는 학습할 수 없음을 증명했다.</p><p>이 결과는 당시 퍼셉트론에 대한 과도한 낙관론에 찬물을 끼얹었고, 신경망 연구에 대한 학계의 관심과 연구 자금이 급감하는 1차 AI 겨울의 주요 원인이 되었다. 다층 구조를 쌓으면 이론적으로 해결 가능하지만, 당시에는 효과적인 학습 알고리즘이 없었다.</p><p>역설적으로 이 저서는 신경망의 한계를 명확히 함으로써, 이후 역전파 알고리즘과 다층 퍼셉트론 연구의 동기를 제공했다. &#x27;한계를 아는 것이 발전의 시작&#x27;이라는 과학사의 교훈을 잘 보여주는 사례이다.</p></div>
+  </div>
+  <div class="detail-page" id="detail-mitchell1997machine">
+    <button class="back-btn" onclick="hideDetail()">&larr; 목록으로</button>
+    <div class="detail-header">
+      <span class="detail-label">[Mitchell 1997]</span>
+      <span class="detail-type">book</span>
+    </div>
+    <h2 class="detail-title">Machine Learning</h2>
+    <div class="detail-meta">
+      <p><strong>저자:</strong> Mitchell, Tom M.</p>
+      <p><strong>출처:</strong> . McGraw-Hill, 1997.</p>
+    </div>
+    <div class="detail-links">
+      <h3>원문 접근</h3>
+      <a href="https://scholar.google.com/scholar?q=Machine Learning" target="_blank" class="detail-link">Google Scholar &rarr;</a>
+
+    </div>
+    
+  </div>
+  <div class="detail-page" id="detail-miyato2018spectral">
+    <button class="back-btn" onclick="hideDetail()">&larr; 목록으로</button>
+    <div class="detail-header">
+      <span class="detail-label">[Miyato 2018]</span>
+      <span class="detail-type">inproceedings</span>
+    </div>
+    <h2 class="detail-title">Spectral Normalization for Generative Adversarial Networks</h2>
+    <div class="detail-meta">
+      <p><strong>저자:</strong> Miyato, Takeru and Kataoka, Toshiki and Koyama, Masanori and Yoshida, Yuichi</p>
+      <p><strong>출처:</strong> ICLR, 2018.</p>
+    </div>
+    <div class="detail-links">
+      <h3>원문 접근</h3>
+      <a href="https://scholar.google.com/scholar?q=Spectral Normalization for Generative Adversarial Networks" target="_blank" class="detail-link">Google Scholar &rarr;</a>
+
+    </div>
+    
+  </div>
+  <div class="detail-page" id="detail-mnih2015dqn">
+    <button class="back-btn" onclick="hideDetail()">&larr; 목록으로</button>
+    <div class="detail-header">
+      <span class="detail-label">[Mnih 2015]</span>
+      <span class="detail-type">article</span>
+    </div>
+    <h2 class="detail-title">Human-level control through deep reinforcement learning</h2>
+    <div class="detail-meta">
+      <p><strong>저자:</strong> Mnih, Volodymyr and Kavukcuoglu, Koray and Silver, David and others</p>
+      <p><strong>출처:</strong> Nature, vol. 518, pp. 529--533, 2015.</p>
+    </div>
+    <div class="detail-links">
+      <h3>원문 접근</h3>
+      <a href="https://scholar.google.com/scholar?q=Human-level control through deep reinforcement learning" target="_blank" class="detail-link">Google Scholar &rarr;</a>
+
+    </div>
+    <div class='detail-summary'><h3>주요 내용 요약</h3><p>Mnih 등은 Q 함수를 심층 CNN으로 근사하는 DQN(Deep Q-Network)을 Nature에 발표하였다. 아타리 2600 게임 49종에서 동일한 구조와 하이퍼파라미터로 학습하여 29개 게임에서 인간 전문 테스터를 능가하였다.</p><p>경험 재생(experience replay)으로 과거 경험을 버퍼에 저장하고 무작위 샘플링하여 데이터 상관성을 제거하고, 타깃 네트워크로 TD 타깃의 안정성을 확보한다. 이 두 기법이 심층 강화학습의 학습 불안정 문제를 해결하는 핵심이다.</p><p>DQN은 딥러닝과 강화학습을 결합한 최초의 대규모 성공 사례로, Double DQN, Dueling DQN, Rainbow 등 후속 발전과 AlphaGo로 이어지는 심층 강화학습 연구의 시발점이 되었다.</p></div>
+  </div>
+  <div class="detail-page" id="detail-moravec1988mind">
+    <button class="back-btn" onclick="hideDetail()">&larr; 목록으로</button>
+    <div class="detail-header">
+      <span class="detail-label">[Moravec 1988]</span>
+      <span class="detail-type">book</span>
+    </div>
+    <h2 class="detail-title">Mind Children: The Future of Robot and Human Intelligence</h2>
+    <div class="detail-meta">
+      <p><strong>저자:</strong> Moravec, Hans</p>
+      <p><strong>출처:</strong> . Harvard University Press, 1988.</p>
+    </div>
+    <div class="detail-links">
+      <h3>원문 접근</h3>
+      <a href="https://scholar.google.com/scholar?q=Mind Children: The Future of Robot and Human Intelligence" target="_blank" class="detail-link">Google Scholar &rarr;</a>
+
+    </div>
+    
+  </div>
+  <div class="detail-page" id="detail-noroozi2016jigsaw">
+    <button class="back-btn" onclick="hideDetail()">&larr; 목록으로</button>
+    <div class="detail-header">
+      <span class="detail-label">[Noroozi 2016]</span>
+      <span class="detail-type">inproceedings</span>
+    </div>
+    <h2 class="detail-title">Unsupervised Visual Representation Learning by Context Prediction</h2>
+    <div class="detail-meta">
+      <p><strong>저자:</strong> Noroozi, Mehdi and Favaro, Paolo</p>
+      <p><strong>출처:</strong> ECCV, pp. 69--84, 2016.</p>
+    </div>
+    <div class="detail-links">
+      <h3>원문 접근</h3>
+      <a href="https://scholar.google.com/scholar?q=Unsupervised Visual Representation Learning by Context Predi" target="_blank" class="detail-link">Google Scholar &rarr;</a>
+
+    </div>
+    
+  </div>
+  <div class="detail-page" id="detail-ouyang2022rlhf">
+    <button class="back-btn" onclick="hideDetail()">&larr; 목록으로</button>
+    <div class="detail-header">
+      <span class="detail-label">[Ouyang 2022]</span>
+      <span class="detail-type">article</span>
+    </div>
+    <h2 class="detail-title">Training language models to follow instructions with human feedback</h2>
+    <div class="detail-meta">
+      <p><strong>저자:</strong> Ouyang, Long and Wu, Jeff and Jiang, Xu and others</p>
+      <p><strong>출처:</strong> NeurIPS, 2022.</p>
+    </div>
+    <div class="detail-links">
+      <h3>원문 접근</h3>
+      <a href="https://scholar.google.com/scholar?q=Training language models to follow instructions with human f" target="_blank" class="detail-link">Google Scholar &rarr;</a>
+
+    </div>
+    <div class='detail-summary'><h3>주요 내용 요약</h3><p>Ouyang 등은 인간 선호 피드백으로 GPT-3를 정렬한 InstructGPT를 제안하였다. 지도 파인튜닝(SFT) → 보상 모델 학습 → PPO 강화학습의 3단계 RLHF 파이프라인을 확립하였다.</p><p>인간 평가자가 모델 응답 쌍에 대한 선호를 표시하고, 이 데이터로 보상 모델을 훈련한다. PPO가 보상 모델의 점수를 최대화하면서 KL 페널티로 원본 모델과의 괴리를 제한한다.</p><p>13억 파라미터의 InstructGPT가 1,750억 파라미터의 GPT-3보다 인간 평가에서 선호되어, &#x27;정렬이 규모만큼 중요하다&#x27;는 교훈을 남겼다. 이 방법론이 ChatGPT에 직접 적용되었다.</p></div>
+  </div>
+  <div class="detail-page" id="detail-perronnin2010improving">
+    <button class="back-btn" onclick="hideDetail()">&larr; 목록으로</button>
+    <div class="detail-header">
+      <span class="detail-label">[Perronnin 2010]</span>
+      <span class="detail-type">inproceedings</span>
+    </div>
+    <h2 class="detail-title">Improving the Fisher Kernel for Large-Scale Image Classification</h2>
+    <div class="detail-meta">
+      <p><strong>저자:</strong> Perronnin, Florent and Sánchez, Jorge and Mensink, Thomas</p>
+      <p><strong>출처:</strong> ECCV, pp. 143--156, 2010.</p>
+    </div>
+    <div class="detail-links">
+      <h3>원문 접근</h3>
+      <a href="https://scholar.google.com/scholar?q=Improving the Fisher Kernel for Large-Scale Image Classifica" target="_blank" class="detail-link">Google Scholar &rarr;</a>
+
+    </div>
+    
+  </div>
+  <div class="detail-page" id="detail-peters2018elmo">
+    <button class="back-btn" onclick="hideDetail()">&larr; 목록으로</button>
+    <div class="detail-header">
+      <span class="detail-label">[Peters 2018]</span>
+      <span class="detail-type">article</span>
+    </div>
+    <h2 class="detail-title">Deep Contextualized Word Representations</h2>
+    <div class="detail-meta">
+      <p><strong>저자:</strong> Peters, Matthew E. and Neumann, Mark and Iyyer, Mohit and Gardner, Matt and Clark, Christopher and Lee, Kenton and Zettlemoyer, Luke</p>
+      <p><strong>출처:</strong> Proceedings of the 2018 Conference of the North American Chapter of the ACL (NAACL), pp. 2227--2237, 2018.</p>
+    </div>
+    <div class="detail-links">
+      <h3>원문 접근</h3>
+      <a href="https://scholar.google.com/scholar?q=Deep Contextualized Word Representations" target="_blank" class="detail-link">Google Scholar &rarr;</a>
+
+    </div>
+    <div class='detail-summary'><h3>주요 내용 요약</h3><p>Peters 등은 양방향 LSTM으로 문맥에 따라 달라지는 단어 임베딩 ELMo를 제안하였다. 같은 단어라도 문맥에 따라 다른 벡터를 출력하여 다의어 문제를 해결한다.</p><p>왼쪽→오른쪽과 오른쪽→왼쪽 LSTM을 별도로 학습한 뒤 출력을 연결하는 방식으로, 각 층의 표현을 가중합하여 최종 임베딩을 구성한다. 얕은 층은 구문 정보를, 깊은 층은 의미 정보를 포착하는 경향이 있다.</p><p>ELMo는 BERT에 앞서 &#x27;사전학습된 문맥적 임베딩&#x27;이라는 패러다임을 제시한 선구자이며, 이 연구가 BERT의 양방향 학습 아이디어에 직접적 영감을 주었다.</p></div>
+  </div>
+  <div class="detail-page" id="detail-radford2016dcgan">
+    <button class="back-btn" onclick="hideDetail()">&larr; 목록으로</button>
+    <div class="detail-header">
+      <span class="detail-label">[Radford 2016]</span>
+      <span class="detail-type">inproceedings</span>
+    </div>
+    <h2 class="detail-title">Unsupervised Representation Learning with Deep Convolutional Generative Adversarial Networks</h2>
+    <div class="detail-meta">
+      <p><strong>저자:</strong> Radford, Alec and Metz, Luke and Chintala, Soumith</p>
+      <p><strong>출처:</strong> ICLR, 2016.</p>
+    </div>
+    <div class="detail-links">
+      <h3>원문 접근</h3>
+      <a href="https://scholar.google.com/scholar?q=Unsupervised Representation Learning with Deep Convolutional" target="_blank" class="detail-link">Google Scholar &rarr;</a>
+
+    </div>
+    <div class='detail-summary'><h3>주요 내용 요약</h3><p>Radford 등은 CNN 구조를 GAN에 체계적으로 적용한 DCGAN을 제안하고, 안정적 GAN 학습을 위한 아키텍처 가이드라인을 제시하였다.</p><p>풀링 대신 스트라이드 합성곱, 완전연결층 제거, 배치 정규화 적용, 생성자에 ReLU/디코더에 Leaky ReLU 사용 등의 원칙을 제안하였다. 생성자는 전치 합성곱으로 잠재 벡터를 이미지로 확장한다.</p><p>DCGAN은 이후 거의 모든 이미지 생성 GAN의 기본 구조가 되었으며, 잠재 공간의 산술 연산(예: 안경 낀 남성 - 남성 + 여성 = 안경 낀 여성)으로 GAN이 의미 있는 표현을 학습함을 보였다.</p></div>
+  </div>
+  <div class="detail-page" id="detail-radford2018gpt">
+    <button class="back-btn" onclick="hideDetail()">&larr; 목록으로</button>
+    <div class="detail-header">
+      <span class="detail-label">[Radford 2018]</span>
+      <span class="detail-type">article</span>
+    </div>
+    <h2 class="detail-title">Improving Language Understanding by Generative Pre-Training</h2>
+    <div class="detail-meta">
+      <p><strong>저자:</strong> Radford, Alec and Narasimhan, Karthik and Salimans, Tim and Sutskever, Ilya</p>
+      <p><strong>출처:</strong> OpenAI Technical Report, 2018.</p>
+    </div>
+    <div class="detail-links">
+      <h3>원문 접근</h3>
+      <a href="https://scholar.google.com/scholar?q=Improving Language Understanding by Generative Pre-Training" target="_blank" class="detail-link">Google Scholar &rarr;</a>
+
+    </div>
+    <div class='detail-summary'><h3>주요 내용 요약</h3><p>Radford 등은 트랜스포머 디코더만을 사용하여 다음 토큰을 예측하는 생성적 사전학습(GPT) 방법론을 제안하였다. 12층 디코더, 약 1.1억 파라미터 규모이다.</p><p>대규모 비레이블 텍스트에서 자기회귀 언어 모델로 사전학습한 뒤, 각 과제에 맞는 출력 헤드를 추가하여 파인튜닝한다. 사전학습에서 획득한 언어 지식이 다양한 과제로 효과적으로 전이됨을 보였다.</p><p>GPT-1은 BERT와 거의 같은 시기에 발표되어 인코더 vs 디코더 사전학습의 양대 패러다임을 형성하였으며, GPT-2, GPT-3로 이어지는 스케일링 연구의 출발점이 되었다.</p></div>
+  </div>
+  <div class="detail-page" id="detail-radford2019gpt2">
+    <button class="back-btn" onclick="hideDetail()">&larr; 목록으로</button>
+    <div class="detail-header">
+      <span class="detail-label">[Radford 2019]</span>
+      <span class="detail-type">article</span>
+    </div>
+    <h2 class="detail-title">Language Models are Unsupervised Multitask Learners</h2>
+    <div class="detail-meta">
+      <p><strong>저자:</strong> Radford, Alec and Wu, Jeffrey and Child, Rewon and Luan, David and Amodei, Dario and Sutskever, Ilya</p>
+      <p><strong>출처:</strong> OpenAI Technical Report, 2019.</p>
+    </div>
+    <div class="detail-links">
+      <h3>원문 접근</h3>
+      <a href="https://scholar.google.com/scholar?q=Language Models are Unsupervised Multitask Learners" target="_blank" class="detail-link">Google Scholar &rarr;</a>
+
+    </div>
+    <div class='detail-summary'><h3>주요 내용 요약</h3><p>Radford 등은 15억 파라미터의 GPT-2로 파인튜닝 없이 프롬프트만으로 다양한 과제를 수행하는 제로샷 능력을 시연하였다. &#x27;언어 모델은 비지도 멀티태스크 학습기&#x27;라는 핵심 명제를 제시한다.</p><p>40GB의 WebText 데이터로 학습된 GPT-2는 텍스트 생성, 요약, 번역, 질의응답 등에서 별도 학습 없이도 합리적인 성능을 보여, &#x27;규모가 능력을 만든다&#x27;는 스케일링 가설의 초기 증거를 제공하였다.</p><p>OpenAI는 초기에 오용 우려로 모델 공개를 제한하였으나, 이후 전체 공개하였다. GPT-2는 GPT-3의 인컨텍스트 학습과 ChatGPT로 이어지는 길을 열었다.</p></div>
+  </div>
+  <div class="detail-page" id="detail-radford2021clip">
+    <button class="back-btn" onclick="hideDetail()">&larr; 목록으로</button>
+    <div class="detail-header">
+      <span class="detail-label">[Radford 2021]</span>
+      <span class="detail-type">inproceedings</span>
+    </div>
+    <h2 class="detail-title">Learning Transferable Visual Models From Natural Language Supervision</h2>
+    <div class="detail-meta">
+      <p><strong>저자:</strong> Radford, Alec and Kim, Jong Wook and Hallacy, Chris and others</p>
+      <p><strong>출처:</strong> ICML, 2021.</p>
+    </div>
+    <div class="detail-links">
+      <h3>원문 접근</h3>
+      <a href="https://scholar.google.com/scholar?q=Learning Transferable Visual Models From Natural Language Su" target="_blank" class="detail-link">Google Scholar &rarr;</a>
+
+    </div>
+    <div class='detail-summary'><h3>주요 내용 요약</h3><p>Radford 등은 4억 이미지-텍스트 쌍으로 이미지 인코더와 텍스트 인코더를 대조 학습으로 동시 훈련한 CLIP을 제안하였다. 두 모달리티를 하나의 표현 공간에 정렬한다.</p><p>이 정렬 덕분에 텍스트 프롬프트만으로 제로샷 이미지 분류가 가능하며, ImageNet에서 제로샷으로 76.2%의 Top-1 정확도를 달성하여 ResNet-50(76.1%)과 대등한 성능을 레이블 없이 보였다.</p><p>CLIP은 Stable Diffusion의 텍스트 조건 인코더, LLaVA 등 비전-언어 모델의 비전 인코더로도 핵심적으로 활용되며, 멀티모달 AI의 기반 기술이 되었다.</p></div>
+  </div>
+  <div class="detail-page" id="detail-rafailov2023dpo">
+    <button class="back-btn" onclick="hideDetail()">&larr; 목록으로</button>
+    <div class="detail-header">
+      <span class="detail-label">[Rafailov 2023]</span>
+      <span class="detail-type">inproceedings</span>
+    </div>
+    <h2 class="detail-title">Direct Preference Optimization: Your Language Model is Secretly a Reward Model</h2>
+    <div class="detail-meta">
+      <p><strong>저자:</strong> Rafailov, Rafael and Sharma, Archit and Mitchell, Eric and others</p>
+      <p><strong>출처:</strong> NeurIPS, 2023.</p>
+    </div>
+    <div class="detail-links">
+      <h3>원문 접근</h3>
+      <a href="https://scholar.google.com/scholar?q=Direct Preference Optimization: Your Language Model is Secre" target="_blank" class="detail-link">Google Scholar &rarr;</a>
+
+    </div>
+    <div class='detail-summary'><h3>주요 내용 요약</h3><p>Rafailov 등은 보상 모델 없이 선호 데이터로 정책을 직접 최적화하는 DPO(Direct Preference Optimization)를 제안하였다. RLHF의 3단계 파이프라인을 지도학습 형태로 단순화한다.</p><p>보상 함수와 최적 정책 사이의 분석적 관계를 유도하여, 선호/비선호 응답 쌍에 대한 단순한 분류 손실로 정렬을 수행한다. PPO의 하이퍼파라미터 민감성과 학습 불안정 문제를 피할 수 있다.</p><p>DPO는 구현의 단순함과 안정적 학습 덕분에 빠르게 채택되고 있으며, LLaMA 2, Zephyr 등 최신 모델의 정렬에 활용되고 있다.</p></div>
+  </div>
+  <div class="detail-page" id="detail-redmon2016yolo">
+    <button class="back-btn" onclick="hideDetail()">&larr; 목록으로</button>
+    <div class="detail-header">
+      <span class="detail-label">[Redmon 2016]</span>
+      <span class="detail-type">inproceedings</span>
+    </div>
+    <h2 class="detail-title">You Only Look Once: Unified, Real-Time Object Detection</h2>
+    <div class="detail-meta">
+      <p><strong>저자:</strong> Redmon, Joseph and Divvala, Santosh and Girshick, Ross and Farhadi, Ali</p>
+      <p><strong>출처:</strong> CVPR, pp. 779--788, 2016.</p>
+    </div>
+    <div class="detail-links">
+      <h3>원문 접근</h3>
+      <a href="https://scholar.google.com/scholar?q=You Only Look Once: Unified, Real-Time Object Detection" target="_blank" class="detail-link">Google Scholar &rarr;</a>
+
+    </div>
+    <div class='detail-summary'><h3>주요 내용 요약</h3><p>Redmon 등은 객체 탐지를 단일 회귀 문제로 재정의하여, 영역 제안 없이 한 번의 순전파로 바운딩 박스와 클래스 확률을 동시에 예측하는 YOLO를 제안하였다. 45 FPS의 실시간 탐지 속도를 최초로 달성하였다.</p><p>이미지를 S×S 격자로 나누고, 각 셀이 바운딩 박스 좌표, 신뢰도, 클래스 확률을 예측한다. 전체 이미지를 한 번에 보기 때문에 전역 문맥을 활용할 수 있어 배경 오인(False Positive)이 크게 줄었다.</p><p>YOLO는 v2(앵커 박스), v3(멀티스케일), v5(실용적 개선), v8(앵커-프리)까지 꾸준히 발전하며, 실시간 객체 탐지의 사실상 표준으로 자리잡았다.</p></div>
+  </div>
+  <div class="detail-page" id="detail-ren2015fasterrcnn">
+    <button class="back-btn" onclick="hideDetail()">&larr; 목록으로</button>
+    <div class="detail-header">
+      <span class="detail-label">[Ren 2015]</span>
+      <span class="detail-type">inproceedings</span>
+    </div>
+    <h2 class="detail-title">Faster R-CNN: Towards Real-Time Object Detection with Region Proposal Networks</h2>
+    <div class="detail-meta">
+      <p><strong>저자:</strong> Ren, Shaoqing and He, Kaiming and Girshick, Ross and Sun, Jian</p>
+      <p><strong>출처:</strong> NeurIPS, pp. 91--99, 2015.</p>
+    </div>
+    <div class="detail-links">
+      <h3>원문 접근</h3>
+      <a href="https://scholar.google.com/scholar?q=Faster R-CNN: Towards Real-Time Object Detection with Region" target="_blank" class="detail-link">Google Scholar &rarr;</a>
+
+    </div>
+    <div class='detail-summary'><h3>주요 내용 요약</h3><p>Ren 등은 영역 제안 네트워크(RPN)를 도입하여 탐지 파이프라인 전체를 하나의 신경망으로 통합한 Faster R-CNN을 제안하였다. 앵커 박스 기반의 RPN이 후보 영역 제안을 수행하여 Selective Search를 대체한다.</p><p>RPN은 특징 맵의 각 위치에서 다양한 크기·비율의 앵커 박스에 대해 객체 존재 여부와 박스 보정값을 예측한다. 이 모듈이 탐지 헤드와 특징 추출기를 공유하므로 추가 연산 비용이 거의 없다.</p><p>Faster R-CNN은 약 5 FPS의 준실시간 속도와 높은 정확도(PASCAL VOC mAP 73.2%)를 동시에 달성하며, 이후 Mask R-CNN, Feature Pyramid Network 등 수많은 후속 연구의 기반이 되었다.</p></div>
+  </div>
+  <div class="detail-page" id="detail-rombach2022ldm">
+    <button class="back-btn" onclick="hideDetail()">&larr; 목록으로</button>
+    <div class="detail-header">
+      <span class="detail-label">[Rombach 2022]</span>
+      <span class="detail-type">inproceedings</span>
+    </div>
+    <h2 class="detail-title">High-Resolution Image Synthesis with Latent Diffusion Models</h2>
+    <div class="detail-meta">
+      <p><strong>저자:</strong> Rombach, Robin and Blattmann, Andreas and Lorenz, Dominik and Esser, Patrick and Ommer, Björn</p>
+      <p><strong>출처:</strong> CVPR, pp. 10684--10695, 2022.</p>
+    </div>
+    <div class="detail-links">
+      <h3>원문 접근</h3>
+      <a href="https://scholar.google.com/scholar?q=High-Resolution Image Synthesis with Latent Diffusion Models" target="_blank" class="detail-link">Google Scholar &rarr;</a>
+
+    </div>
+    <div class='detail-summary'><h3>주요 내용 요약</h3><p>Rombach 등은 확산 과정을 VAE의 잠재 공간에서 수행하는 잠재 확산 모델(Latent Diffusion Model, LDM)을 제안하였다. 이것이 Stable Diffusion의 기반 아키텍처이다.</p><p>고해상도 이미지(512×512)를 VAE 인코더로 64×64 잠재 표현으로 압축한 뒤, 이 작은 공간에서 확산과 역확산을 수행하므로 연산 비용이 약 48배 줄어든다. U-Net의 크로스 어텐션을 통해 CLIP 텍스트 인코딩을 참조하여 텍스트 조건 생성이 가능하다.</p><p>LDM은 DDPM의 높은 생성 품질과 VAE의 효율적 표현을 결합한 실용적 해법으로, Stable Diffusion으로 상용화되어 텍스트-이미지 생성의 대중화를 이끌었다.</p></div>
+  </div>
+  <div class="detail-page" id="detail-ronneberger2015unet">
+    <button class="back-btn" onclick="hideDetail()">&larr; 목록으로</button>
+    <div class="detail-header">
+      <span class="detail-label">[Ronneberger 2015]</span>
+      <span class="detail-type">inproceedings</span>
+    </div>
+    <h2 class="detail-title">U-Net: Convolutional Networks for Biomedical Image Segmentation</h2>
+    <div class="detail-meta">
+      <p><strong>저자:</strong> Ronneberger, Olaf and Fischer, Philipp and Brox, Thomas</p>
+      <p><strong>출처:</strong> MICCAI, pp. 234--241, 2015.</p>
+    </div>
+    <div class="detail-links">
+      <h3>원문 접근</h3>
+      <a href="https://scholar.google.com/scholar?q=U-Net: Convolutional Networks for Biomedical Image Segmentat" target="_blank" class="detail-link">Google Scholar &rarr;</a>
+
+    </div>
+    <div class='detail-summary'><h3>주요 내용 요약</h3><p>Ronneberger 등은 인코더-디코더 대칭 구조에 스킵 연결을 더한 U-Net을 의료 영상 분할에 제안하였다. 소량의 학습 데이터로도 정밀한 분할이 가능하다는 점이 핵심 장점이다.</p><p>인코더(수축 경로)는 공간 크기를 줄이면서 의미적 특징을 추출하고, 디코더(확장 경로)는 전치 합성곱으로 해상도를 복원한다. 인코더의 각 단계 출력이 스킵 연결을 통해 대응하는 디코더 단계에 연결되어 세밀한 공간 정보를 보존한다.</p><p>U-Net은 의료 영상(세포 분할, 장기 분할)의 사실상 표준 아키텍처가 되었으며, 확산 모델(DDPM, Stable Diffusion)의 노이즈 예측 네트워크로도 핵심적으로 활용된다.</p></div>
+  </div>
+  <div class="detail-page" id="detail-rosenblatt1958perceptron">
+    <button class="back-btn" onclick="hideDetail()">&larr; 목록으로</button>
+    <div class="detail-header">
+      <span class="detail-label">[Rosenblatt 1958]</span>
+      <span class="detail-type">article</span>
+    </div>
+    <h2 class="detail-title">The Perceptron: A Probabilistic Model for Information Storage and Organization in the Brain</h2>
+    <div class="detail-meta">
+      <p><strong>저자:</strong> Rosenblatt, Frank</p>
+      <p><strong>출처:</strong> Psychological Review, vol. 65, pp. 386--408, 1958.</p>
+    </div>
+    <div class="detail-links">
+      <h3>원문 접근</h3>
+      <a href="https://scholar.google.com/scholar?q=The Perceptron: A Probabilistic Model for Information Storag" target="_blank" class="detail-link">Google Scholar &rarr;</a>
+
+    </div>
+    <div class='detail-summary'><h3>주요 내용 요약</h3><p>Frank Rosenblatt는 McCulloch-Pitts 뉴런에 학습 규칙을 추가한 퍼셉트론을 제안하였다. 입력의 가중합이 임계값을 초과하면 1, 그렇지 않으면 0을 출력하며, 오분류된 샘플에 대해 가중치를 갱신하는 단순한 규칙으로 학습한다.</p><p>퍼셉트론 수렴 정리는 데이터가 선형 분리 가능할 때 유한 횟수의 갱신 후 올바른 결정 경계를 찾음을 보장한다. 이 정리는 학습하는 기계의 가능성에 대한 수학적 증명으로, 당시 학계와 대중의 큰 관심을 끌었다.</p><p>그러나 Minsky와 Papert(1969)가 단층 퍼셉트론이 XOR 같은 비선형 문제를 풀 수 없음을 증명하면서 1차 AI 겨울이 도래하였다. 이 한계는 이후 다층 퍼셉트론과 역전파 알고리즘의 개발로 극복되었다.</p></div>
+  </div>
+  <div class="detail-page" id="detail-rumelhart1986backprop">
+    <button class="back-btn" onclick="hideDetail()">&larr; 목록으로</button>
+    <div class="detail-header">
+      <span class="detail-label">[Rumelhart 1986]</span>
+      <span class="detail-type">article</span>
+    </div>
+    <h2 class="detail-title">Learning Representations by Back-propagating Errors</h2>
+    <div class="detail-meta">
+      <p><strong>저자:</strong> Rumelhart, David E. and Hinton, Geoffrey E. and Williams, Ronald J.</p>
+      <p><strong>출처:</strong> Nature, vol. 323, pp. 533--536, 1986.</p>
+    </div>
+    <div class="detail-links">
+      <h3>원문 접근</h3>
+      <a href="https://scholar.google.com/scholar?q=Learning Representations by Back-propagating Errors" target="_blank" class="detail-link">Google Scholar &rarr;</a>
+
+    </div>
+    <div class='detail-summary'><h3>주요 내용 요약</h3><p>Rumelhart, Hinton, Williams는 다층 신경망에서 오차를 역방향으로 전파하여 모든 가중치의 기울기를 효율적으로 계산하는 역전파 알고리즘을 Nature에 공식 발표하였다. 연쇄 법칙을 체계적으로 적용하여 한 번의 역방향 패스로 전체 기울기를 구한다.</p><p>이 알고리즘은 Minsky가 지적한 다층 네트워크의 학습 문제를 해결하며, 은닉층이 데이터의 내부 표현을 자동으로 학습할 수 있음을 실험적으로 보였다. 이론적으로는 Werbos(1974)의 박사 논문에서 먼저 제안되었으나, 이 논문이 학계에 널리 알려지는 계기가 되었다.</p><p>역전파는 오늘날 PyTorch의 Autograd, TensorFlow의 GradientTape 등 모든 딥러닝 프레임워크의 핵심 엔진이며, 현대 딥러닝의 가장 기본적인 알고리즘이다.</p></div>
+  </div>
+  <div class="detail-page" id="detail-samuel1959checkers">
+    <button class="back-btn" onclick="hideDetail()">&larr; 목록으로</button>
+    <div class="detail-header">
+      <span class="detail-label">[Samuel 1959]</span>
+      <span class="detail-type">article</span>
+    </div>
+    <h2 class="detail-title">Some Studies in Machine Learning Using the Game of Checkers</h2>
+    <div class="detail-meta">
+      <p><strong>저자:</strong> Samuel, Arthur L.</p>
+      <p><strong>출처:</strong> IBM Journal of Research and Development, vol. 3, pp. 210--229, 1959.</p>
+    </div>
+    <div class="detail-links">
+      <h3>원문 접근</h3>
+      <a href="https://scholar.google.com/scholar?q=Some Studies in Machine Learning Using the Game of Checkers" target="_blank" class="detail-link">Google Scholar &rarr;</a>
+
+    </div>
+    
+  </div>
+  <div class="detail-page" id="detail-schulman2017ppo">
+    <button class="back-btn" onclick="hideDetail()">&larr; 목록으로</button>
+    <div class="detail-header">
+      <span class="detail-label">[Schulman 2017]</span>
+      <span class="detail-type">inproceedings</span>
+    </div>
+    <h2 class="detail-title">Proximal Policy Optimization Algorithms</h2>
+    <div class="detail-meta">
+      <p><strong>저자:</strong> Schulman, John and Wolski, Filip and Dhariwal, Prafulla and Radford, Alec and Klimov, Oleg</p>
+      <p><strong>출처:</strong> arXiv preprint arXiv:1707.06347, 2017.</p>
+    </div>
+    <div class="detail-links">
+      <h3>원문 접근</h3>
+      <a href="https://scholar.google.com/scholar?q=Proximal Policy Optimization Algorithms" target="_blank" class="detail-link">Google Scholar &rarr;</a>
+
+    </div>
+    <div class='detail-summary'><h3>주요 내용 요약</h3><p>Schulman 등은 정책 변화를 클리핑으로 제한하여 안정적으로 학습하는 PPO(Proximal Policy Optimization)를 제안하였다. TRPO의 복잡한 제약 최적화를 간단한 클리핑 목적 함수로 대체한다.</p><p>확률비 r(θ) = π_θ(a|s)/π_old(a|s)를 [1-ε, 1+ε] 범위로 클리핑하여 한 번의 업데이트에서 정책이 급격히 변하는 것을 방지한다. 구현이 간단하면서도 성능이 우수하여 범용적으로 사용된다.</p><p>PPO는 게임 AI, 로보틱스에서 널리 쓰일 뿐 아니라, RLHF에서 LLM을 인간 선호에 정렬시키는 표준 알고리즘으로 채택되어 ChatGPT의 핵심 구성 요소가 되었다.</p></div>
+  </div>
+  <div class="detail-page" id="detail-shannon1937symbolic">
+    <button class="back-btn" onclick="hideDetail()">&larr; 목록으로</button>
+    <div class="detail-header">
+      <span class="detail-label">[Shannon 1937]</span>
+      <span class="detail-type">mastersthesis</span>
+    </div>
+    <h2 class="detail-title">A Symbolic Analysis of Relay and Switching Circuits</h2>
+    <div class="detail-meta">
+      <p><strong>저자:</strong> Shannon, Claude E.</p>
+      <p><strong>출처:</strong> , 1937.</p>
+    </div>
+    <div class="detail-links">
+      <h3>원문 접근</h3>
+      <a href="https://scholar.google.com/scholar?q=A Symbolic Analysis of Relay and Switching Circuits" target="_blank" class="detail-link">Google Scholar &rarr;</a>
+
+    </div>
+    
+  </div>
+  <div class="detail-page" id="detail-simonyan2015vgg">
+    <button class="back-btn" onclick="hideDetail()">&larr; 목록으로</button>
+    <div class="detail-header">
+      <span class="detail-label">[Simonyan 2015]</span>
+      <span class="detail-type">inproceedings</span>
+    </div>
+    <h2 class="detail-title">Very Deep Convolutional Networks for Large-Scale Image Recognition</h2>
+    <div class="detail-meta">
+      <p><strong>저자:</strong> Simonyan, Karen and Zisserman, Andrew</p>
+      <p><strong>출처:</strong> ICLR, 2015.</p>
+    </div>
+    <div class="detail-links">
+      <h3>원문 접근</h3>
+      <a href="https://scholar.google.com/scholar?q=Very Deep Convolutional Networks for Large-Scale Image Recog" target="_blank" class="detail-link">Google Scholar &rarr;</a>
+
+    </div>
+    <div class='detail-summary'><h3>주요 내용 요약</h3><p>Simonyan과 Zisserman은 3×3의 매우 작은 필터만을 사용하여 16~19층까지 깊게 쌓는 VGGNet 아키텍처를 제안하였다. ILSVRC 2014에서 준우승하며 &#x27;깊이가 성능을 결정한다&#x27;는 원칙을 실증적으로 보였다.</p><p>두 개의 3×3 필터를 연속 적용하면 하나의 5×5 필터와 같은 수용야를 가지지만, 파라미터 수는 더 적고 비선형 변환은 더 많다. 이 통찰은 이후 모든 CNN 설계의 기본 원칙이 되었다.</p><p>VGGNet은 약 1억 3,800만 개의 파라미터로 인해 학습 비용이 높지만, 구조의 단순함과 규칙성 덕분에 전이학습의 백본으로 오랫동안 널리 사용되었으며, 특징 추출기로서의 CNN의 범용성을 보여준 대표적 모델이다.</p></div>
+  </div>
+  <div class="detail-page" id="detail-srivastava2014dropout">
+    <button class="back-btn" onclick="hideDetail()">&larr; 목록으로</button>
+    <div class="detail-header">
+      <span class="detail-label">[Srivastava 2014]</span>
+      <span class="detail-type">article</span>
+    </div>
+    <h2 class="detail-title">Dropout: A Simple Way to Prevent Neural Networks from Overfitting</h2>
+    <div class="detail-meta">
+      <p><strong>저자:</strong> Srivastava, Nitish and Hinton, Geoffrey and Krizhevsky, Alex and Sutskever, Ilya and Salakhutdinov, Ruslan</p>
+      <p><strong>출처:</strong> Journal of Machine Learning Research, vol. 15, pp. 1929--1958, 2014.</p>
+    </div>
+    <div class="detail-links">
+      <h3>원문 접근</h3>
+      <a href="https://scholar.google.com/scholar?q=Dropout: A Simple Way to Prevent Neural Networks from Overfi" target="_blank" class="detail-link">Google Scholar &rarr;</a>
+
+    </div>
+    <div class='detail-summary'><h3>주요 내용 요약</h3><p>Srivastava 등은 학습 시 각 뉴런을 확률 p로 무작위 비활성화하는 드롭아웃 기법을 제안하였다. 추론 시에는 모든 뉴런을 사용하되 출력에 (1-p)를 곱하여 스케일을 맞춘다.</p><p>드롭아웃의 효과는 두 가지 관점에서 설명된다. 첫째, 뉴런 간 공적응(co-adaptation)을 방지하여 각 뉴런이 독립적으로 유용한 특징을 학습하게 한다. 둘째, 매 학습 단계에서 서로 다른 서브네트워크를 학습하므로 배깅과 유사한 앙상블 효과를 얻는다.</p><p>드롭아웃은 구현이 매우 간단하면서도 효과적인 정칙화 방법으로, 완전연결층과 트랜스포머에서 표준적으로 사용된다. 트랜스포머에서는 p=0.1이 기본값이다.</p></div>
+  </div>
+  <div class="detail-page" id="detail-strubell2019energy">
+    <button class="back-btn" onclick="hideDetail()">&larr; 목록으로</button>
+    <div class="detail-header">
+      <span class="detail-label">[Strubell 2019]</span>
+      <span class="detail-type">article</span>
+    </div>
+    <h2 class="detail-title">Energy and Policy Considerations for Deep Learning in NLP</h2>
+    <div class="detail-meta">
+      <p><strong>저자:</strong> Strubell, Emma and Ganesh, Ananya and McCallum, Andrew</p>
+      <p><strong>출처:</strong> Proceedings of the 57th Annual Meeting of the ACL, pp. 3645--3650, 2019.</p>
+    </div>
+    <div class="detail-links">
+      <h3>원문 접근</h3>
+      <a href="https://scholar.google.com/scholar?q=Energy and Policy Considerations for Deep Learning in NLP" target="_blank" class="detail-link">Google Scholar &rarr;</a>
+
+    </div>
+    <div class='detail-summary'><h3>주요 내용 요약</h3><p>Strubell 등은 대형 NLP 모델 학습의 에너지 소비와 탄소 배출량을 정량적으로 분석한 최초의 연구이다. 트랜스포머 학습이 자동차 평생 탄소 배출량의 5배에 달할 수 있음을 보였다.</p><p>특히 신경 아키텍처 탐색(NAS)의 반복적 학습이 가장 큰 에너지 비용을 발생시키며, 연구 커뮤니티가 연산 효율성을 성능만큼 중요하게 고려해야 한다고 주장하였다.</p><p>이 논문은 &#x27;Green AI&#x27; 운동의 촉발점이 되었으며, 이후 모델 학습 시 탄소 배출을 보고하는 관행이 확산되는 계기가 되었다.</p></div>
+  </div>
+  <div class="detail-page" id="detail-su2021rope">
+    <button class="back-btn" onclick="hideDetail()">&larr; 목록으로</button>
+    <div class="detail-header">
+      <span class="detail-label">[Su 2021]</span>
+      <span class="detail-type">article</span>
+    </div>
+    <h2 class="detail-title">RoFormer: Enhanced Transformer with Rotary Position Embedding</h2>
+    <div class="detail-meta">
+      <p><strong>저자:</strong> Su, Jianlin and Lu, Yu and Pan, Shengfeng and Murtadha, Ahmed and Wen, Bo and Liu, Yunfeng</p>
+      <p><strong>출처:</strong> arXiv preprint arXiv:2104.09864, 2021.</p>
+    </div>
+    <div class="detail-links">
+      <h3>원문 접근</h3>
+      <a href="https://arxiv.org/abs/2104.09864" target="_blank" class="detail-link">arXiv &rarr;</a>
+<a href="https://scholar.google.com/scholar?q=RoFormer: Enhanced Transformer with Rotary Position Embeddin" target="_blank" class="detail-link">Google Scholar &rarr;</a>
+
+    </div>
+    <div class='detail-summary'><h3>주요 내용 요약</h3><p>Su 등은 절대 위치가 아닌 상대 위치를 회전 행렬로 인코딩하는 RoPE(Rotary Position Embedding)를 제안하였다. 토큰 임베딩 벡터를 위치에 비례한 각도로 회전시켜 위치 정보를 주입한다.</p><p>RoPE의 핵심 성질은 두 토큰의 내적이 상대 위치의 함수가 된다는 것이다. 이를 통해 학습에서 보지 못한 긴 시퀀스에서도 위치 관계를 외삽(extrapolate)할 수 있어, 긴 컨텍스트 처리에 유리하다.</p><p>RoPE는 LLaMA, Mistral, Qwen 등 최신 대형 언어 모델의 사실상 표준 위치 인코딩으로 자리잡았으며, 원래의 사인·코사인 고정 인코딩과 학습 가능 임베딩을 대체하고 있다.</p></div>
+  </div>
+  <div class="detail-page" id="detail-sun2020survey">
+    <button class="back-btn" onclick="hideDetail()">&larr; 목록으로</button>
+    <div class="detail-header">
+      <span class="detail-label">[Sun 2020]</span>
+      <span class="detail-type">article</span>
+    </div>
+    <h2 class="detail-title">A Survey of Optimization Methods from a Machine Learning Perspective</h2>
+    <div class="detail-meta">
+      <p><strong>저자:</strong> Sun, Shiliang and Cao, Zehui and Zhu, Han and Zhao, Jing</p>
+      <p><strong>출처:</strong> IEEE Transactions on Cybernetics, vol. 50, pp. 3668--3681, 2020.</p>
+    </div>
+    <div class="detail-links">
+      <h3>원문 접근</h3>
+      <a href="https://scholar.google.com/scholar?q=A Survey of Optimization Methods from a Machine Learning Per" target="_blank" class="detail-link">Google Scholar &rarr;</a>
+
+    </div>
+    
+  </div>
+  <div class="detail-page" id="detail-sutton2018rl">
+    <button class="back-btn" onclick="hideDetail()">&larr; 목록으로</button>
+    <div class="detail-header">
+      <span class="detail-label">[Sutton 2018]</span>
+      <span class="detail-type">book</span>
+    </div>
+    <h2 class="detail-title">Reinforcement Learning: An Introduction</h2>
+    <div class="detail-meta">
+      <p><strong>저자:</strong> Sutton, Richard S. and Barto, Andrew G.</p>
+      <p><strong>출처:</strong> . MIT Press, 2018.</p>
+    </div>
+    <div class="detail-links">
+      <h3>원문 접근</h3>
+      <a href="https://scholar.google.com/scholar?q=Reinforcement Learning: An Introduction" target="_blank" class="detail-link">Google Scholar &rarr;</a>
+
+    </div>
+    <div class='detail-summary'><h3>주요 내용 요약</h3><p>Sutton과 Barto의 &#x27;Reinforcement Learning: An Introduction&#x27;은 강화학습의 이론과 알고리즘을 체계적으로 다루는 정석적 교과서이다. 2018년 2판이 출간되었으며, 온라인에서도 접근 가능하다.</p><p>다중팔 밴딧에서 시작하여 MDP, 동적 프로그래밍, 몬테카를로, TD 학습, 함수 근사, 정책 경사법, Actor-Critic까지 단계적으로 전개한다. 2판에서는 딥 강화학습 관련 내용이 보강되었다.</p><p>강화학습을 공부하는 거의 모든 연구자가 참고하는 필독서이며, 이 책의 표기법과 개념 체계가 분야의 표준으로 자리잡았다.</p></div>
+  </div>
+  <div class="detail-page" id="detail-szegedy2015googlenet">
+    <button class="back-btn" onclick="hideDetail()">&larr; 목록으로</button>
+    <div class="detail-header">
+      <span class="detail-label">[Szegedy 2015]</span>
+      <span class="detail-type">inproceedings</span>
+    </div>
+    <h2 class="detail-title">Going Deeper with Convolutions</h2>
+    <div class="detail-meta">
+      <p><strong>저자:</strong> Szegedy, Christian and Liu, Wei and Jia, Yangqing and Sermanet, Pierre and Reed, Scott and Anguelov, Dragomir and Erhan, Dumitru and Vanhoucke, Vincent and Rabinovich, Andrew</p>
+      <p><strong>출처:</strong> CVPR, pp. 1--9, 2015.</p>
+    </div>
+    <div class="detail-links">
+      <h3>원문 접근</h3>
+      <a href="https://scholar.google.com/scholar?q=Going Deeper with Convolutions" target="_blank" class="detail-link">Google Scholar &rarr;</a>
+
+    </div>
+    <div class='detail-summary'><h3>주요 내용 요약</h3><p>Szegedy 등은 1×1, 3×3, 5×5 합성곱을 병렬로 수행하는 Inception 모듈을 제안하고, 이를 22층으로 쌓은 GoogLeNet(Inception v1)으로 ILSVRC 2014 우승을 차지하였다. 파라미터 수는 VGGNet의 약 1/27에 불과한 500만 개이다.</p><p>핵심 아이디어는 1×1 합성곱을 &#x27;병목층&#x27;으로 사용하여 채널 수를 먼저 줄인 뒤 다양한 크기의 필터를 적용하는 것이다. 이를 통해 다중 스케일 특징을 효율적으로 추출하면서도 연산량을 크게 절감한다.</p><p>GoogLeNet은 &#x27;깊이와 효율은 양립할 수 있다&#x27;는 것을 증명하였으며, 이후 Inception v2~v4, Inception-ResNet 등의 후속 발전으로 이어졌다. 1×1 합성곱의 채널 압축 기법은 ResNet의 병목 블록에도 핵심적으로 활용된다.</p></div>
+  </div>
+  <div class="detail-page" id="detail-tan2019efficientnet">
+    <button class="back-btn" onclick="hideDetail()">&larr; 목록으로</button>
+    <div class="detail-header">
+      <span class="detail-label">[Tan 2019]</span>
+      <span class="detail-type">article</span>
+    </div>
+    <h2 class="detail-title">EfficientNet: Rethinking Model Scaling for Convolutional Neural Networks</h2>
+    <div class="detail-meta">
+      <p><strong>저자:</strong> Tan, Mingxing and Le, Quoc V.</p>
+      <p><strong>출처:</strong> Proceedings of the 36th International Conference on Machine Learning (ICML), pp. 6105--6114, 2019.</p>
+    </div>
+    <div class="detail-links">
+      <h3>원문 접근</h3>
+      <a href="https://scholar.google.com/scholar?q=EfficientNet: Rethinking Model Scaling for Convolutional Neu" target="_blank" class="detail-link">Google Scholar &rarr;</a>
+
+    </div>
+    <div class='detail-summary'><h3>주요 내용 요약</h3><p>Tan과 Le는 깊이(depth), 너비(width), 해상도(resolution)를 하나의 복합 계수 φ로 동시에 균형 있게 스케일링하는 EfficientNet을 제안하였다. 한 축만 키우는 기존 접근보다 훨씬 효율적인 성능-파라미터 트레이드오프를 달성한다.</p><p>기본 모델 EfficientNet-B0은 신경 아키텍처 탐색(NAS)으로 설계되었으며, 530만 파라미터로 77.1%의 ImageNet Top-1 정확도를 달성한다. 복합 계수를 키워 B1~B7까지 확장하면, B7은 6,600만 파라미터로 84.3%에 이른다.</p><p>&#x27;어떤 비율로 키울 것인가&#x27;라는 질문에 원칙적 답을 제시한 이 연구는, 이후 EfficientNetV2, EfficientDet 등으로 발전하였으며, 모델 스케일링의 사실상 표준 방법론이 되었다.</p></div>
+  </div>
+  <div class="detail-page" id="detail-tibshirani1996lasso">
+    <button class="back-btn" onclick="hideDetail()">&larr; 목록으로</button>
+    <div class="detail-header">
+      <span class="detail-label">[Tibshirani 1996]</span>
+      <span class="detail-type">article</span>
+    </div>
+    <h2 class="detail-title">Regression Shrinkage and Selection via the Lasso</h2>
+    <div class="detail-meta">
+      <p><strong>저자:</strong> Tibshirani, Robert</p>
+      <p><strong>출처:</strong> Journal of the Royal Statistical Society: Series B, vol. 58, pp. 267--288, 1996.</p>
+    </div>
+    <div class="detail-links">
+      <h3>원문 접근</h3>
+      <a href="https://scholar.google.com/scholar?q=Regression Shrinkage and Selection via the Lasso" target="_blank" class="detail-link">Google Scholar &rarr;</a>
+
+    </div>
+    
+  </div>
+  <div class="detail-page" id="detail-touvron2023llama">
+    <button class="back-btn" onclick="hideDetail()">&larr; 목록으로</button>
+    <div class="detail-header">
+      <span class="detail-label">[Touvron 2023]</span>
+      <span class="detail-type">article</span>
+    </div>
+    <h2 class="detail-title">LLaMA 2: Open Foundation and Fine-Tuned Chat Models</h2>
+    <div class="detail-meta">
+      <p><strong>저자:</strong> Touvron, Hugo and Martin, Louis and Stone, Kevin and Albert, Peter and Almahairi, Amjad and Babaei, Yasmine and others</p>
+      <p><strong>출처:</strong> arXiv preprint arXiv:2307.09288, 2023.</p>
+    </div>
+    <div class="detail-links">
+      <h3>원문 접근</h3>
+      <a href="https://arxiv.org/abs/2307.09288" target="_blank" class="detail-link">arXiv &rarr;</a>
+<a href="https://scholar.google.com/scholar?q=LLaMA 2: Open Foundation and Fine-Tuned Chat Models" target="_blank" class="detail-link">Google Scholar &rarr;</a>
+
+    </div>
+    <div class='detail-summary'><h3>주요 내용 요약</h3><p>Touvron 등은 7B~70B 파라미터의 오픈 가중치 대형 언어 모델 LLaMA 2를 공개하였다. 사전학습 모델과 RLHF로 정렬된 Chat 모델을 함께 제공한다.</p><p>2조 토큰의 공개 데이터로 학습하였으며, 그룹 쿼리 어텐션(GQA)과 RoPE 위치 인코딩을 채택하였다. 70B 모델은 다양한 벤치마크에서 GPT-3.5에 필적하는 성능을 보인다.</p><p>LLaMA 2의 가중치 공개는 오픈소스 LLM 생태계의 폭발적 성장을 촉발하였으며, Mistral, Qwen 등 후속 오픈 모델의 기준점이 되었다.</p></div>
+  </div>
+  <div class="detail-page" id="detail-turing1950computing">
+    <button class="back-btn" onclick="hideDetail()">&larr; 목록으로</button>
+    <div class="detail-header">
+      <span class="detail-label">[Turing 1950]</span>
+      <span class="detail-type">article</span>
+    </div>
+    <h2 class="detail-title">Computing Machinery and Intelligence</h2>
+    <div class="detail-meta">
+      <p><strong>저자:</strong> Turing, Alan M.</p>
+      <p><strong>출처:</strong> Mind, vol. 49, pp. 433--460, 1950.</p>
+    </div>
+    <div class="detail-links">
+      <h3>원문 접근</h3>
+      <a href="https://scholar.google.com/scholar?q=Computing Machinery and Intelligence" target="_blank" class="detail-link">Google Scholar &rarr;</a>
+
+    </div>
+    <div class='detail-summary'><h3>주요 내용 요약</h3><p>Alan Turing은 &#x27;기계가 생각할 수 있는가?&#x27;라는 근본적 질문을 제기하고, 이를 판별하기 위한 &#x27;모방 게임&#x27;(이후 튜링 테스트)을 제안하였다. 인간 심사관이 기계와 사람의 응답을 구별할 수 없다면 기계에게 지능을 인정해야 한다는 논증이다.</p><p>이 논문은 &#x27;기계의 지능&#x27;이라는 개념을 철학적으로 정당화하고, 반론(의식, 창의성, 수학적 한계 등)에 대해 체계적으로 응답함으로써 인공지능이라는 학문 분야의 철학적 토대를 마련하였다.</p><p>70년이 지난 오늘날, 대형 언어 모델이 일부 맥락에서 튜링 테스트를 통과하면서 Turing의 질문은 다시금 활발한 논쟁의 중심에 서 있다. 이 논문은 인공지능 철학의 출발점이자 여전히 가장 많이 인용되는 AI 논문 중 하나이다.</p></div>
+  </div>
+  <div class="detail-page" id="detail-vanderWalt2014scikit">
+    <button class="back-btn" onclick="hideDetail()">&larr; 목록으로</button>
+    <div class="detail-header">
+      <span class="detail-label">[van der Walt 2014]</span>
+      <span class="detail-type">article</span>
+    </div>
+    <h2 class="detail-title">Scikit-Image: Image Processing in Python</h2>
+    <div class="detail-meta">
+      <p><strong>저자:</strong> van der Walt, Stéfan and Schönberger, Johannes L. and Nunez-Iglesias, Juan and Boulogne, François and Warner, Joshua D. and Yager, Neil and Gouillart, Emmanuelle and Yu, Tony</p>
+      <p><strong>출처:</strong> PeerJ, vol. 2, pp. e453, 2014.</p>
+    </div>
+    <div class="detail-links">
+      <h3>원문 접근</h3>
+      <a href="https://scholar.google.com/scholar?q=Scikit-Image: Image Processing in Python" target="_blank" class="detail-link">Google Scholar &rarr;</a>
+
+    </div>
+    
+  </div>
+  <div class="detail-page" id="detail-vaswani2017attention">
+    <button class="back-btn" onclick="hideDetail()">&larr; 목록으로</button>
+    <div class="detail-header">
+      <span class="detail-label">[Vaswani 2017]</span>
+      <span class="detail-type">inproceedings</span>
+    </div>
+    <h2 class="detail-title">Attention Is All You Need</h2>
+    <div class="detail-meta">
+      <p><strong>저자:</strong> Vaswani, Ashish and Shazeer, Noam and Parmar, Niki and others</p>
+      <p><strong>출처:</strong> NeurIPS, pp. 5998--6008, 2017.</p>
+    </div>
+    <div class="detail-links">
+      <h3>원문 접근</h3>
+      <a href="https://scholar.google.com/scholar?q=Attention Is All You Need" target="_blank" class="detail-link">Google Scholar &rarr;</a>
+
+    </div>
+    <div class='detail-summary'><h3>주요 내용 요약</h3><p>Vaswani 등은 순환 구조 없이 셀프 어텐션만으로 구성된 트랜스포머 아키텍처를 제안하였다. &#x27;Attention Is All You Need&#x27;라는 제목 그대로, 어텐션이 시퀀스 모델링에 충분함을 입증하였다.</p><p>인코더는 멀티헤드 셀프 어텐션과 FFN의 반복으로, 디코더는 여기에 마스크 셀프 어텐션과 크로스 어텐션을 추가한 구조이다. 위치 인코딩으로 순서 정보를 주입하고, 잔차 연결과 레이어 정규화로 깊은 구조의 학습을 안정화한다.</p><p>트랜스포머는 NLP(BERT, GPT), 컴퓨터 비전(ViT), 음성(Whisper), 멀티모달(CLIP) 등 현대 AI의 거의 모든 분야에서 범용 아키텍처로 자리잡았으며, 이 논문은 딥러닝 역사상 가장 영향력 있는 논문 중 하나로 평가된다.</p></div>
+  </div>
+  <div class="detail-page" id="detail-wei2022cot">
+    <button class="back-btn" onclick="hideDetail()">&larr; 목록으로</button>
+    <div class="detail-header">
+      <span class="detail-label">[Wei 2022]</span>
+      <span class="detail-type">article</span>
+    </div>
+    <h2 class="detail-title">Chain-of-Thought Prompting Elicits Reasoning in Large Language Models</h2>
+    <div class="detail-meta">
+      <p><strong>저자:</strong> Wei, Jason and Wang, Xuezhi and Schuurmans, Dale and others</p>
+      <p><strong>출처:</strong> NeurIPS, 2022.</p>
+    </div>
+    <div class="detail-links">
+      <h3>원문 접근</h3>
+      <a href="https://scholar.google.com/scholar?q=Chain-of-Thought Prompting Elicits Reasoning in Large Langua" target="_blank" class="detail-link">Google Scholar &rarr;</a>
+
+    </div>
+    <div class='detail-summary'><h3>주요 내용 요약</h3><p>Wei 등은 LLM에 중간 추론 단계를 토큰으로 생성하게 하는 Chain-of-Thought(CoT) 프롬프팅을 제안하였다. 산술, 상식 추론, 기호 추론 등에서 성능이 획기적으로 개선된다.</p><p>퓨샷(예시에 추론 과정 포함)과 제로샷(&#x27;Let\&#x27;s think step by step&#x27;) 두 가지 형태가 있으며, 모델 규모가 클수록 효과가 크다. 출력 토큰이 작업 기억과 추가 계산 단계의 역할을 하여 트랜스포머의 유효 깊이를 늘린다.</p><p>CoT는 자기 일관성(Self-Consistency), 사고의 나무(ToT), 사고의 그래프(GoT) 등 후속 프롬프팅 기법의 기반이 되었으며, 추론 특화 모델(o1 등)의 학습 데이터 생성에도 활용된다.</p></div>
+  </div>
+  <div class="detail-page" id="detail-welling2019vae">
+    <button class="back-btn" onclick="hideDetail()">&larr; 목록으로</button>
+    <div class="detail-header">
+      <span class="detail-label">[Welling 2019]</span>
+      <span class="detail-type">article</span>
+    </div>
+    <h2 class="detail-title">An Introduction to Variational Autoencoders</h2>
+    <div class="detail-meta">
+      <p><strong>저자:</strong> Welling, Max and Kingma, Diederik P.</p>
+      <p><strong>출처:</strong> Foundations and Trends in Machine Learning, vol. 12, pp. 307--392, 2019.</p>
+    </div>
+    <div class="detail-links">
+      <h3>원문 접근</h3>
+      <a href="https://scholar.google.com/scholar?q=An Introduction to Variational Autoencoders" target="_blank" class="detail-link">Google Scholar &rarr;</a>
+
+    </div>
+    
+  </div>
+  <div class="detail-page" id="detail-werbos1974beyond">
+    <button class="back-btn" onclick="hideDetail()">&larr; 목록으로</button>
+    <div class="detail-header">
+      <span class="detail-label">[Werbos 1974]</span>
+      <span class="detail-type">phdthesis</span>
+    </div>
+    <h2 class="detail-title">Beyond Regression: New Tools for Prediction and Analysis in the Behavioral Sciences</h2>
+    <div class="detail-meta">
+      <p><strong>저자:</strong> Werbos, Paul J.</p>
+      <p><strong>출처:</strong> , 1974.</p>
+    </div>
+    <div class="detail-links">
+      <h3>원문 접근</h3>
+      <a href="https://scholar.google.com/scholar?q=Beyond Regression: New Tools for Prediction and Analysis in " target="_blank" class="detail-link">Google Scholar &rarr;</a>
+
+    </div>
+    
+  </div>
+  <div class="detail-page" id="detail-williams1992reinforce">
+    <button class="back-btn" onclick="hideDetail()">&larr; 목록으로</button>
+    <div class="detail-header">
+      <span class="detail-label">[Williams 1992]</span>
+      <span class="detail-type">article</span>
+    </div>
+    <h2 class="detail-title">Simple Statistical Gradient-Following Algorithms for Connectionist Reinforcement Learning</h2>
+    <div class="detail-meta">
+      <p><strong>저자:</strong> Williams, Ronald J.</p>
+      <p><strong>출처:</strong> Machine Learning, vol. 8, pp. 229--256, 1992.</p>
+    </div>
+    <div class="detail-links">
+      <h3>원문 접근</h3>
+      <a href="https://scholar.google.com/scholar?q=Simple Statistical Gradient-Following Algorithms for Connect" target="_blank" class="detail-link">Google Scholar &rarr;</a>
+
+    </div>
+    
+  </div>
+  <div class="detail-page" id="detail-wolpert1996lack">
+    <button class="back-btn" onclick="hideDetail()">&larr; 목록으로</button>
+    <div class="detail-header">
+      <span class="detail-label">[Wolpert 1996]</span>
+      <span class="detail-type">article</span>
+    </div>
+    <h2 class="detail-title">The Lack of A Priori Distinctions between Learning Algorithms</h2>
+    <div class="detail-meta">
+      <p><strong>저자:</strong> Wolpert, David H.</p>
+      <p><strong>출처:</strong> Neural Computation, vol. 8, pp. 1341--1390, 1996.</p>
+    </div>
+    <div class="detail-links">
+      <h3>원문 접근</h3>
+      <a href="https://scholar.google.com/scholar?q=The Lack of A Priori Distinctions between Learning Algorithm" target="_blank" class="detail-link">Google Scholar &rarr;</a>
+
+    </div>
+    
+  </div>
+  <div class="detail-page" id="detail-wolpert1997nofree">
+    <button class="back-btn" onclick="hideDetail()">&larr; 목록으로</button>
+    <div class="detail-header">
+      <span class="detail-label">[Wolpert 1997]</span>
+      <span class="detail-type">article</span>
+    </div>
+    <h2 class="detail-title">No Free Lunch Theorems for Optimization</h2>
+    <div class="detail-meta">
+      <p><strong>저자:</strong> Wolpert, David H. and Macready, William G.</p>
+      <p><strong>출처:</strong> IEEE Transactions on Evolutionary Computation, vol. 1, pp. 67--82, 1997.</p>
+    </div>
+    <div class="detail-links">
+      <h3>원문 접근</h3>
+      <a href="https://scholar.google.com/scholar?q=No Free Lunch Theorems for Optimization" target="_blank" class="detail-link">Google Scholar &rarr;</a>
+
+    </div>
+    
+  </div>
+  <div class="detail-page" id="detail-yao2023react">
+    <button class="back-btn" onclick="hideDetail()">&larr; 목록으로</button>
+    <div class="detail-header">
+      <span class="detail-label">[Yao 2023]</span>
+      <span class="detail-type">article</span>
+    </div>
+    <h2 class="detail-title">ReAct: Synergizing Reasoning and Acting in Language Models</h2>
+    <div class="detail-meta">
+      <p><strong>저자:</strong> Yao, Shunyu and Zhao, Jeffrey and Yu, Dian and others</p>
+      <p><strong>출처:</strong> ICLR, 2023.</p>
+    </div>
+    <div class="detail-links">
+      <h3>원문 접근</h3>
+      <a href="https://scholar.google.com/scholar?q=ReAct: Synergizing Reasoning and Acting in Language Models" target="_blank" class="detail-link">Google Scholar &rarr;</a>
+
+    </div>
+    <div class='detail-summary'><h3>주요 내용 요약</h3><p>Yao 등은 추론(Thought)과 행동(Action)을 교차 수행하는 ReAct 프레임워크를 제안하였다. LLM이 생각하고, 도구를 호출하고, 결과를 관찰하는 Thought→Action→Observation 루프를 반복한다.</p><p>순수 CoT는 외부 정보 없이 추론하므로 환각 위험이 있고, 순수 행동(Action-only)은 계획 없이 도구를 호출하므로 비효율적이다. ReAct는 두 접근의 장점을 결합하여 추론과 행동의 시너지를 만든다.</p><p>ReAct는 LLM 기반 AI 에이전트의 기본 설계 패턴이 되었으며, LangChain, AutoGPT 등 에이전트 프레임워크의 핵심 아키텍처로 활용된다.</p></div>
+  </div>
+  <div class="detail-page" id="detail-zhang2019rmsnorm">
+    <button class="back-btn" onclick="hideDetail()">&larr; 목록으로</button>
+    <div class="detail-header">
+      <span class="detail-label">[Zhang 2019]</span>
+      <span class="detail-type">inproceedings</span>
+    </div>
+    <h2 class="detail-title">Root Mean Square Layer Normalization</h2>
+    <div class="detail-meta">
+      <p><strong>저자:</strong> Zhang, Biao and Sennrich, Rico</p>
+      <p><strong>출처:</strong> NeurIPS, 2019.</p>
+    </div>
+    <div class="detail-links">
+      <h3>원문 접근</h3>
+      <a href="https://scholar.google.com/scholar?q=Root Mean Square Layer Normalization" target="_blank" class="detail-link">Google Scholar &rarr;</a>
+
+    </div>
+    
+  </div>
+  <div class="detail-page" id="detail-zhu2017cyclegan">
+    <button class="back-btn" onclick="hideDetail()">&larr; 목록으로</button>
+    <div class="detail-header">
+      <span class="detail-label">[Zhu 2017]</span>
+      <span class="detail-type">inproceedings</span>
+    </div>
+    <h2 class="detail-title">Unpaired Image-to-Image Translation Using Cycle-Consistent Adversarial Networks</h2>
+    <div class="detail-meta">
+      <p><strong>저자:</strong> Zhu, Jun-Yan and Park, Taesung and Isola, Phillip and Efros, Alexei A.</p>
+      <p><strong>출처:</strong> ICCV, pp. 2223--2232, 2017.</p>
+    </div>
+    <div class="detail-links">
+      <h3>원문 접근</h3>
+      <a href="https://scholar.google.com/scholar?q=Unpaired Image-to-Image Translation Using Cycle-Consistent A" target="_blank" class="detail-link">Google Scholar &rarr;</a>
+
+    </div>
+    <div class='detail-summary'><h3>주요 내용 요약</h3><p>Zhu 등은 쌍(pair) 데이터 없이 두 도메인 간 이미지 변환을 수행하는 CycleGAN을 제안하였다. 순환 일관성 손실(cycle-consistency loss)이 핵심이다.</p><p>도메인 A→B 생성자와 B→A 생성자를 동시에 학습하며, A→B→A 순환과 B→A→B 순환에서 원본이 복원되도록 제약한다. 이 제약이 쌍 데이터 없이도 의미 있는 변환을 학습하게 한다.</p><p>말→얼룩말, 사진→모네 그림, 여름→겨울 등의 인상적인 결과를 보였으며, 비쌍(unpaired) 이미지 변환의 대표적 방법론이 되었다.</p></div>
+  </div>
+
+<div class="footer">
+  으뜸 딥러닝 &mdash; 참고문헌 | Generated from references.bib
+</div>
+
+<script>
+function filterRefs() {
+  const q = document.getElementById('searchInput').value.toLowerCase();
+  document.querySelectorAll('.ref-card').forEach(card => {
+    card.style.display = card.textContent.toLowerCase().includes(q) ? 'flex' : 'none';
+  });
+}
+function showDetail(key) {
+  document.getElementById('refList').style.display = 'none';
+  document.querySelector('.search-bar').style.display = 'none';
+  document.querySelectorAll('.detail-page').forEach(p => p.classList.remove('active'));
+  document.getElementById('detail-' + key).classList.add('active');
+  window.scrollTo(0, 0);
+}
+function hideDetail() {
+  document.querySelectorAll('.detail-page').forEach(p => p.classList.remove('active'));
+  document.getElementById('refList').style.display = 'block';
+  document.querySelector('.search-bar').style.display = 'block';
+}
+// Handle hash navigation
+if (location.hash.startsWith('#detail-')) {
+  showDetail(location.hash.replace('#detail-', ''));
+}
+</script>
+</body>
+</html>
